@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reporter Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+<header class="brand-header">
+  <img src="/assets/logo.png" alt="S సంగారెడ్డి NEWS Logo" />
+  <h1> సంగారెడ్డి <span>NEWS</span></h1>
+</header>
+
+
+<div class="container">
+
+  <h1>Newsroom Control Desk</h1>
+
+  <button onclick="logout()" style="float:right;margin-top:-48px;">
+    Logout
+  </button>
+
+  <!-- AUTH CHECK -->
+  <script>
+    if (!localStorage.getItem("token")) {
+      window.location.href = "/login.html";
+    }
+  </script>
+
+  <!-- PUBLISH NEWS -->
+  <div class="admin-card">
+    <h2>Publish News</h2>
+
+    <input id="title" placeholder="News Title" />
+
+    <select id="category">
+      <option>Politics</option>
+      <option>Local</option>
+      <option>Sports</option>
+      <option>Crime</option>
+      <option>Opinion</option>
+    </select>
+
+    <input id="summary" placeholder="Short Summary" />
+    <textarea id="content" placeholder="Full News Content"></textarea>
+
+    <input id="authorName" placeholder="Reporter Name" />
+
+    <h3 style="margin-top:20px;margin-bottom:10px;font-size:16px;color:#ccc;">
+      Reporter Photo
+    </h3>
+
+    <input type="file" id="authorPhoto" accept="image/*" />
+
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="authorVerified" checked />
+      <span>Verified Reporter</span>
+    </label>
+
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="breaking" />
+      <span>Mark as Breaking News</span>
+    </label>
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="sponsored" />
+      <span>Mark as Sponsored</span>
+    </label>
+
+
+    <h3 style="margin-top:30px;margin-bottom:10px;font-size:16px;color:#ccc;">
+      Thumbnail Image
+    </h3>
+
+    <input type="file" id="image" /><br /><br />
+
+    <h3 style="margin-top:30px;margin-bottom:10px;font-size:16px;color:#ccc;">
+      Video URL (YouTube)
+    </h3>
+
+    <input
+      type="text"
+      id="video"
+      placeholder="Paste video link (optional)"
+    />
+
+    <h3 style="margin-top:30px;margin-bottom:10px;font-size:16px;color:#ccc;">
+      Article Advertisement (Optional)
+    </h3>
+       
+    <h3 style="margin-top:30px;margin-bottom:10px;font-size:16px;color:#ccc;">
+      Sponsored Ad (Client – Optional)
+    </h3>
+
+    <textarea
+      id="sponsoredAd"
+      placeholder="Paste sponsored ad HTML / banner code here"
+      style="min-height:120px;"
+    ></textarea>
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="enableGoogleAd" checked />
+      <span>Enable Google Ads for this article</span>
+    </label>
+
+
+    <button onclick="publishNews()">Publish</button>
+    <p id="status"></p>
+  </div>
+
+  <!-- CHANGE PASSWORD -->
+  <div class="admin-card">
+    <h2>Change Password</h2>
+
+    <input id="oldPassword" type="password" placeholder="Old Password" />
+    <input id="newPassword" type="password" placeholder="New Password" />
+
+    <button onclick="changePassword()">Update Password</button>
+    <p id="password-status"></p>
+  </div>
+
+  <!-- PUBLISHED NEWS -->
+  <div class="admin-card">
+    <h2>Published News</h2>
+    <div id="admin-news-list"></div>
+  </div>
+
+</div>
+
+<script src="/js/admin.js"></script>
+
+</body>
+</html>

@@ -1,10 +1,12 @@
 # Dependencies
 node_modules/
+server/node_modules/
 
 # Environment files
 .env
+.env.*
 
-# Uploads (optional – comment if needed)
+# Uploads (deprecated – using Cloudflare R2)
 uploads/
 
 # Logs
@@ -12,6 +14,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# OS files
+# OS / Editor files
 .DS_Store
 Thumbs.db
+.vscode/

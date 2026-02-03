@@ -2,13 +2,41 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
 const mongoose = require("mongoose");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+
+const r2 = new S3Client({
+  region: "auto",
+  endpoint: process.env.R2_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY
+  }
+});
+
+async function uploadToR2(file, folder = "images") {
+  if (!file) return null;
+
+  const safeName = file.originalname.replace(/\s+/g, "_");
+  const key = `${folder}/${Date.now()}-${safeName}`;
+
+  await r2.send(
+    new PutObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: key,
+      Body: file.buffer,
+      ContentType: file.mimetype
+    })
+  );
+
+  return `${process.env.R2_PUBLIC_URL}/${key}`;
+}
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
-
-
 
 /* -------------------- MongoDB -------------------- */
 mongoose
@@ -75,11 +103,6 @@ ensureAdmin();
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client")));
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-
-const upload = multer({
-  dest: path.join(__dirname, "../uploads")
-});
 
 /* -------------------- Auth -------------------- */
 function auth(req, res, next) {
@@ -151,6 +174,13 @@ app.post(
 
   const { title, summary, content, category, breaking, sponsored } = req.body;
 
+  const imageUrl = await uploadToR2(req.files?.image?.[0], "thumbnails");
+
+  const authorPhotoUrl = req.files?.authorPhoto?.[0]
+    ? await uploadToR2(req.files.authorPhoto[0], "authors")
+    : "/assets/reporter.jpg";
+
+
   const article = new News({
     title: req.body.title,
     summary: req.body.summary,
@@ -158,18 +188,15 @@ app.post(
     category: req.body.category,
     breaking: req.body.breaking === "true",
     sponsored: req.body.sponsored === "true",
-    image: req.files?.image
-      ? `/uploads/${req.files.image[0].filename}`
-      : null,
     video: req.body.video || null,
     date: new Date().toISOString().split("T")[0],
+    image: imageUrl,
     author: {
       name: req.body.authorName || "Independent Reporter",
-      photo: req.files?.authorPhoto
-        ? `/uploads/${req.files.authorPhoto[0].filename}`
-        : "/assets/reporter.jpg",
+      photo: authorPhotoUrl,
       verified: req.body.authorVerified === "true"
     },
+
     
     ads: {
       sponsored: req.body.sponsoredAd

@@ -2232,6 +2232,30 @@ body.login-page .masthead-inner {
   color: #ffffff;
 }
 
+/* ===== ADMIN MANUAL AD – STABLE FIX ===== */
+
+.admin-textarea-wrap {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.admin-textarea-wrap textarea {
+  display: block;
+  width: 100%;
+  min-height: 160px;
+  resize: vertical;
+
+  background: #0f0f0f;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
+
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
 /* ===============================
    ADMIN FILTER BAR (PREMIUM)
 ================================ */
@@ -3276,45 +3300,6 @@ body.login-page .masthead-inner {
   resize: vertical;
 }
 
-/* =====================================================
-   ADMIN PANEL – FORCE MANUAL AD TEXTAREA VISIBILITY
-===================================================== */
-
-.admin-page textarea#sponsoredAd {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-
-  min-height: 140px !important;
-  height: auto !important;
-  width: 100% !important;
-
-  padding: 12px !important;
-  margin-top: 8px !important;
-
-  background-color: #0f0f0f !important;
-  color: #ffffff !important;
-
-  border: 1px solid #444 !important;
-  border-radius: 6px !important;
-
-  font-family: monospace !important;
-  resize: vertical !important;
-}
-
-.admin-card {
-  height: auto !important;
-  overflow: visible !important;
-}
-
-.admin-page .container {
-  overflow: visible !important;
-}
-
-.admin-card textarea {
-  display: block;
-  min-height: 140px;
-}
 
 /* ===============================
    ADMIN — FORCE MANUAL AD BOX

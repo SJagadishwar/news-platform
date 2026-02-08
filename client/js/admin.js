@@ -77,7 +77,11 @@ function loadAdminNews(forceRender = false) {
   fetch("/api/news?limit=1000")
     .then(res => res.json())
     .then(data => {
-      ALL_ADMIN_ARTICLES = data.articles || [];
+      ALL_ADMIN_ARTICLES = [
+        ...(data.breaking || []),
+        ...(data.articles || [])
+      ];
+
 
       if (forceRender || SHOW_ALL_ADMIN_NEWS) {
         renderAdminArticles(ALL_ADMIN_ARTICLES);

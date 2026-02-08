@@ -712,16 +712,44 @@ function renderCategory(catData) {
 
   newsList.innerHTML = "";
 
-  const combined = [
-    ...(catData.breaking || []),
-    ...(catData.articles || [])
-  ];
+  const breaking = catData.breaking || [];
+  const normal = catData.articles || [];
 
-  combined.forEach(article => {
+  /* =========================
+     TODAY'S BREAKING NEWS
+  ========================= */
+  if (breaking.length > 0) {
+    newsList.innerHTML += `
+      <h2 style="color:#e60000;margin-bottom:20px;">
+        Today's Breaking News
+      </h2>
+    `;
 
+    breaking.forEach(article => {
+      newsList.innerHTML += `
+        <div class="news-card breaking-card">
+          <img src="${article.image || '/assets/news-placeholder.jpg'}">
+          <div class="news-card-body">
+            <div class="meta">${article.category} • ${article.date}</div>
+            <h3>
+              <a href="article.html?id=${article._id}">
+                ${article.title}
+              </a>
+            </h3>
+            <p class="summary">${article.summary}</p>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* =========================
+     MORE STORIES
+  ========================= */
+  normal.forEach(article => {
     newsList.innerHTML += `
       <div class="news-card">
-        <img src="${article.image || '/assets/news-placeholder.jpg'}" loading="lazy">
+        <img src="${article.image || '/assets/news-placeholder.jpg'}">
         <div class="news-card-body">
           <div class="meta">${article.category} • ${article.date}</div>
           <h3>
@@ -737,6 +765,7 @@ function renderCategory(catData) {
 
   renderPagination(catData.page, catData.pages);
 }
+
 
 function renderPagination(page, totalPages) {
   const newsList = qs("news-list");

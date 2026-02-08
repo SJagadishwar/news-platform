@@ -468,7 +468,10 @@ app.post(
       image: mainImage,          // 👈 used everywhere
       images: imageUrls,         // 👈 slideshow array
 
-      video: req.body.video || null,
+      video: req.body.video && req.body.video.trim() !== ""
+        ? req.body.video.trim()
+        : null,
+
       date: today,
 
       author: {

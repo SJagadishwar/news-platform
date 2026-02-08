@@ -1,317 +1,1185 @@
-// Load news list on homepage
-if (document.getElementById("news-list")) {
-  fetch("/api/news")
+let currentPage = 1;
+const PAGE_LIMIT = 10;
+
+
+/* =========================================================
+   MAIN.JS — CLEAN, STABLE, FINAL
+========================================================= */
+
+/* ---------------------------------------------------------
+   UTIL
+--------------------------------------------------------- */
+function qs(id) {
+  return document.getElementById(id);
+}
+
+/* =========================================================
+   HOMEPAGE IMAGE SLIDESHOW (SAFE, SILENT)
+========================================================= */
+
+/* =========================================================
+   PREMIUM SECTION-SPECIFIC THUMBNAIL SLIDESHOW ENGINE
+========================================================= */
+
+function startSlideshow(imgEl, images, mode = "fade") {
+  if (!imgEl || !images || images.length <= 1) return;
+
+  let index = 0;
+
+  if (mode === "slide") {
+    setupSlideAnimation(imgEl, images);
+    return;
+  }
+
+  if (mode === "zoom") {
+    setupZoomAnimation(imgEl, images);
+    return;
+  }
+
+  if (mode === "crossfade") {
+    setupCrossfadeAnimation(imgEl, images);
+    return;
+  }
+
+  // default fallback
+  setupFadeAnimation(imgEl, images);
+}
+
+/* ---------- BREAKING NEWS: SLIDE (RIGHT → LEFT) ---------- */
+function setupSlideAnimation(imgEl, images) {
+  let index = 0;
+
+  imgEl.style.transition = "transform 0.9s ease, opacity 0.9s ease";
+  imgEl.style.transform = "translateX(0)";
+  imgEl.style.opacity = "1";
+
+  setInterval(() => {
+    imgEl.style.transform = "translateX(-30px)";
+    imgEl.style.opacity = "0";
+
+    setTimeout(() => {
+      index = (index + 1) % images.length;
+      imgEl.src = images[index];
+      imgEl.style.transform = "translateX(30px)";
+    }, 450);
+
+    setTimeout(() => {
+      imgEl.style.transform = "translateX(0)";
+      imgEl.style.opacity = "1";
+    }, 500);
+
+  }, 5000);
+}
+
+/* ---------- LATEST HEADLINES: SOFT FADE ---------- */
+function setupFadeAnimation(imgEl, images) {
+  let index = 0;
+  imgEl.style.transition = "opacity 0.8s ease-in-out";
+
+  setInterval(() => {
+    imgEl.style.opacity = "0";
+
+    setTimeout(() => {
+      index = (index + 1) % images.length;
+      imgEl.src = images[index];
+      imgEl.style.opacity = "1";
+    }, 400);
+  }, 4500);
+}
+
+/* ---------- TODAY'S BREAKING: ZOOM IN ---------- */
+function setupZoomAnimation(imgEl, images) {
+  let index = 0;
+
+  imgEl.style.transition =
+    "opacity 0.7s ease, transform 0.7s ease";
+  imgEl.style.transform = "scale(1)";
+  imgEl.style.opacity = "1";
+
+  setInterval(() => {
+    imgEl.style.opacity = "0";
+    imgEl.style.transform = "scale(1.05)";
+
+    setTimeout(() => {
+      index = (index + 1) % images.length;
+      imgEl.src = images[index];
+      imgEl.style.transform = "scale(1)";
+      imgEl.style.opacity = "1";
+    }, 400);
+  }, 4800);
+}
+
+/* ---------- MORE STORIES: CROSS FADE (VERY SUBTLE) ---------- */
+function setupCrossfadeAnimation(imgEl, images) {
+  let index = 0;
+
+  imgEl.style.transition = "opacity 1s ease-in-out";
+
+  setInterval(() => {
+    imgEl.style.opacity = "0";
+
+    setTimeout(() => {
+      index = (index + 1) % images.length;
+      imgEl.src = images[index];
+      imgEl.style.opacity = "1";
+    }, 600);
+  }, 6000);
+}
+
+
+
+
+/* ---------------------------------------------------------
+   PAGE DETECTION
+--------------------------------------------------------- */
+const isArticlePage = document.body.classList.contains("article-page");
+
+function highlightActiveNav() {
+  const navLinks = document.querySelectorAll(".masthead-nav a");
+  if (!navLinks.length) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const currentCategory = params.get("category");
+  const path = window.location.pathname;
+
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+  });
+
+  // 1️⃣ Time Travel page (highest priority)
+  if (path.includes("archive.html")) {
+    document
+      .querySelector('.masthead-nav a[data-nav="time-travel"]')
+      ?.classList.add("active");
+    return; // ⛔ STOP HERE — do not activate HOME
+  }
+
+  // 2️⃣ Category pages
+  if (currentCategory) {
+    document
+      .querySelector(`.masthead-nav a[data-nav="${currentCategory.toLowerCase()}"]`)
+      ?.classList.add("active");
+    return;
+  }
+
+  // 3️⃣ Home & article pages
+  document
+    .querySelector('.masthead-nav a[data-nav="home"]')
+    ?.classList.add("active");
+    
+  }
+
+
+
+
+/* =========================================================
+   HOMEPAGE LOGIC
+========================================================= */
+function loadHomepage() {
+  const params = new URLSearchParams(window.location.search);
+  const selectedCategory = params.get("category");
+
+  // 🔥 CATEGORY PAGE: completely bypass homepage logic
+  if (selectedCategory) {
+    fetch(`/api/news?category=${selectedCategory}&page=${currentPage}&limit=${PAGE_LIMIT}`)
+      .then(res => res.json())
+      .then(catData => {
+        renderCategory(catData);
+      })
+      .catch(err => console.error("Category load failed", err));
+    return;
+  }
+
+  const breakingList = qs("breaking-list");
+  const latestList = qs("latest-list");
+  const newsList = qs("news-list");
+  const trendingList = qs("trending-list");
+  const todayBreakingList = qs("today-breaking-list");
+
+  if (!newsList) return;
+
+  // Skeleton
+  newsList.innerHTML = `
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-text short"></div>
+  `;
+
+  fetch("/api/news?type=homepage&limit=20")
     .then(res => res.json())
     .then(data => {
+      data = data.articles;
+      // Clear skeletons
+      breakingList && (breakingList.innerHTML = "");
+      latestList && (latestList.innerHTML = "");
+      newsList.innerHTML = "";
+      trendingList && (trendingList.innerHTML = "");
+      
 
-      // BREAKING NEWS (CORRECT LOGIC)
-      const breakingBox = document.querySelector(".breaking");
-      const breakingText = document.getElementById("breaking-text");
+      /* -------- BREAKING -------- */
+      const breaking = data
+        .filter(a => a.breaking)
+        .slice(0, 10); // ✅ LIMIT TO 10 BREAKING NEWS
 
-      // find breaking article from news list
-      const breakingArticle = data.find(a => a.breaking === true);
 
-      if (breakingArticle && breakingText) {
-        breakingText.innerText = breakingArticle.title;
-      } else if (breakingBox) {
-        // hide bar completely if no breaking news
-        breakingBox.style.display = "none";
+      /* -------- TODAY'S BREAKING NEWS -------- */
+      if (todayBreakingList) {
+        todayBreakingList.innerHTML = "";
+
+        const today = new Date().toISOString().split("T")[0];
+
+        const todaysBreaking = data.filter(
+          a => a.breaking && a.date === today
+        );
+
+        if (todaysBreaking.length === 0) {
+          todayBreakingList.innerHTML = `
+          <p style="color:#999;font-size:15px;max-width:600px;">
+            There are no breaking developments today.
+            Regular news coverage continues below.
+          </p>
+        `;
+
+        } else {
+          todaysBreaking.forEach(article => {
+            todayBreakingList.innerHTML += `
+              <div class="news-card today-breaking-item">
+                <div class="news-card-body">
+                  <div class="meta">
+                    ${article.category} • ${article.date}
+                  </div>
+                  <h3>
+                    <a href="article.html?id=${article._id}">
+                      ${article.title}
+                    </a>
+                  </h3>
+                  <p class="summary">${article.summary}</p>
+                </div>
+
+                <img 
+                  class="today-breaking-thumb"
+                  src="${article.image || '/assets/news-placeholder.jpg'}"
+                  data-images='${JSON.stringify(article.images || [])}'
+                  alt="${article.title}"
+                />
+
+              </div>
+            `;
+          });
+        }
+
+        // 🟠 Today’s Breaking — ZOOM animation
+        document.querySelectorAll(".today-breaking-thumb").forEach(img => {
+          try {
+            const images = JSON.parse(img.dataset.images || "[]");
+            startSlideshow(img, images, "slide");
+
+          } catch (e) {}
+        });
       }
 
-      // TRENDING (Most Read)
-      const trending = [...data]
-        .sort((a, b) => (b.likes || 0) - (a.likes || 0))
-        .slice(0, 5);
 
-      const trendingList = document.getElementById("trending-list");
+      const heroBreaking = breaking[0];          // latest breaking
+      const secondaryBreaking = breaking.slice(1);
 
-      if (trendingList) {
-        trendingList.innerHTML = trending.map(article => `
-          <p>
-            <a href="/article.html?id=${article._id}">
+      if (heroBreaking) {
+        breakingList.innerHTML += `
+          <div class="breaking-hero">
+            <a href="article.html?id=${heroBreaking._id}" class="breaking-link">
+              <img src="${heroBreaking.image}" alt="${heroBreaking.title}" />
+              <h2>${heroBreaking.title}</h2>
+              <div class="breaking-meta">
+                ${heroBreaking.category} • ${heroBreaking.date}
+              </div>
+            </a>
+          </div>
+        `;
+      setTimeout(() => {
+        const heroImg = document.querySelector(".breaking-hero img");
+        startSlideshow(heroImg, heroBreaking.images, "slide");
+      }, 100);
+
+
+      secondaryBreaking.forEach(article => {
+        breakingList.innerHTML += `
+          <div class="breaking-item">
+            <a href="article.html?id=${article._id}" class="breaking-link">
+              <img 
+                src="${article.image || '/assets/news-placeholder.jpg'}"
+                class="breaking-thumb"
+                data-images='${JSON.stringify(article.images || [])}'
+              />
+              <div class="breaking-text">
+                <h2>${article.title}</h2>
+                <div class="breaking-meta">${article.category} • ${article.date}</div>
+              </div>
+            </a>
+          </div>
+        `;
+      });
+
+      // 🔴 Secondary Breaking — SLIDE animation
+      document.querySelectorAll(".breaking-thumb").forEach(img => {
+        try {
+          const images = JSON.parse(img.dataset.images || "[]");
+          startSlideshow(img, images, "slide");
+        } catch (e) {}
+      });
+    }
+
+
+      /* -------- LATEST (TOP 2 NON-BREAKING) -------- */
+      const nonBreaking = data.filter(a => !a.breaking);
+      const latest = nonBreaking.slice(0, 5);
+
+      latest.forEach(article => {
+        const imgSrc = article.image && article.image.trim() !== ""
+          ? article.image
+          : "/assets/news-placeholder.jpg";
+
+        latestList.innerHTML += `
+          <div class="latest-item">
+            <img
+              src="${article.image || '/assets/news-placeholder.jpg'}"
+              data-images='${JSON.stringify(article.images || [])}'
+              loading="lazy"
+            >
+            <h4>
+              <a href="article.html?id=${article._id}">
+                ${article.title}
+              </a>
+            </h4>
+          </div>
+        `;
+      });
+
+      // 🔵 Latest Headlines — FADE animation
+      document.querySelectorAll(".latest-item img").forEach(img => {
+        try {
+          const images = JSON.parse(img.dataset.images || "[]");
+          startSlideshow(img, images, "slide");
+        } catch (e) {}
+      });
+
+
+
+      /* -------- MORE STORIES (ALL REMAINING) -------- */
+      const remaining = nonBreaking;
+
+
+
+      remaining.forEach(article => {
+        newsList.innerHTML += `
+          <div class="news-card">
+            <img
+              src="${article.image || '/assets/news-placeholder.jpg'}"
+              data-images='${JSON.stringify(article.images || [])}'
+              loading="lazy"
+            >
+            <div class="news-card-body">
+
+              <div class="meta">${article.category} • ${article.date}</div>
+              <h3>
+                <a href="article.html?id=${article._id}">
+                  ${article.title}
+                </a>
+              </h3>
+              <p class="summary">${article.summary}</p>
+            </div>
+          </div>
+        `;
+      });
+
+      // 🟢 More Stories — CROSSFADE animation
+      document.querySelectorAll(".news-card img").forEach(img => {
+        try {
+          const images = JSON.parse(img.dataset.images || "[]");
+          startSlideshow(img, images, "slide");
+        } catch (e) {}
+      });
+
+
+      
+      /* -------- MOST READ (by views) -------- */
+      data
+        .slice()
+        .sort((a, b) => (b.views || 0) - (a.views || 0))
+        .slice(0, 5)
+        .forEach(article => {
+          trendingList.innerHTML += `
+            <p>
+              <a href="article.html?id=${article._id}">
+                ${article.title}
+              </a>
+            </p>
+          `;
+        });
+
+        
+    })
+    .catch(err => {
+      console.error("Homepage load failed", err);
+    });
+}
+
+
+
+
+/* =========================================================
+   ARTICLE PAGE LOGIC
+========================================================= */
+function loadArticlePage() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  if (!id || !qs("title")) return;
+
+  qs("content").innerHTML = `
+    <span class="skeleton skeleton-text"></span>
+    <span class="skeleton skeleton-text"></span>
+    <span class="skeleton skeleton-text short"></span>
+  `;
+
+  fetch(`/api/news/${id}`)
+    .then(res => res.json())
+    .then(article => {
+      qs("title").innerText = article.title;
+      qs("date").innerText = article.date;
+      qs("category-label").innerText = article.category || "News";
+
+      // ---------------- RELATED ARTICLES (SAME CATEGORY) ----------------
+      const sidebarCategory = qs("sidebar-category");
+      const relatedList = qs("related-list");
+
+      if (sidebarCategory && relatedList && article.category) {
+        sidebarCategory.innerText = article.category;
+
+        fetch("/api/news")
+          .then(res => res.json())
+          .then(all => {
+            const related = all
+              .filter(a =>
+                a.category === article.category &&
+                a._id !== article._id
+              )
+              .slice(0, 5);
+
+            relatedList.innerHTML = related.length
+              ? related.map(a => `
+                  <div class="latest-item">
+                    <img
+                      src="${a.image || '/assets/news-placeholder.jpg'}"
+                      data-images='${JSON.stringify(a.images || [])}'
+                      alt="${a.title}"
+                    />
+                    <h4>
+                      <a href="article.html?id=${a._id}">
+                        ${a.title}
+                      </a>
+                    </h4>
+                  </div>
+                `).join("")
+              : `<p style="color:#777;font-size:14px;">No more articles in this category.</p>`;
+          });
+
+          // 🔵 Animate latest thumbnails in article page sidebar
+          setTimeout(() => {
+            document
+              .querySelectorAll("#related-list .latest-item img")
+              .forEach(img => {
+                try {
+                  const images = JSON.parse(img.dataset.images || "[]");
+                  startSlideshow(img, images, "slide");
+                } catch (e) {}
+              });
+          }, 100);
+
+
+          // Sidebar thumbnail slideshow (same premium animation)
+          document.querySelectorAll(".sidebar-item img").forEach(img => {
+            const articleId = img.closest(".sidebar-item")
+              ?.querySelector("a")
+              ?.getAttribute("href")
+              ?.split("id=")[1];
+
+            if (!articleId) return;
+
+            fetch(`/api/news/${articleId}`)
+              .then(res => res.json())
+              .then(a => {
+                const images = a.images && a.images.length > 1 ? a.images : [];
+                startSlideshow(img, images, "slide");
+              });
+          });
+      }
+
+
+      qs("content").innerHTML = article.content
+        .split("\n")
+        .map(p => `<p>${p}</p>`)
+        .join("");
+
+        // ===============================
+        // RENDER SPONSORED AD (MANUAL)
+        // ===============================
+        const sponsoredSlot = document.getElementById("sponsored-ad-slot");
+
+        if (
+          sponsoredSlot &&
+          article.ads &&
+          article.ads.sponsored &&
+          article.ads.sponsored.content &&
+          article.ads.sponsored.content.trim() !== ""
+        ) {
+          sponsoredSlot.innerHTML = `
+            <div class="sponsored-label">Sponsored</div>
+            ${article.ads.sponsored.content}
+          `;
+        } else if (sponsoredSlot) {
+          sponsoredSlot.innerHTML = "";
+        }
+
+      
+      // ---------------- ARTICLE VIDEO ----------------
+      const videoContainer = document.getElementById("article-video");
+      const videoLink = document.getElementById("article-video-link");
+
+      if (
+        article.video &&
+        typeof article.video === "string" &&
+        article.video.trim() !== ""
+      ) {
+        videoLink.href = article.video;
+        videoContainer.style.display = "block";
+      } else {
+        videoContainer.style.display = "none";
+        videoLink.href = "";   // 🔥 THIS LINE WAS MISSING
+      }
+
+      
+      // 🔐 Count view ONLY ONCE per user (lifetime)
+      const viewKey = `viewed_once_${article._id}`;
+
+      if (!localStorage.getItem(viewKey)) {
+        fetch(`/api/news/${article._id}/view`, {
+          method: "POST"
+        });
+
+        // Mark as viewed permanently
+        localStorage.setItem(viewKey, "true");
+      }
+
+
+      // SEO
+      document.title = `${article.title} | Sangareddy News`;
+      qs("meta-description")?.setAttribute(
+        "content",
+        article.summary || article.content.slice(0, 150)
+      );
+      qs("og-title")?.setAttribute("content", article.title);
+      qs("og-description")?.setAttribute(
+        "content",
+        article.summary || article.content.slice(0, 150)
+      );
+      article.image &&
+        qs("og-image")?.setAttribute("content", article.image);
+
+      // Article Hero Image / Slideshow (SAME AS HOMEPAGE)
+      const heroImg = qs("article-image");
+
+      if (heroImg) {
+        const images = article.images && article.images.length > 0
+          ? article.images
+          : article.image
+            ? [article.image]
+            : [];
+
+        if (images.length > 0) {
+          heroImg.src = images[0];
+          startSlideshow(heroImg, images, "slide");
+        }
+      }
+
+      // Author
+      if (article.author && qs("author-box")) {
+        qs("author-box").innerHTML = `
+          <img src="${article.author.photo}">
+          <div class="author-details">
+            <div class="author-name">${article.author.name}</div>
+            ${
+              article.author.verified
+                ? `<div class="author-verified">✔ Verified Reporter</div>`
+                : ""
+            }
+          </div>
+        `;
+      }
+
+      // Likes
+      const likeBtn = qs("like-btn");
+      const likeCount = qs("like-count");
+      if (likeBtn && likeCount) {
+        likeCount.innerText = article.likes || 0;
+        const likedKey = `liked_${article._id}`;
+
+        if (localStorage.getItem(likedKey)) {
+          likeBtn.classList.add("liked");
+
+          const icon = likeBtn.querySelector("i");
+          if (icon) {
+            icon.classList.remove("fa-regular");
+            icon.classList.add("fa-solid");
+          }
+        }
+
+        likeBtn.onclick = () => {
+          if (localStorage.getItem(likedKey)) return;
+
+          fetch(`/api/news/${article._id}/like`, {
+            method: "POST"
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.likes !== undefined) {
+                likeCount.innerText = data.likes;
+
+                // 🔥 ICON SWITCH: outline → solid
+                const icon = likeBtn.querySelector("i");
+                if (icon) {
+                  icon.classList.remove("fa-regular");
+                  icon.classList.add("fa-solid");
+                }
+
+                likeBtn.classList.add("liked");
+                localStorage.setItem(likedKey, "true");
+              }
+            })
+            .catch(() => {
+              console.error("Like failed");
+            });
+        };
+      }
+
+      // Share
+      const url = window.location.href;
+      qs("wa-share") && (qs("wa-share").href = `https://wa.me/?text=${encodeURIComponent(url)}`);
+      qs("fb-share") && (qs("fb-share").href = `https://www.facebook.com/sharer/sharer.php?u=${url}`);
+      qs("tw-share") && (qs("tw-share").href = `https://twitter.com/intent/tweet?url=${url}`);
+
+      // Comments
+      function renderComments(comments) {
+        qs("comments").innerHTML = comments
+          .map(c => `<p><strong>${c.name}</strong>: ${c.text}</p>`)
+          .join("");
+      }
+
+      renderComments(article.comments || []);
+
+      qs("comment-btn") &&
+        (qs("comment-btn").onclick = async () => {
+          const name = qs("comment-name").value;
+          const text = qs("comment-text").value;
+          if (!name || !text) return;
+
+          const res = await fetch(`/api/news/${article._id}/comment`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, text })
+          });
+
+          const comments = await res.json();
+          renderComments(comments);
+          qs("comment-name").value = "";
+          qs("comment-text").value = "";
+        });
+    })
+    .catch(err => console.error("Article load failed", err));
+}
+
+
+/* =========================================================
+   CATEGORY RENDER + PAGINATION (STEP 8)
+========================================================= */
+
+function renderCategory(catData) {
+  const newsList = qs("news-list");
+  if (!newsList) return;
+
+  newsList.innerHTML = "";
+
+  catData.articles.forEach(article => {
+    newsList.innerHTML += `
+      <div class="news-card">
+        <img src="${article.image || '/assets/news-placeholder.jpg'}" loading="lazy">
+        <div class="news-card-body">
+          <div class="meta">${article.category} • ${article.date}</div>
+          <h3>
+            <a href="article.html?id=${article._id}">
               ${article.title}
             </a>
-          </p>
-        `).join("");
-      }
-
-
-      const lead = document.getElementById("lead-story");
-      const list = document.getElementById("news-list");
-
-      lead.innerHTML = "";
-      list.innerHTML = "";
-
-      if (data.length > 0) {
-        const top = data[0];
-
-        lead.innerHTML = `
-        <div style="margin-bottom:60px;">
-          ${top.image ? `<img src="${top.image}" style="width:100%;max-height:420px;object-fit:cover;margin-bottom:30px;">` : ""}
-          <h2 style="font-size:52px;margin-bottom:18px;line-height:1.2;">
-            <a href="/article.html?id=${top._id}" style="color:#fff;text-decoration:none;">
-              ${top.title}
-            </a>
-          </h2>
-          <p style="font-size:18px;color:#ccc;">
-            <strong>${top.category}</strong>
-            ${top.sponsored ? ' • <span style="color:#c00;font-weight:bold">Sponsored</span>' : ''}
-            — ${top.summary}
-          </p>
-
-          <p style="font-size:13px;color:#999;margin-top:8px;">
-            Published on ${top.date}
-          </p>
-          <p style="font-size:14px;color:#aaa;margin-top:10px;">
-            By <strong>${top.author?.name || "Independent Reporter"}</strong>
-            ${top.author?.verified ? ' • <span style="color:#4caf50">Verified</span>' : ''}
-          </p>
+          </h3>
+          <p class="summary">${article.summary}</p>
         </div>
-      `;
+      </div>
+    `;
+  });
+
+  renderPagination(catData.page, catData.pages);
+}
+
+function renderPagination(page, totalPages) {
+  const newsList = qs("news-list");
+  if (!newsList || totalPages <= 1) return;
+
+  const pagination = document.createElement("div");
+  pagination.style.marginTop = "50px";
+  pagination.style.textAlign = "center";
+
+  pagination.innerHTML = `
+    <button ${page === 1 ? "disabled" : ""} id="prev-page">← Previous</button>
+    <span style="margin:0 14px;">Page ${page} of ${totalPages}</span>
+    <button ${page === totalPages ? "disabled" : ""} id="next-page">Next →</button>
+  `;
+
+  newsList.appendChild(pagination);
+
+  document.getElementById("prev-page")?.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      loadHomepage();
+    }
+  });
+
+  document.getElementById("next-page")?.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      loadHomepage();
+    }
+  });
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+if (isArticlePage) {
+  loadArticlePage();
+} else {
+  loadHomepage();
+}
+
+// 🔥 ALWAYS highlight active section
+highlightActiveNav();
+
+
+/* =========================================================
+   HEADER SCROLL
+========================================================= */
+window.addEventListener("scroll", () => {
+  const header = document.querySelector(".brand-header");
+  if (!header) return;
+  header.classList.toggle("header-shrink", window.scrollY > 40);
+});
+
+/* =========================================================
+   CLICK FEEDBACK
+========================================================= */
+document.addEventListener("click", e => {
+  if (e.target.closest("a, button")) {
+    document.body.style.cursor = "progress";
+    setTimeout(() => {
+      document.body.style.cursor = "default";
+    }, 300);
+  }
+});
+
+
+/* =========================================================
+   TIME TRAVELER / ARCHIVE PAGE
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  
+  // ================================
+  // TIME TRAVELER – CATEGORY PILLS
+  // ================================
+  
+
+  document.querySelectorAll(".archive-categories button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".archive-categories button")
+        .forEach(b => b.classList.remove("active"));
+
+      btn.classList.add("active");
+      selectedCategory = btn.dataset.category || "";
+    });
+  });
+});
+
+/* =========================
+   ARCHIVE FETCH (USED BY TIME MACHINE)
+========================= */
+
+function fetchArchive(date) {
+  const results = document.getElementById("archive-results");
+  const onThisDay = document.getElementById("on-this-day");
+  const category = selectedCategory || "";
+
+  if (!results) return;
+
+  let url = `/api/archive?date=${date}`;
+  if (category) {
+    url += `&category=${category}`;
+  }
+
+  results.innerHTML = "<p style='color:#888;'>Loading...</p>";
+  onThisDay && (onThisDay.innerHTML = "");
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const articles = data.articles || [];
+
+      /* ---------- ON THIS DAY ---------- */
+      if (onThisDay && articles.length > 0) {
+        const highlights = articles.slice(0, 3);
+
+        onThisDay.innerHTML = `
+          <div class="on-this-day-card">
+            <h2>On This Day</h2>
+            ${highlights
+              .map(
+                a => `
+                <div class="on-this-day-item">
+                  <h3>
+                    <a href="/article.html?id=${a._id}">
+                      ${a.title}
+                    </a>
+                  </h3>
+                  <p>${a.summary}</p>
+                </div>
+              `
+              )
+              .join("")}
+          </div>
+        `;
       }
 
-      data.slice(1).forEach(article => {
-        const div = document.createElement("div");
-        div.className = "news-card";
+      /* ---------- ARCHIVE LIST ---------- */
+      if (articles.length === 0) {
+        results.innerHTML = `
+          <div class="empty-archive">
+            <h3>No stories on this day</h3>
+            <p>
+              We didn’t publish any news on this date.
+              Try another day or explore nearby dates.
+            </p>
+          </div>
+        `;
+        return;
+      }
 
-        div.innerHTML = `
-          ${article.image ? `
-            <img src="${article.image}" />
-          ` : ""}
 
-          <div class="news-card-body">
+      results.innerHTML = "";
+
+      articles.forEach(article => {
+        const card = document.createElement("div");
+        card.className = "news-card archive-card";
+
+        card.innerHTML = `
+          <img
+            class="archive-thumb"
+            src="${article.image || '/assets/news-placeholder.jpg'}"
+            alt="${article.title}"
+          />
+          <div class="archive-content">
             <h3>
               <a href="/article.html?id=${article._id}">
                 ${article.title}
               </a>
             </h3>
-
-            <p class="meta">
-              ${article.category}
-              ${article.sponsored ? ' • <span class="sponsored">Sponsored</span>' : ''}
-            </p>
-
-            <p class="summary">
-              ${article.summary}
-            </p>
-          </div>
-        `;
-        list.appendChild(div);  
-      });
-    });
-  }
-
-
-
-
-// Load single article
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
-
-
-if (id && document.getElementById("title")) {
-  fetch(`/api/news/${id}`)
-    .then(res => res.json())
-    .then(article => {
-
-      // Visible content
-      document.getElementById("title").innerText = article.title;
-      document.getElementById("date").innerText = article.date;
-      document.getElementById("content").innerText = article.content;
-
-      
-      // LIKE FEATURE (FINAL, FIXED)
-      const likeBtn = document.getElementById("like-btn");
-      const likeCount = document.getElementById("like-count");
-
-      likeCount.innerText = article.likes ?? 0;
-
-      if (likeBtn) {
-      const likedKey = `liked_${article._id}`;
-
-      // If already liked, lock UI
-      if (localStorage.getItem(likedKey)) {
-        likeBtn.classList.add("liked");
-      }
-
-      likeBtn.addEventListener("click", async () => {
-        // ❌ Block spam
-        if (localStorage.getItem(likedKey)) return;
-
-        // ✅ Optimistic UI
-        const currentLikes = Number(likeCount.innerText) || 0;
-        likeCount.innerText = currentLikes + 1;
-
-        likeBtn.classList.add("liked");
-        localStorage.setItem(likedKey, "true");
-
-        // Sync with server
-        fetch(`/api/news/${article._id}/like`, {
-          method: "POST"
-        }).catch(() => {
-          // rollback if request fails
-          likeCount.innerText = currentLikes;
-          localStorage.removeItem(likedKey);
-          likeBtn.classList.remove("liked");
-        });
-      });
-    }
-
-
-
-      // SHARE LINKS
-      const url = window.location.href;
-
-      document.getElementById("wa-share").href =
-        `https://wa.me/?text=${encodeURIComponent(url)}`;
-
-      document.getElementById("fb-share").href =
-        `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-
-      document.getElementById("tw-share").href =
-        `https://twitter.com/intent/tweet?url=${url}`;
-
-      // COMMENTS
-      function renderComments(comments) {
-        document.getElementById("comments").innerHTML =
-          comments.map(c =>
-            `<p><strong>${c.name}</strong>: ${c.text}</p>`
-          ).join("");
-      }
-
-      renderComments(article.comments || []);
-
-      document.getElementById("comment-btn").onclick = async () => {
-        const name = document.getElementById("comment-name").value;
-        const text = document.getElementById("comment-text").value;
-
-        if (!name || !text) return;
-
-        const res = await fetch(`/api/news/${article._id}/comment`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, text })
-        });
-
-        const comments = await res.json();
-        renderComments(comments);
-
-        document.getElementById("comment-name").value = "";
-        document.getElementById("comment-text").value = "";
-      };
-
-      
-      if (article.video) {
-        const videoId = article.video.split("v=")[1];
-        document.getElementById("video-container").innerHTML = `
-          <iframe
-            width="100%"
-            height="420"
-            src="https://www.youtube.com/embed/${videoId}"
-            frameborder="0"
-            allowfullscreen>
-          </iframe>
-        `;
-      }
-
-      if (article.sponsored) {
-        document.getElementById("sponsored-label").innerText = "Sponsored Content";
-      }
-
-      // Article image
-      if (article.image) {
-        document.getElementById("article-image").src = article.image;
-      }
-
-      // AUTHOR RENDER
-      if (article.author) {
-        document.getElementById("author-box").innerHTML = `
-          <div class="reporter-box" style="margin-top:20px;">
-            <img src="${article.author.photo}" />
-            <div>
-              <h4>${article.author.name}</h4>
-              ${article.author.verified ? '<span class="verified">✔ Verified Reporter</span>' : ''}
+            <p class="summary">${article.summary}</p>
+            <div class="meta">
+              ${article.category} • ${article.date}
             </div>
           </div>
         `;
-     
-        if (window.adsbygoogle) {
-          window.adsbygoogle.push({});
-        }
-        
-        // SPONSORED AD (Client)
-        if (article.ads?.sponsored?.content) {
-          document.getElementById("sponsored-ad-slot").innerHTML = `
-            <div class="ad-inline">
-              <strong style="display:block;margin-bottom:6px;color:#999;">
-                Sponsored
-              </strong>
-              ${article.ads.sponsored.content}
-            </div>
-          `;
-        }
 
-        // GOOGLE AD (Network)
-        if (article.ads?.google?.enabled) {
-          document.getElementById("google-ad-slot").innerHTML = `
-            <div class="ad-inline">
-              <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-XXXXXX"
-                data-ad-slot="YYYYYY"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            </div>
-          `;
-
-          if (window.adsbygoogle) {
-            window.adsbygoogle.push({});
-          }
-        }
-      }
-
-      // SEO meta
-      document.title = article.title + " | Reporter News";
-      document
-        .querySelector('meta[name="description"]')
-        .setAttribute("content", article.summary);
-
-      // Schema.org structured data
-      const schema = {
-        "@context": "https://schema.org",
-        "@type": "NewsArticle",
-        "headline": article.title,
-        "datePublished": article.date,
-        "articleSection": article.category,
-        "author": {
-          "@type": "Person",
-          "name": "Independent Reporter"
-        }
-      };
-
-      document.getElementById("schema").innerText =
-        JSON.stringify(schema);
+        results.appendChild(card);
+      });
     });
 }
 
-window.addEventListener("scroll", () => {
-  const header = document.querySelector(".brand-header");
-  if (!header) return;
+/* =========================
+   TIME MACHINE NAVIGATION
+========================= */
 
-  if (window.scrollY > 40) {
-    header.classList.add("header-shrink");
-  } else {
-    header.classList.remove("header-shrink");
+function goBack() {
+  if (!dateView.classList.contains("hidden")) {
+    selectedDateStr = null;
+    updateBreadcrumb();
+    dateView.classList.add("hidden");
+    monthView.classList.remove("hidden");
+    return;
   }
-});
 
-window.addEventListener("scroll", () => {
-  const header = document.querySelector(".brand-header");
-  if (!header) return;
-
-  if (window.scrollY > 40) {
-    header.classList.add("header-shrink");
-  } else {
-    header.classList.remove("header-shrink");
+  if (!monthView.classList.contains("hidden")) {
+    selectedMonth = null;
+    updateBreadcrumb();
+    monthView.classList.add("hidden");
+    yearView.classList.remove("hidden");
   }
-});
+}
+
+
+// 🚀 PREVIEW MODE LAUNCH DATE (first-ever article date)
+const launchDate = new Date(2026, 1, 6, 12, 0, 0); 
+// Month is 0-based → Feb = 1
+
+/* =========================
+   TIME TRAVEL BREADCRUMB
+========================= */
+
+function updateBreadcrumb() {
+  const bc = document.getElementById("time-breadcrumb");
+  if (!bc) return;
+
+  let parts = [];
+
+  if (selectedYear) {
+    parts.push(selectedYear);
+  }
+
+  if (selectedMonth) {
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    parts.push(monthNames[selectedMonth - 1]);
+  }
+
+  if (selectedDateStr) {
+    const day = selectedDateStr.split("-")[2];
+    parts.push(day);
+  }
+
+  bc.innerHTML = parts.length
+    ? parts.join(" <span class='sep'>›</span> ")
+    : "";
+}
+
+
+/* =========================
+   TIME MACHINE LOGIC
+========================= */
+
+// AUTO-GENERATED ARCHIVE DATES (PREVIEW + PROD SAFE)
+let availableArchiveDates = [];
+
+fetch("/api/news")
+  .then(res => res.json())
+  .then(data => {
+    const articles = data.articles || data || [];
+
+    const uniqueDates = new Set(
+      articles.map(a => a.date).filter(Boolean)
+    );
+
+    availableArchiveDates = Array.from(uniqueDates).sort();
+  });
+
+
+// Convert available dates to normalized noon timestamps
+const availableDateSet = new Set(
+  availableArchiveDates.map(d => {
+    const [y, m, day] = d.split("-").map(Number);
+    return new Date(y, m - 1, day, 12, 0, 0).getTime();
+  })
+);
+
+
+
+
+
+let selectedYear = null;
+let selectedMonth = null;
+let selectedDateStr = null;
+let selectedCategory = "";
+
+
+const yearView = document.getElementById("tm-year");
+const monthView = document.getElementById("tm-month");
+const dateView = document.getElementById("tm-date");
+
+const yearsGrid = document.getElementById("tm-years");
+const monthsGrid = document.getElementById("tm-months");
+const datesGrid = document.getElementById("tm-dates");
+
+/* ---------- YEAR SETUP (AUTO, DATA-DRIVEN) ---------- */
+
+function renderYears() {
+  yearsGrid.innerHTML = "";
+
+  // derive years only from published articles
+  const yearsSet = new Set(
+    availableArchiveDates.map(d => Number(d.split("-")[0]))
+  );
+
+  // no articles yet → show nothing
+  if (yearsSet.size === 0) return;
+
+  const years = Array.from(yearsSet).sort();
+
+  years.forEach(year => {
+    const div = document.createElement("div");
+    div.textContent = year;
+
+    div.onclick = () => {
+      selectedYear = year;
+      selectedMonth = null;
+      selectedDateStr = null;
+      updateBreadcrumb();
+      showMonths();
+    };
+
+
+    yearsGrid.appendChild(div);
+  });
+}
+
+// render years after archive dates are loaded
+setTimeout(renderYears, 300);
+
+
+
+/* ---------- MONTH VIEW ---------- */
+
+function showMonths() {
+  yearView.classList.add("hidden");
+  monthView.classList.remove("hidden");
+
+  monthsGrid.innerHTML = "";
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  months.forEach((m, idx) => {
+    const div = document.createElement("div");
+    div.textContent = m;
+
+    const monthKeyPrefix = `${selectedYear}-${String(idx + 1).padStart(2,"0")}`;
+
+    const hasMonthData = availableArchiveDates.some(d =>
+      d.startsWith(monthKeyPrefix)
+    );
+
+    if (!hasMonthData) {
+      div.classList.add("disabled");
+      div.onclick = () => alert("No news available for this month");
+    } else {
+      div.onclick = () => {
+        selectedMonth = idx + 1;
+        selectedDateStr = null;
+        updateBreadcrumb();
+        showDates();
+      };
+    }
+    monthsGrid.appendChild(div);
+  });
+}
+
+/* ---------- DATE VIEW ---------- */
+
+function showDates() {
+  monthView.classList.add("hidden");
+  dateView.classList.remove("hidden");
+
+  datesGrid.innerHTML = "";
+
+  const today = new Date();
+  const isCurrentMonth =
+    selectedYear === today.getFullYear() &&
+    selectedMonth === today.getMonth() + 1;
+
+  const maxDay = isCurrentMonth
+    ? today.getDate()
+    : new Date(selectedYear, selectedMonth, 0).getDate();
+
+
+  availableArchiveDates.forEach(dateStr => {
+    const [y, m, d] = dateStr.split("-").map(Number);
+
+    // show only dates for selected year & month
+    if (y !== selectedYear || m !== selectedMonth) return;
+
+    const div = document.createElement("div");
+    div.textContent = d;
+
+    div.onclick = () => {
+      selectedDateStr = dateStr;
+      updateBreadcrumb();
+
+
+      document.querySelectorAll("#tm-dates div").forEach(el =>
+        el.classList.remove("active")
+      );
+      div.classList.add("active");
+    };
+
+    datesGrid.appendChild(div);
+  });
+}
+
+
+
+
+
+
+const exploreBtn = document.getElementById("archive-search");
+
+if (exploreBtn) {
+  exploreBtn.addEventListener("click", () => {
+    if (!selectedDateStr) {
+      alert("Please select a date first");
+      return;
+    }
+    fetchArchive(selectedDateStr);
+  });
+}
+
+/* =========================
+   ARCHIVE CLEAR BUTTON
+========================= */
+
+const clearBtn = document.getElementById("archive-clear");
+
+if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+
+    // 1️⃣ Reset state
+    selectedYear = null;
+    selectedMonth = null;
+    selectedDateStr = null;
+    selectedCategory = "";
+
+    // 2️⃣ Reset breadcrumb
+    updateBreadcrumb();
+
+    // 3️⃣ Reset views
+    yearView.classList.remove("hidden");
+    monthView.classList.add("hidden");
+    dateView.classList.add("hidden");
+
+    // 4️⃣ Reset category pills to "All"
+    document
+      .querySelectorAll(".archive-categories button")
+      .forEach(btn => {
+        btn.classList.remove("active");
+        if (btn.dataset.category === "") {
+          btn.classList.add("active");
+        }
+      });
+
+    // 5️⃣ Clear results + highlights
+    const results = document.getElementById("archive-results");
+    const onThisDay = document.getElementById("on-this-day");
+
+    results && (results.innerHTML = "");
+    onThisDay && (onThisDay.innerHTML = "");
+
+  });
+}

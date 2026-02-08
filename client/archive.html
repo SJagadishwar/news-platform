@@ -1,35 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sangareddy News | Trusted Local Journalism</title>
-
-  <meta name="description" content="Sangareddy News delivers trusted, independent local journalism covering politics, governance, crime, opinion, and community stories." />
-
-  <meta property="og:title" content="Sangareddy News | Trusted Local Journalism" />
-  <meta property="og:description" content="Independent local journalism focused on credibility, clarity, and community." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="/" />
-  <meta property="og:image" content="/assets/logo.png" />
-
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  <title>Time Travel – News Archive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
+
 <body>
 
 <header class="masthead">
   <div class="masthead-inner">
 
     <div class="masthead-brand masthead-centered">
-
-      <img src="/assets/logo.png" alt="Sangareddy News Logo" class="brand-seal" />
-
+      <img
+        src="/assets/logo.png"
+        alt="Sangareddy News Logo"
+        class="brand-seal"
+      />
       <h1>
         సంగారెడ్డి
         <span>NEWS</span>
       </h1>
-
     </div>
-
 
     <nav class="masthead-nav">
       <a href="/" data-nav="home">HOME</a>
@@ -46,72 +38,72 @@
 </header>
 
 
-<div class="homepage">
-
-  <!-- ABOVE THE FOLD: GLOBAL NEWS LAYOUT -->
-  <section class="news-fold">
-
-    <!-- LEFT: BREAKING / LEAD -->
-    <div class="news-left">
-
-    <!-- BREAKING NEWS STACK -->
-      <div class="breaking-stack">
-        <div class="breaking-label">
-          <span class="live-dot"></span>
-          BREAKING NEWS
-        </div>
-        <div id="breaking-list"></div>
-      </div>
-      
-    </div>
-
-
-    <!-- RIGHT: LATEST -->
-    <!-- RIGHT: LATEST -->
-    <div class="news-right">
-
-      <div class="latest-block">
-        <h3 class="latest-heading">Latest Headlines</h3>
-        <div id="latest-list"></div>
-      </div>
-
-    </div>
-
-
-  </section>
-
-  <!-- TODAY'S BREAKING NEWS -->
-  <section class="today-breaking-section">
-    <h2 class="section-heading">Today’s Breaking News</h2>
-    <div id="today-breaking-list"></div>
-  </section>
-
-
-  <!-- BELOW: OLDER STORIES -->
-  <section class="news-section">
-
-    <div class="older-stories">
-      <h2 class="section-heading">More Stories</h2>
-      <div id="news-list"></div>
-    </div>
-
-    <aside class="sidebar">
-      <div id="trending">
-        <h3>Most Read</h3>
-        <div id="trending-list"></div>
-      </div>
-    </aside>
-
-  </section>
-
-</div>
-
-
 <div class="container">
-  <div id="ad-slot-home"></div>
+
+  <section class="time-traveler-hero">
+    <h1>Travel Back in News</h1>
+    <p>
+      Go back in time and see what mattered on a specific day.
+      Stories, decisions, and moments that shaped Sangareddy.
+    </p>
+  </section>
+
+
+  <div class="admin-card">
+    <!-- Time Travel Breadcrumb -->
+    <div id="time-breadcrumb" class="time-breadcrumb"></div>
+
+    <div class="time-machine">
+
+      <!-- YEAR VIEW -->
+      <div class="tm-view" id="tm-year">
+        <h4>Select Year</h4>
+        <div class="tm-grid" id="tm-years"></div>
+      </div>
+
+      <!-- MONTH VIEW -->
+      <div class="tm-view hidden" id="tm-month">
+        <div class="tm-header">
+          <button class="tm-back" onclick="goBack()">← Back</button>
+          <h4>Select Month</h4>
+        </div>
+        <div class="tm-grid" id="tm-months"></div>
+      </div>
+
+
+      <!-- DATE VIEW -->
+      <div class="tm-view hidden" id="tm-date">
+        <div class="tm-header">
+          <button class="tm-back" onclick="goBack()">← Back</button>
+          <h4>Select Date</h4>
+        </div>
+        <div class="tm-grid" id="tm-dates"></div>
+      </div>
+
+    </div>
+
+
+    <div class="archive-categories">
+      <button data-category="" class="active">All</button>
+      <button data-category="Politics">Politics</button>
+      <button data-category="Local">Local Life</button>
+      <button data-category="Crime">Crime</button>
+      <button data-category="Sports">Sports</button>
+      <button data-category="Agriculture">Agriculture</button>
+    </div>
+
+
+    <button id="archive-search">Explore</button>
+    <button id="archive-clear" class="archive-clear">Clear</button>
+
+
+  </div>
+
+  <div id="on-this-day"></div>
+  <div id="archive-results"></div>
+
+
 </div>
-
-
 
 <footer class="site-footer">
 
@@ -171,6 +163,6 @@
 </footer>
 
 
-<script src="js/main.js?v=2"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>

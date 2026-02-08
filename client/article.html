@@ -3,7 +3,24 @@
 <head>
   <title id="meta-title">News Article</title>
   <meta name="description" id="meta-description" content="" />
+  <meta property="og:title" id="og-title" content="" />
+  <meta property="og:description" id="og-description" content="" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" id="og-image" content="" />
+  <meta name="description" id="meta-description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta http-equiv="Content-Security-Policy"
+  content="
+    default-src 'self';
+    img-src 'self' https: data:;
+    style-src 'self' 'unsafe-inline' https:;
+    font-src 'self' https: data:;
+    script-src 'self' https:;
+    frame-src https://www.youtube.com https://googleads.g.doubleclick.net;
+  ">
+
+
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -13,38 +30,117 @@
   src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
 </script>
 
-<body>
+<body class="article-page">
 
-<header class="brand-header">
-  <img src="/assets/logo.png" alt="S సంగారెడ్డి NEWS Logo" />
-  <h1> సంగారెడ్డి <span>NEWS</span></h1>
+<header class="masthead">
+  <div class="masthead-inner">
+
+    <div class="masthead-brand masthead-centered">
+      <img
+        src="/assets/logo.png"
+        alt="Sangareddy News Logo"
+        class="brand-seal"
+      />
+      <h1>
+        సంగారెడ్డి
+        <span>NEWS</span>
+      </h1>
+    </div>
+
+    <!-- ADD THIS NAV EXACTLY -->
+    <nav class="masthead-nav">
+      <a href="/" data-nav="home">HOME</a>
+      <a href="/?category=Politics" data-nav="politics">POLITICS</a>
+      <a href="/?category=Local" data-nav="local">LOCAL</a>
+      <a href="/?category=Crime" data-nav="crime">CRIME</a>
+      <a href="/?category=Sports" data-nav="sports">SPORTS</a>
+      <a href="/?category=Agriculture" data-nav="agriculture">AGRICULTURE</a>
+      <a href="/archive.html" data-nav="time-travel">TIME TRAVEL</a>
+    </nav>
+
+
+  </div>
+
 </header>
-
 
 <div class="container">
 
-  <div class="article-surface">
+  <div class="article-layout">
 
-    <div class="article-hero">
-      <img id="article-image" />
+    <!-- MAIN ARTICLE -->
+    <div class="article-surface">
+
+      <!-- HERO IMAGE / SLIDESHOW -->
+      <div class="article-hero">
+        <img id="article-image" />
+      </div>
+
+
+      <!-- TITLE -->
+      <h1 id="title"></h1>
+
+      <!-- META -->
+      <div class="article-meta">
+        <span id="category-label"></span> • <span id="date"></span>
+      </div>
+
+      <!-- AUTHOR -->
+    <div id="author-box" class="author-box"></div>
+
+      
+
+
+      <!-- ARTICLE CONTENT -->
+      <div id="content" class="article-content"></div>
+
+      <div id="article-video" class="article-video" style="display:none;">
+        <a
+          id="article-video-link"
+          class="article-video-card"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="video-icon">▶</span>
+          <div class="video-text">
+            <div class="video-label">VIDEO REPORT</div>
+            <div class="video-title">Watch related coverage</div>
+          </div>
+        </a>
+      </div>
+
+
+
+
+
+      <!-- SPONSORED / VIDEO / ADS -->
+      <div id="sponsored-ad-slot"></div>
+      <div id="video-container" style="margin:40px 0;"></div>
+      <div id="ad-slot-article"></div>
+
+      <br />
+      <a href="/">← Back to News</a>
+
     </div>
 
-    <p id="sponsored-label" style="color:#c00;font-weight:bold"></p>
-    <h1 id="title"></h1>
-    <p id="date"></p>
+    <!-- RIGHT SIDEBAR -->
+    <aside class="article-sidebar">
+      <h3 class="sidebar-heading">
+        Latest in <span id="sidebar-category"></span>
+      </h3>
+      <div id="related-list"></div>
+    </aside>
 
-    <div id="author-box"></div>
+  </div>
 
-    <div id="article-body">
-      <p id="content"></p>
-    </div>
+
 
     <div id="sponsored-ad-slot"></div>
     <div id="video-container" style="margin:40px 0;"></div>
     <div id="ad-slot-article"></div>
 
     <br />
-    <a href="/">← Back to News</a>
+    
 
   </div>
 
@@ -79,9 +175,6 @@
 </div>
 
 
-
-<hr />
-
 <div class="comments-section">
   <h3>Discussion</h3>
 
@@ -96,9 +189,61 @@
 
 
 
-
 <footer class="site-footer">
-  © Sangareddy News
+
+  <div class="footer-inner">
+
+    <!-- ABOUT -->
+    <div class="footer-col">
+      <h4>Sangareddy News</h4>
+      <p>
+        Sangareddy News is a digital-first local news platform
+        delivering verified, timely, and responsible journalism
+        focused on Sangareddy and surrounding regions.
+      </p>
+    </div>
+
+    <!-- SECTIONS -->
+    <div class="footer-col">
+      <h4>News Sections</h4>
+      <ul>
+        <li><a href="/?category=Politics">Politics</a></li>
+        <li><a href="/?category=Local">Local</a></li>
+        <li><a href="/?category=Crime">Crime</a></li>
+        <li><a href="/?category=Sports">Sports</a></li>
+        <li><a href="/?category=Agriculture">Agriculture</a></li>
+        <li><a href="/archive.html">Time Travel</a></li>
+      </ul>
+    </div>
+
+    <!-- INFORMATION -->
+    <div class="footer-col">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="/about.html">About Us</a></li>
+        <li><a href="/contact.html">Contact Us</a></li>
+        <li><a href="/editorial-policy.html">Editorial Policy</a></li>
+        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="/terms.html">Terms & Conditions</a></li>
+        <li><a href="/disclaimer.html">Disclaimer</a></li>
+      </ul>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>
+        📍 Sangareddy, Telangana, India<br>
+        📧 contact@sangareddynews.com
+      </p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Sangareddy News. All rights reserved.
+  </div>
+
 </footer>
 
 

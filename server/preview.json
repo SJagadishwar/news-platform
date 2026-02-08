@@ -1,0 +1,803 @@
+[
+  {
+    "_id": "1770460877894",
+    "title": "Community Library Opens in Sangareddy ",
+    "summary": "A new public library aims to boost literacy.",
+    "content": "With over 10,000 books and free internet access, the library is expected to serve students and professionals alike.",
+    "category": "Local",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770460877891-10.png",
+    "images": [
+      "/uploads/1770460877891-10.png",
+      "/uploads/1770460877893-9.png"
+    ],
+    "video": "__REMOVE__",
+    "date": "2026-02-07",
+    "author": {
+      "name": "Rahul",
+      "photo": "/uploads/1770460877894-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": true
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770386832530",
+    "title": "Zaheerabad Bus Terminal Upgrade Announced  ",
+    "summary": " Authorities unveil plans for a modernized transport hub.",
+    "content": "The new terminal will include digital ticketing, solar panels, and improved passenger amenities to ease congestion.",
+    "category": "Local",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770386832514-9.png",
+    "images": [
+      "/uploads/1770386832514-9.png",
+      "/uploads/1770386832523-7.png"
+    ],
+    "date": "2026-02-06",
+    "author": {
+      "name": "",
+      "photo": "/uploads/1770386832524-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": "<a href=\"https://example.com\" target=\"_blank\" rel=\"sponsored noopener\">\r\n  <img src=\"https://dummyimage.com/728x90/ff0000/ffffff.png&amp;text=Sponsored+Ad\" alt=\"Sponsored Ad\" style=\"width:100%;max-width:728px;border-radius:8px\" />\r\n</a>"
+      },
+      "google": {
+        "enabled": true
+      }
+    },
+    "views": 1,
+    "likes": 1,
+    "comments": [],
+    "updatedAt": "2026-02-07T07:57:50.018Z",
+    "video": "https://youtu.be/H4vYynZaOTU?si=d321jvRqqOEcfN4u"
+  },
+  {
+    "_id": "1770384552232",
+    "title": "Water Supply Restoration in Rural TG Villages  ",
+    "summary": " Pipeline repairs bring relief to drought-hit communities.",
+    "content": "The Telangana government completed emergency works to ensure consistent drinking water supply.",
+    "category": "Local",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770384552224-2.jpg",
+    "images": [
+      "/uploads/1770384552224-2.jpg",
+      "/uploads/1770384552227-1.jpg"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Ashwathamma",
+      "photo": "/uploads/1770384552231-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": true
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384506604",
+    "title": "Local Handloom Festival Draws Crowds  ",
+    "summary": " Traditional weavers showcase their craft.",
+    "content": "The festival highlights Telangana’s rich textile heritage, supporting artisans through direct sales.",
+    "category": "Local",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770384506602-4.png",
+    "images": [
+      "/uploads/1770384506602-4.png",
+      "/uploads/1770384506603-3.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Bhim",
+      "photo": "/uploads/1770384506604-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": true
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384464895",
+    "title": "Zaheerabad Hospital Expands Emergency Wing  ",
+    "summary": "Healthcare services strengthened for rural patients.",
+    "content": "The expansion includes advanced trauma care and telemedicine facilities.",
+    "category": "Local",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770384464893-7.png",
+    "images": [
+      "/uploads/1770384464893-7.png",
+      "/uploads/1770384464894-6.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Krishna",
+      "photo": "/uploads/1770384464894-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 1,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384423378",
+    "title": "Parliament Debates Digital Privacy Bill  ",
+    "summary": "Lawmakers clash over citizen data protection.",
+    "content": "The bill proposes stricter rules for tech companies handling personal information.",
+    "category": "Politics",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770384423375-8.png",
+    "images": [
+      "/uploads/1770384423375-8.png",
+      "/uploads/1770384423376-7.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Arjun",
+      "photo": "/uploads/1770384423377-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384386576",
+    "title": "State Budget Prioritizes Rural Development  ",
+    "summary": "Telangana allocates funds for agriculture and infrastructure.",
+    "content": "The budget emphasizes irrigation projects and rural employment schemes.",
+    "category": "Politics",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770384386573-10.png",
+    "images": [
+      "/uploads/1770384386573-10.png",
+      "/uploads/1770384386574-9.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Eshwar",
+      "photo": "/uploads/1770384386574-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384353583",
+    "title": "Opposition Criticizes Fuel Price Hike  ",
+    "summary": "Political parties demand rollback of recent increases.",
+    "content": "Rising fuel costs have sparked protests across major cities.",
+    "category": "Politics",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770384353573-12.png",
+    "images": [
+      "/uploads/1770384353573-12.png",
+      "/uploads/1770384353574-11.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Harish",
+      "photo": "/uploads/1770384353583-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384322795",
+    "title": "Women’s Reservation Bill Gains Momentum  ",
+    "summary": "Push for greater representation in legislatures.",
+    "content": "The bill seeks to reserve one-third of seats for women in Parliament and state ",
+    "category": "Politics",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770384322793-13.png",
+    "images": [
+      "/uploads/1770384322793-13.png",
+      "/uploads/1770384322794-12.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Rakesh",
+      "photo": "/uploads/1770384322795-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384281533",
+    "title": "India Strengthens Ties with ASEAN Nations  ",
+    "summary": "Diplomatic talks focus on trade and security.",
+    "content": "Leaders discussed maritime cooperation and regional stability.",
+    "category": "Politics",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770384281531-15.png",
+    "images": [
+      "/uploads/1770384281531-15.png",
+      "/uploads/1770384281532-14.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Chandhu",
+      "photo": "/uploads/1770384281532-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384238676",
+    "title": "Telangana Farmers Adopt Drip Irrigation  ",
+    "summary": " Water-efficient farming gains popularity.",
+    "content": "Subsidies encourage farmers to switch to modern irrigation methods.",
+    "category": "Agriculture",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770384238673-10.png",
+    "images": [
+      "/uploads/1770384238673-10.png",
+      "/uploads/1770384238674-8.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Mohan",
+      "photo": "/uploads/1770384238675-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384196158",
+    "title": "Organic Farming Sees Growth in Medak District ",
+    "summary": "Farmers shift to chemical-free cultivation.",
+    "content": " Demand for organic produce is rising in urban markets.",
+    "category": "Agriculture",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770384196152-10.png",
+    "images": [
+      "/uploads/1770384196152-10.png",
+      "/uploads/1770384196152-9.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Dinesh",
+      "photo": "/uploads/1770384196153-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384149289",
+    "title": "New Hybrid Seed Boosts Paddy Yield  ",
+    "summary": "Scientists introduce high-yield rice variety.",
+    "content": "The seed promises resilience against pests and climate stress.",
+    "category": "Agriculture",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770384149287-11.png",
+    "images": [
+      "/uploads/1770384149287-11.png",
+      "/uploads/1770384149288-5.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Ramesh",
+      "photo": "/uploads/1770384149289-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384109924",
+    "title": "Government Launches Crop Insurance Awareness Drive  ",
+    "summary": " Farmers educated on risk protection schemes.",
+    "content": "Government Launches Crop Insurance Awareness Drive  ",
+    "category": "Crime",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770384109922-12.png",
+    "images": [
+      "/uploads/1770384109922-12.png",
+      "/uploads/1770384109923-4.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Lokesh",
+      "photo": "/uploads/1770384109923-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384069300",
+    "title": "Agri-Tech Startups Empower Small Farmers  ",
+    "summary": "Mobile apps provide market price updates.",
+    "content": "Technology bridges the gap between farmers and buyers.",
+    "category": "Agriculture",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770384069298-13.png",
+    "images": [
+      "/uploads/1770384069298-13.png",
+      "/uploads/1770384069299-3.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Bushan",
+      "photo": "/uploads/1770384069299-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770384024237",
+    "title": "Major Card Fraud Bust in Hyderabad  ",
+    "summary": "Police arrest gang involved in digital scams.",
+    "content": "The group allegedly siphoned off lakhs using cloned cards.",
+    "category": "Crime",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770384024234-14.png",
+    "images": [
+      "/uploads/1770384024234-14.png",
+      "/uploads/1770384024235-2.jpg"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Ganesh",
+      "photo": "/uploads/1770384024237-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383986752",
+    "title": "Illegal Sand Mining Crackdown in TG ",
+    "summary": "Authorities seize trucks in overnight raids.",
+    "content": "The operation targeted mafia networks exploiting riverbeds.",
+    "category": "Crime",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770383986747-15.png",
+    "images": [
+      "/uploads/1770383986747-15.png",
+      "/uploads/1770383986748-1.jpg"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Tejas",
+      "photo": "/uploads/1770383986752-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383938405",
+    "title": "Cybercrime Unit Warns of Phishing Attacks  ",
+    "summary": "Citizens urged to safeguard online accounts.",
+    "content": "Rising cases of email and SMS scams prompt awareness campaigns.",
+    "category": "Crime",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770383938403-15.png",
+    "images": [
+      "/uploads/1770383938403-15.png",
+      "/uploads/1770383938404-14.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Raju",
+      "photo": "/uploads/1770383938405-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383897083",
+    "title": "Drug Trafficking Ring Dismantled  ",
+    "summary": "Narcotics worth crores seized in coordinated raids.",
+    "content": "Police linked the network to interstate smuggling routes.",
+    "category": "Crime",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770383897072-13.png",
+    "images": [
+      "/uploads/1770383897072-13.png",
+      "/uploads/1770383897082-12.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Prashanth",
+      "photo": "/uploads/1770383897083-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383845611",
+    "title": "Local Jewelry Heist Foiled by Quick Response  ",
+    "summary": " Police intercept suspects minutes after robbery.",
+    "content": "CCTV surveillance played a key role in the arrests.",
+    "category": "Crime",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770383845610-12.png",
+    "images": [
+      "/uploads/1770383845610-12.png",
+      "/uploads/1770383845610-11.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Chandu",
+      "photo": "/uploads/1770383845611-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383802114",
+    "title": "India Clinches Victory in T20 Series  ",
+    "summary": "Team India defeats Australia in thrilling finale.",
+    "content": "Star batsman’s century sealed the win at Mumbai stadium.",
+    "category": "Sports",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770383802111-10.png",
+    "images": [
+      "/uploads/1770383802111-10.png",
+      "/uploads/1770383802113-9.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Surya",
+      "photo": "/uploads/1770383802113-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383764747",
+    "title": "Telangana Hosts State-Level Kabaddi Tournament  ",
+    "summary": "Rural athletes showcase traditional sport.",
+    "content": " The event promotes grassroots talent and cultural pride.",
+    "category": "Sports",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770383764745-8.png",
+    "images": [
+      "/uploads/1770383764745-8.png",
+      "/uploads/1770383764746-7.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Tarun",
+      "photo": "/uploads/1770383764747-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383721580",
+    "title": "Zaheerabad School Wins District Football Cup  ",
+    "summary": "Young players triumph in local championship.",
+    "content": "The victory highlights growing interest in football among students",
+    "category": "Sports",
+    "breaking": false,
+    "sponsored": false,
+    "image": "/uploads/1770383721570-6.png",
+    "images": [
+      "/uploads/1770383721570-6.png",
+      "/uploads/1770383721571-5.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "",
+      "photo": "/uploads/1770383721572-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383677977",
+    "title": "Indian Wrestler Secures Olympic Qualification  ",
+    "summary": "National champion earns spot for Paris 2028",
+    "content": "The athlete overcame tough competition in qualifiers.",
+    "category": "Sports",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770383677975-4.png",
+    "images": [
+      "/uploads/1770383677975-4.png",
+      "/uploads/1770383677975-3.png"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "",
+      "photo": "/uploads/1770383677976-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
+    "_id": "1770383623322",
+    "title": "Cricket League Expands to Include Women’s Teams  ",
+    "summary": "New initiative boosts gender equality in sports.",
+    "content": "Organizers plan equal prize money and sponsorship opportunities.",
+    "category": "Sports",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770383623315-2.jpg",
+    "images": [
+      "/uploads/1770383623315-2.jpg",
+      "/uploads/1770383623319-1.jpg"
+    ],
+    "video": null,
+    "date": "2026-02-06",
+    "author": {
+      "name": "Omkar",
+      "photo": "/uploads/1770383623322-Dummy.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": false
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  }
+]

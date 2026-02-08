@@ -1,18 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Sangareddy News | Trusted Local Journalism</title>
+  <meta charset="UTF-8" />
+  <title>Editorial Policy | Sangareddy News</title>
+  <link rel="stylesheet" href="/css/style.css">
 
-  <meta name="description" content="Sangareddy News delivers trusted, independent local journalism covering politics, governance, crime, opinion, and community stories." />
-
-  <meta property="og:title" content="Sangareddy News | Trusted Local Journalism" />
-  <meta property="og:description" content="Independent local journalism focused on credibility, clarity, and community." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="/" />
-  <meta property="og:image" content="/assets/logo.png" />
-
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 </head>
 <body>
 
@@ -42,75 +34,52 @@
     </nav>
 
 
+
+
   </div>
 </header>
 
+<main class="static-page">
 
-<div class="homepage">
+  <!-- HERO CARD (same as About) -->
+  <section class="page-hero">
+    <nav class="breadcrumb">
+      <a href="/">Home</a> <span>›</span> <span>Editorial Policy</span>
+    </nav>
 
-  <!-- ABOVE THE FOLD: GLOBAL NEWS LAYOUT -->
-  <section class="news-fold">
+    <h1>Editorial Policy</h1>
 
-    <!-- LEFT: BREAKING / LEAD -->
-    <div class="news-left">
+    <p class="page-subtitle">
+      Sangareddy News follows a strict editorial policy to ensure accuracy,
+      fairness, and independence in all published content.
+    </p>
+  </section>
 
-    <!-- BREAKING NEWS STACK -->
-      <div class="breaking-stack">
-        <div class="breaking-label">
-          <span class="live-dot"></span>
-          BREAKING NEWS
-        </div>
-        <div id="breaking-list"></div>
-      </div>
-      
-    </div>
+  <!-- CONTENT CARD (separate card) -->
+  <section class="page-content">
 
+    <h3>Accuracy &amp; Verification</h3>
+    <p>
+      We verify information using reliable sources before publication.
+      Errors, if identified, are corrected promptly.
+    </p>
 
-    <!-- RIGHT: LATEST -->
-    <!-- RIGHT: LATEST -->
-    <div class="news-right">
+    <h3>Independence</h3>
+    <p>
+      Editorial decisions are made independently and are not influenced by
+      advertisers, political parties, or external interests.
+    </p>
 
-      <div class="latest-block">
-        <h3 class="latest-heading">Latest Headlines</h3>
-        <div id="latest-list"></div>
-      </div>
-
-    </div>
-
+    <h3>Corrections</h3>
+    <p>
+      Readers may report inaccuracies via the
+      <a href="/contact.html">Contact Us</a> page.
+      Verified corrections are made transparently.
+    </p>
 
   </section>
 
-  <!-- TODAY'S BREAKING NEWS -->
-  <section class="today-breaking-section">
-    <h2 class="section-heading">Today’s Breaking News</h2>
-    <div id="today-breaking-list"></div>
-  </section>
-
-
-  <!-- BELOW: OLDER STORIES -->
-  <section class="news-section">
-
-    <div class="older-stories">
-      <h2 class="section-heading">More Stories</h2>
-      <div id="news-list"></div>
-    </div>
-
-    <aside class="sidebar">
-      <div id="trending">
-        <h3>Most Read</h3>
-        <div id="trending-list"></div>
-      </div>
-    </aside>
-
-  </section>
-
-</div>
-
-
-<div class="container">
-  <div id="ad-slot-home"></div>
-</div>
-
+</main>
 
 
 <footer class="site-footer">
@@ -170,7 +139,5 @@
 
 </footer>
 
-
-<script src="js/main.js?v=2"></script>
 </body>
 </html>

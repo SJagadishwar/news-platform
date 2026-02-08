@@ -5,13 +5,19 @@ function publishNews() {
   formData.append("content", document.getElementById("content").value);
   formData.append("category", document.getElementById("category").value);
   formData.append("breaking", document.getElementById("breaking").checked);
-  formData.append("image", document.getElementById("image").files[0]);
+  const images = document.getElementById("image").files;
+  for (let i = 0; i < images.length; i++) {
+    formData.append("images", images[i]);
+  }
+
   formData.append(
     "authorPhoto",
     document.getElementById("authorPhoto").files[0]
   );
   formData.append("sponsored", document.getElementById("sponsored").checked);
-  formData.append("video", document.getElementById("video").value);
+  const videoValue = document.getElementById("video").value.trim();
+  formData.append("video", videoValue === "" ? "__REMOVE__" : videoValue);
+
   formData.append("authorName", document.getElementById("authorName").value);
   formData.append("authorVerified", document.getElementById("authorVerified").checked);
   formData.append(
@@ -27,43 +33,180 @@ function publishNews() {
 
 
 
-  fetch("/api/news", {
-    method: "POST",
+  const url = EDITING_ARTICLE_ID
+    ? `/api/news/${EDITING_ARTICLE_ID}`
+    : "/api/news";
+
+  const method = EDITING_ARTICLE_ID ? "PUT" : "POST";
+
+  fetch(url, {
+    method,
+
     headers: {
-      "Authorization": localStorage.getItem("token")
+      "Authorization": sessionStorage.getItem("token")
+
     },
     body: formData
   })
     .then(res => res.json())
     .then(() => {
-      document.getElementById("status").innerText = "News published ✅";
+      document.getElementById("status").innerText =
+        EDITING_ARTICLE_ID ? "Article updated ✅" : "News published ✅";
+
+      loadAdminNews();
+
+      // EXIT EDIT MODE (🔥 THIS IS THE FIX)
+      EDITING_ARTICLE_ID = null;
+      document.querySelector("button[onclick='publishNews()']").innerText = "Publish";
+
+      // Show "Add Another Article" button
+      document.getElementById("add-another-btn").style.display = "inline-block";
     });
 }
 
 function logout() {
-  localStorage.removeItem("token");
+  sessionStorage.removeItem("token");
   window.location.href = "/login.html";
 }
 
-function loadAdminNews() {
-  fetch("/api/news")
+let SHOW_ALL_ADMIN_NEWS = false;
+
+let ALL_ADMIN_ARTICLES = [];
+
+function loadAdminNews(forceRender = false) {
+  fetch("/api/news?limit=1000")
     .then(res => res.json())
     .then(data => {
-      const list = document.getElementById("admin-news-list");
-      list.innerHTML = "";
+      ALL_ADMIN_ARTICLES = data.articles || [];
 
-      data.forEach(article => {
-        const div = document.createElement("div");
-        div.innerHTML = `
-          <p>
-            <strong>${article.title}</strong>
-            <button onclick="deleteNews('${article._id}')">Delete</button>
-          </p>
-        `;
-        list.appendChild(div);
-      });
-    });
+      if (forceRender || SHOW_ALL_ADMIN_NEWS) {
+        renderAdminArticles(ALL_ADMIN_ARTICLES);
+      }
+    })
+    .catch(err => console.error("Admin news load failed", err));
 }
+
+
+
+
+
+function renderAdminArticles(articles) {
+  const list = document.getElementById("admin-news-list");
+  list.innerHTML = "";
+
+  if (articles.length === 0) {
+    list.innerHTML = "<p style='color:#777;'>No articles found for this date.</p>";
+    return;
+  }
+
+  articles.forEach(article => {
+    const card = document.createElement("div");
+    card.className = "admin-article-card";
+
+    card.innerHTML = `
+      <div class="admin-article-info">
+        <div class="admin-article-title">
+          ${article.title}
+        </div>
+        <div class="admin-article-meta">
+          <span>${article.category}</span>
+          <span>•</span>
+          <span>${article.date}</span>
+        </div>
+      </div>
+
+      <div class="admin-article-actions">
+        <button
+          class="admin-edit-btn"
+          onclick="editArticle('${article._id}')"
+        >
+          Edit
+        </button>
+
+        <button
+          class="admin-delete-btn"
+          onclick="deleteNews('${article._id}')"
+        >
+          Delete
+        </button>
+      </div>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+// ================================
+// DATE FILTER HANDLING
+// ================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dateInput = document.getElementById("filter-date");
+  const clearBtn = document.getElementById("clear-filters");
+
+
+  if (!dateInput) return;
+  
+  
+
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      SHOW_ALL_ADMIN_NEWS = false;
+      dateInput.value = "";
+      document.getElementById("filter-category").value = "";
+      renderAdminArticles([]); // ❌ show nothing
+    });
+  }
+
+
+
+  const showAllBtn = document.getElementById("show-all-news");
+  if (showAllBtn) {
+    showAllBtn.addEventListener("click", () => {
+      const dateVal = document.getElementById("filter-date").value;
+      const categoryVal = document.getElementById("filter-category").value;
+
+      // 🚫 Date is mandatory
+      if (!dateVal) {
+        renderAdminArticles([]);
+        alert("Please select a date to view published news.");
+        return;
+      }
+
+      SHOW_ALL_ADMIN_NEWS = true;
+
+      let filtered = [...ALL_ADMIN_ARTICLES];
+
+      filtered = filtered.filter(a => a.date === dateVal);
+
+
+      if (categoryVal) {
+        filtered = filtered.filter(a => a.category === categoryVal);
+      }
+
+      renderAdminArticles(filtered);
+    });
+
+  }
+  loadAdminNews(false); // 🔥 load data, do NOT render
+
+});
+
+
+const categoryFilter = document.getElementById("filter-category");
+const clearFiltersBtn = document.getElementById("clear-filters");
+
+
+
+clearFiltersBtn.addEventListener("click", () => {
+  SHOW_ALL_ADMIN_NEWS = false;
+  document.getElementById("filter-date").value = "";
+  categoryFilter.value = "All";
+  renderAdminArticles([]);
+});
+
+
 
 function deleteNews(id) {
   if (!confirm("Are you sure you want to delete this news?")) return;
@@ -71,7 +214,7 @@ function deleteNews(id) {
   fetch(`/api/news/${id}`, {
     method: "DELETE",
     headers: {
-      Authorization: localStorage.getItem("token")
+      Authorization: sessionStorage.getItem("token")
     }
   })
 
@@ -81,24 +224,64 @@ function deleteNews(id) {
     });
 }
 
-// Load news list when admin page opens
-loadAdminNews();
 
-function changePassword() {
-  const oldPassword = document.getElementById("oldPassword").value;
-  const newPassword = document.getElementById("newPassword").value;
 
-  fetch("/api/change-password", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": localStorage.getItem("token")
-    },
-    body: JSON.stringify({ oldPassword, newPassword })
-  })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("password-status").innerText =
-        data.success ? "Password updated ✅" : data.message;
-    });
+
+function resetPublishForm() {
+  // Clear text inputs
+  document.getElementById("title").value = "";
+  document.getElementById("summary").value = "";
+  document.getElementById("content").value = "";
+  document.getElementById("authorName").value = "";
+  document.getElementById("video").value = "";
+  document.getElementById("sponsoredAd").value = "";
+
+  // Reset selects
+  document.getElementById("category").selectedIndex = 0;
+
+  // Reset checkboxes
+  document.getElementById("breaking").checked = false;
+  document.getElementById("sponsored").checked = false;
+  document.getElementById("authorVerified").checked = true;
+  document.getElementById("enableGoogleAd").checked = true;
+
+  // Reset file inputs
+  document.getElementById("image").value = "";
+  document.getElementById("authorPhoto").value = "";
+
+  // Reset status
+  document.getElementById("status").innerText = "";
+
+  // Hide button again
+  document.getElementById("add-another-btn").style.display = "none";
 }
+
+let EDITING_ARTICLE_ID = null;
+
+function editArticle(id) {
+  const article = ALL_ADMIN_ARTICLES.find(a => a._id === id);
+  if (!article) return;
+
+  EDITING_ARTICLE_ID = id;
+
+  document.getElementById("title").value = article.title;
+  document.getElementById("summary").value = article.summary;
+  document.getElementById("content").value = article.content;
+  document.getElementById("category").value = article.category;
+  document.getElementById("authorName").value = article.authorName || "";
+  document.getElementById("video").value = article.video || "";
+  document.getElementById("breaking").checked = article.breaking;
+
+  // ✅ ADD THESE TWO BLOCKS (THIS IS THE FIX)
+
+  document.getElementById("sponsoredAd").value =
+    article.ads?.sponsored?.content || "";
+
+  document.getElementById("enableGoogleAd").checked =
+    article.ads?.google?.enabled ?? true;
+
+  // 🔁 Switch button to Update mode
+  document.querySelector("button[onclick='publishNews()']").innerText =
+    "Update Article";
+}
+

@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 
-<body>
+<body class="login-page">
 
 <header class="brand-header">
   <img src="/assets/logo.png" alt="S సంగారెడ్డి NEWS Logo" />
@@ -19,12 +19,19 @@
   <div class="admin-card">
     <h2>Reporter Login</h2>
 
-    <input id="username" placeholder="Username" />
-    <input id="password" type="password" placeholder="Password" />
+    <input id="email" type="email" placeholder="Enter admin email" />
 
-    <button onclick="login()">Login</button>
+    <div id="otp-section" style="display:none;">
+      <input id="otp" placeholder="Enter OTP" />
+    </div>
 
+    <button id="send-otp-btn" onclick="sendOtp()">Send OTP</button>
+    <button id="verify-otp-btn" onclick="verifyOtp()" style="display:none;">
+      Verify OTP
+    </button>
+    
     <p id="status"></p>
+  
   </div>
 
 </div>

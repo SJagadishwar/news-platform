@@ -181,8 +181,13 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
+// ===============================
+// RESOLVE CLIENT PATH CORRECTLY
+// ===============================
+const ROOT_DIR = path.resolve(__dirname, "..");
+const CLIENT_PATH = path.join(ROOT_DIR, "client");
 
-const CLIENT_PATH = path.resolve(process.cwd(), "client");
+
 app.use(express.static(CLIENT_PATH));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

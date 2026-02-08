@@ -819,6 +819,21 @@ app.get("/sitemap.xml", async (req, res) => {
   </urlset>`);
 });
 
+// ===============================
+// HTML ROUTES (PRODUCTION FIX)
+// ===============================
+app.get("/", (req, res) => {
+  res.sendFile(path.join(CLIENT_PATH, "index.html"));
+});
+
+app.get("/login.html", (req, res) => {
+  res.sendFile(path.join(CLIENT_PATH, "login.html"));
+});
+
+app.get("/admin.html", (req, res) => {
+  res.sendFile(path.join(CLIENT_PATH, "admin.html"));
+});
+
 
 /* -------------------- Start Server -------------------- */
 app.listen(PORT, () => {

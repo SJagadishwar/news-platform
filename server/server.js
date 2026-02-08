@@ -8,7 +8,14 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const { Resend } = require("resend");
 const sanitizeHtml = require("sanitize-html");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend = null;
+
+if (process.env.RESEND_API_KEY) {
+  resend = new Resend(process.env.RESEND_API_KEY);
+} else {
+  console.warn("⚠️ RESEND_API_KEY not set — email disabled");
+}
+
 
 const r2 = new S3Client({
   region: "auto",
@@ -47,20 +54,30 @@ async function uploadToR2(file, folder = "images") {
   // ============================
   // PRODUCTION (R2)
   // ============================
+  if (!process.env.R2_BUCKET_NAME) {
+    throw new Error("R2 not configured properly");
+  }
+
   const safeName = file.originalname.replace(/\s+/g, "_");
   const key = `${folder}/${Date.now()}-${safeName}`;
 
-  await r2.send(
-    new PutObjectCommand({
-      Bucket: process.env.R2_BUCKET_NAME,
-      Key: key,
-      Body: file.buffer,
-      ContentType: file.mimetype
-    })
-  );
+  try {
+    await r2.send(
+      new PutObjectCommand({
+        Bucket: process.env.R2_BUCKET_NAME,
+        Key: key,
+        Body: file.buffer,
+        ContentType: file.mimetype
+      })
+    );
+  } catch (err) {
+    console.error("❌ R2 upload failed:", err);
+    throw new Error("Image upload failed");
+  }
 
   return `${process.env.R2_PUBLIC_URL}/${key}`;
 }
+
 
 
 
@@ -267,6 +284,11 @@ app.post("/api/send-otp", async (req, res) => {
       success: false,
       message: "Unauthorized email"
     });
+  }
+  
+  if (!resend) {
+    console.log("📭 OTP skipped (email disabled)");
+    return res.json({ success: true });
   }
 
   // Generate 6-digit OTP

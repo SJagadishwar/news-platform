@@ -179,13 +179,13 @@ function loadHomepage() {
   const params = new URLSearchParams(window.location.search);
   const selectedCategory = params.get("category");
 
-  // 🔥 CATEGORY PAGE FIX: hide today's breaking section
   if (selectedCategory) {
     const todaySection = document.querySelector(".today-breaking-section");
     if (todaySection) {
-      todaySection.style.display = "none";
+      todaySection.remove();
     }
   }
+
 
 
   // 🔥 CATEGORY PAGE: completely bypass homepage logic
@@ -717,47 +717,35 @@ function loadArticlePage() {
 ========================================================= */
 
 function renderCategory(catData) {
+  const breakingList = qs("breaking-list");
   const newsList = qs("news-list");
-  if (!newsList) return;
 
+  if (!breakingList || !newsList) return;
+
+  breakingList.innerHTML = "";
   newsList.innerHTML = "";
 
-  const categoryBreakingSection = document.getElementById("category-breaking-section");
-  const categoryBreakingList = document.getElementById("category-breaking-list");
-
+  // 🔴 CATEGORY BREAKING (TOP SECTION)
   const breaking = (catData.breaking || []).filter(a => a.breaking);
-  const normal = catData.articles || [];
 
-
-  // CATEGORY BREAKING
-  if (breaking.length > 0 && categoryBreakingSection) {
-    categoryBreakingSection.style.display = "block";
-    categoryBreakingList.innerHTML = "";
-
-    breaking.forEach(article => {
-      categoryBreakingList.innerHTML += `
-        <div class="news-card breaking-card">
-          <img src="${article.image || '/assets/news-placeholder.jpg'}">
-          <div class="news-card-body">
-            <div class="meta">${article.category} • ${article.date}</div>
-            <h3>
-              <a href="article.html?id=${article._id}">
-                ${article.title}
-              </a>
-            </h3>
-            <p>${article.summary}</p>
+  breaking.forEach(article => {
+    breakingList.innerHTML += `
+      <div class="breaking-item">
+        <a href="article.html?id=${article._id}" class="breaking-link">
+          <img src="${article.image || '/assets/news-placeholder.jpg'}" />
+          <div class="breaking-text">
+            <h2>${article.title}</h2>
+            <div class="breaking-meta">
+              ${article.category} • ${article.date}
+            </div>
           </div>
-        </div>
-      `;
-    });
-  } else if (categoryBreakingSection) {
-    categoryBreakingSection.style.display = "none";
-  }
+        </a>
+      </div>
+    `;
+  });
 
-  /* =========================
-     MORE STORIES
-  ========================= */
-  normal.forEach(article => {
+  // 📰 MORE STORIES (CATEGORY)
+  catData.articles.forEach(article => {
     newsList.innerHTML += `
       <div class="news-card">
         <img src="${article.image || '/assets/news-placeholder.jpg'}">
@@ -773,9 +761,8 @@ function renderCategory(catData) {
       </div>
     `;
   });
-
-  renderPagination(catData.page, catData.pages);
 }
+
 
 
 function renderPagination(page, totalPages) {

@@ -421,6 +421,23 @@ app.get("/api/archive", async (req, res) => {
 });
 
 
+app.get("/api/archive/dates", async (req, res) => {
+
+  // PREVIEW MODE
+  if (!process.env.MONGODB_URI) {
+    const dates = [
+      ...new Set(global.PUBLISHED_NEWS.map(a => a.date))
+    ].sort().reverse();
+
+    return res.json({ dates });
+  }
+
+  // PRODUCTION MODE
+  const dates = await News.distinct("date");
+  dates.sort((a, b) => b.localeCompare(a));
+
+  res.json({ dates });
+});
 
 
 

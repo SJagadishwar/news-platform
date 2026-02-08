@@ -712,21 +712,19 @@ function renderCategory(catData) {
 
   newsList.innerHTML = "";
 
+  const categoryBreakingSection = document.getElementById("category-breaking-section");
+  const categoryBreakingList = document.getElementById("category-breaking-list");
+
   const breaking = catData.breaking || [];
   const normal = catData.articles || [];
 
-  /* =========================
-     TODAY'S BREAKING NEWS
-  ========================= */
-  if (breaking.length > 0) {
-    newsList.innerHTML += `
-      <h2 style="color:#e60000;margin-bottom:20px;">
-        Today's Breaking News
-      </h2>
-    `;
+  // CATEGORY BREAKING
+  if (breaking.length > 0 && categoryBreakingSection) {
+    categoryBreakingSection.style.display = "block";
+    categoryBreakingList.innerHTML = "";
 
     breaking.forEach(article => {
-      newsList.innerHTML += `
+      categoryBreakingList.innerHTML += `
         <div class="news-card breaking-card">
           <img src="${article.image || '/assets/news-placeholder.jpg'}">
           <div class="news-card-body">
@@ -736,11 +734,13 @@ function renderCategory(catData) {
                 ${article.title}
               </a>
             </h3>
-            <p class="summary">${article.summary}</p>
+            <p>${article.summary}</p>
           </div>
         </div>
       `;
     });
+  } else if (categoryBreakingSection) {
+    categoryBreakingSection.style.display = "none";
   }
 
   /* =========================
@@ -1013,26 +1013,16 @@ function updateBreadcrumb() {
 // AUTO-GENERATED ARCHIVE DATES (PREVIEW + PROD SAFE)
 let availableArchiveDates = [];
 
-fetch("/api/news")
+fetch("/api/archive/dates")
   .then(res => res.json())
   .then(data => {
-    const articles = data.articles || data || [];
-
-    const uniqueDates = new Set(
-      articles.map(a => a.date).filter(Boolean)
-    );
-
-    availableArchiveDates = Array.from(uniqueDates).sort();
+    availableArchiveDates = (data.dates || []).sort();
+    renderYears(); // 🔥 IMPORTANT: trigger year rendering AFTER data loads
+  })
+  .catch(err => {
+    console.error("Failed to load archive dates", err);
   });
 
-
-// Convert available dates to normalized noon timestamps
-const availableDateSet = new Set(
-  availableArchiveDates.map(d => {
-    const [y, m, day] = d.split("-").map(Number);
-    return new Date(y, m - 1, day, 12, 0, 0).getTime();
-  })
-);
 
 
 

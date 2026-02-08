@@ -496,9 +496,13 @@ app.post(
       image: mainImage,          // 👈 used everywhere
       images: imageUrls,         // 👈 slideshow array
 
-      video: req.body.video && req.body.video.trim() !== ""
-        ? req.body.video.trim()
-        : null,
+      video:
+        req.body.video &&
+        req.body.video.trim() !== "" &&
+        req.body.video !== "__REMOVE__"
+          ? req.body.video.trim()
+          : null,
+
 
       date: today,
 

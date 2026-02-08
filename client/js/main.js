@@ -550,8 +550,10 @@ function loadArticlePage() {
       if (
         article.video &&
         typeof article.video === "string" &&
-        article.video.trim() !== ""
+        article.video.trim() !== "" &&
+        article.video !== "__REMOVE__"
       ) {
+
         videoLink.href = article.video;
         videoContainer.style.display = "block";
       } else {

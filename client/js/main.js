@@ -179,6 +179,15 @@ function loadHomepage() {
   const params = new URLSearchParams(window.location.search);
   const selectedCategory = params.get("category");
 
+  // 🔥 CATEGORY PAGE FIX: hide today's breaking section
+  if (selectedCategory) {
+    const todaySection = document.querySelector(".today-breaking-section");
+    if (todaySection) {
+      todaySection.style.display = "none";
+    }
+  }
+
+
   // 🔥 CATEGORY PAGE: completely bypass homepage logic
   if (selectedCategory) {
     fetch(`/api/news?category=${selectedCategory}&page=${currentPage}&limit=${PAGE_LIMIT}`)
@@ -559,6 +568,7 @@ function loadArticlePage() {
       } else {
         videoContainer.style.display = "none";
         videoLink.href = "";   // 🔥 THIS LINE WAS MISSING
+        videoContainer.innerHTML = ""; // 🔥 FORCE RESET
       }
 
       
@@ -715,8 +725,9 @@ function renderCategory(catData) {
   const categoryBreakingSection = document.getElementById("category-breaking-section");
   const categoryBreakingList = document.getElementById("category-breaking-list");
 
-  const breaking = catData.breaking || [];
+  const breaking = (catData.breaking || []).filter(a => a.breaking);
   const normal = catData.articles || [];
+
 
   // CATEGORY BREAKING
   if (breaking.length > 0 && categoryBreakingSection) {

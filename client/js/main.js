@@ -208,7 +208,13 @@ function loadHomepage() {
   fetch("/api/news?type=homepage&limit=20")
     .then(res => res.json())
     .then(data => {
-      data = data.articles;
+      const allArticles = [
+        ...(data.breaking || []),
+        ...(data.articles || [])
+      ];
+
+      data = allArticles;
+
       // Clear skeletons
       breakingList && (breakingList.innerHTML = "");
       latestList && (latestList.innerHTML = "");
@@ -706,7 +712,13 @@ function renderCategory(catData) {
 
   newsList.innerHTML = "";
 
-  catData.articles.forEach(article => {
+  const combined = [
+    ...(catData.breaking || []),
+    ...(catData.articles || [])
+  ];
+
+  combined.forEach(article => {
+
     newsList.innerHTML += `
       <div class="news-card">
         <img src="${article.image || '/assets/news-placeholder.jpg'}" loading="lazy">

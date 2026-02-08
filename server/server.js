@@ -252,19 +252,30 @@ app.get("/api/news", async (req, res) => {
       query.category = category;
     }
 
-    const news = await News.find(query)
+    // ===============================
+    // BREAKING NEWS (CATEGORY-AWARE)
+    // ===============================
+    const breakingQuery = { ...query, breaking: true };
+    const normalQuery = { ...query, breaking: false };
+
+    const breakingNews = await News.find(breakingQuery)
+      .sort({ createdAt: -1 });
+
+    const normalNews = await News.find(normalQuery)
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(Number(limit));
 
-    const total = await News.countDocuments(query);
+    const total = await News.countDocuments(normalQuery);
 
     res.json({
-      articles: news,
+      breaking: breakingNews,
+      articles: normalNews,
       total,
       page: Number(page),
       pages: Math.ceil(total / limit)
     });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch news" });

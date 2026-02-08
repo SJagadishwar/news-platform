@@ -35,7 +35,7 @@ async function uploadToR2(file, folder = "images") {
   // ============================
   // LOCAL PREVIEW MODE
   // ============================
-  if (!process.env.MONGODB_URI) {
+  if (process.env.NODE_ENV === "development") {
     const uploadsDir = path.join(__dirname, "uploads");
 
     if (!fs.existsSync(uploadsDir)) {
@@ -154,7 +154,7 @@ const News = mongoose.model("News", NewsSchema);
 // -------------------- PREVIEW STORAGE (PERSISTENT) --------------------
 const PREVIEW_FILE = path.join(__dirname, "preview.json");
 
-if (!process.env.MONGODB_URI) {
+if (process.env.NODE_ENV === "development") {
   if (fs.existsSync(PREVIEW_FILE)) {
     try {
       global.PUBLISHED_NEWS = JSON.parse(
@@ -182,13 +182,15 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-app.use(express.static(path.join(__dirname, "../client")));
+const CLIENT_PATH = path.resolve(process.cwd(), "client");
+app.use(express.static(CLIENT_PATH));
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 /* -------------------- Auth -------------------- */
 function auth(req, res, next) {
-  const token = (req.headers.authorization || "").replace("Bearer", "").trim();
+  const token = (req.headers.authorization || "").replace("Bearer ", "").trim();
 
   if (token === "secure-token") {
     return next();
@@ -206,7 +208,8 @@ app.get("/api/news", async (req, res) => {
     // ===============================
     // LOCAL PREVIEW MODE (NO MONGODB)
     // ===============================
-    if (!process.env.MONGODB_URI) {
+    if (process.env.NODE_ENV === "development") {
+
       let data = [...global.PUBLISHED_NEWS];
 
       // Homepage → last 7 days
@@ -368,7 +371,8 @@ app.post("/api/verify-otp", (req, res) => {
 app.get("/api/news/:id", async (req, res) => {
 
   // PREVIEW MODE
-  if (!process.env.MONGODB_URI) {
+  if (process.env.NODE_ENV === "development") {
+
     const article = global.PUBLISHED_NEWS.find(
       a => a._id === req.params.id
     );
@@ -394,7 +398,8 @@ app.get("/api/archive", async (req, res) => {
   // ===============================
   // LOCAL PREVIEW MODE
   // ===============================
-  if (!process.env.MONGODB_URI) {
+  if (process.env.NODE_ENV === "development") {
+
     let data = [...global.PUBLISHED_NEWS];
 
     data = data.filter(a => a.date === date);
@@ -424,7 +429,8 @@ app.get("/api/archive", async (req, res) => {
 app.get("/api/archive/dates", async (req, res) => {
 
   // PREVIEW MODE
-  if (!process.env.MONGODB_URI) {
+  if (process.env.NODE_ENV === "development") {
+
     const dates = [
       ...new Set(global.PUBLISHED_NEWS.map(a => a.date))
     ].sort().reverse();
@@ -529,7 +535,8 @@ app.post(
     // ===============================
     // LOCAL PREVIEW MODE
     // ===============================
-    if (!process.env.MONGODB_URI) {
+    if (process.env.NODE_ENV === "development") {
+
       global.PUBLISHED_NEWS.unshift(article); // 🔥 THIS WAS MISSING
 
       fs.writeFileSync(
@@ -562,7 +569,7 @@ app.put(
     // ===============================
     // PREVIEW MODE
     // ===============================
-    if (!process.env.MONGODB_URI) {
+    if (process.env.NODE_ENV === "development") {
       const index = global.PUBLISHED_NEWS.findIndex(a => a._id === id);
       if (index === -1) {
         return res.status(404).json({ error: "Article not found" });
@@ -653,7 +660,8 @@ app.post("/api/news/:id/like", async (req, res) => {
   // ===============================
   // LOCAL PREVIEW MODE (NO MONGODB)
   // ===============================
-  if (!process.env.MONGODB_URI) {
+  if (process.env.NODE_ENV === "development") {
+
     const article = global.PUBLISHED_NEWS.find(a => a._id === id);
 
     if (!article) {
@@ -691,7 +699,7 @@ app.post("/api/news/:id/like", async (req, res) => {
 app.post("/api/news/:id/view", async (req, res) => {
 
   // Preview / dummy mode
-  if (!process.env.MONGODB_URI) {
+  if (process.env.NODE_ENV === "development") {
     const article = global.PUBLISHED_NEWS.find(
       a => a._id === req.params.id
     );
@@ -735,7 +743,7 @@ app.delete("/api/news/:id", auth, async (req, res) => {
   // ===============================
   // PREVIEW MODE (NO MONGODB)
   // ===============================
-  if (!process.env.MONGODB_URI) {
+  if (process.env.NODE_ENV === "development") {
     global.PUBLISHED_NEWS = global.PUBLISHED_NEWS.filter(
       article => article._id !== id
     );

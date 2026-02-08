@@ -43,9 +43,9 @@ function publishNews() {
     method,
 
     headers: {
-      "Authorization": sessionStorage.getItem("token")
-
+      "Authorization": "Bearer " + sessionStorage.getItem("token")
     },
+
     body: formData
   })
     .then(res => res.json())
@@ -218,10 +218,9 @@ function deleteNews(id) {
   fetch(`/api/news/${id}`, {
     method: "DELETE",
     headers: {
-      Authorization: sessionStorage.getItem("token")
+      Authorization: "Bearer " + sessionStorage.getItem("token")
     }
   })
-
     .then(res => res.json())
     .then(() => {
       loadAdminNews();

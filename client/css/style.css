@@ -3275,3 +3275,43 @@ body.login-page .masthead-inner {
   font-family: monospace;
   resize: vertical;
 }
+
+/* =====================================================
+   ADMIN PANEL – FORCE MANUAL AD TEXTAREA VISIBILITY
+===================================================== */
+
+.admin-page textarea#sponsoredAd {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  min-height: 140px !important;
+  height: auto !important;
+  width: 100% !important;
+
+  padding: 12px !important;
+  margin-top: 8px !important;
+
+  background-color: #0f0f0f !important;
+  color: #ffffff !important;
+
+  border: 1px solid #444 !important;
+  border-radius: 6px !important;
+
+  font-family: monospace !important;
+  resize: vertical !important;
+}
+
+.admin-card {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.admin-page .container {
+  overflow: visible !important;
+}
+
+.admin-card textarea {
+  display: block;
+  min-height: 140px;
+}

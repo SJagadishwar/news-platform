@@ -447,7 +447,6 @@ app.post(
     }
 
     const article = {
-      _id: Date.now().toString(),
       title: req.body.title,
       summary: req.body.summary,
       content: req.body.content,

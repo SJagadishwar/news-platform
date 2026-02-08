@@ -133,6 +133,15 @@ function setupCrossfadeAnimation(imgEl, images) {
    PAGE DETECTION
 --------------------------------------------------------- */
 const isArticlePage = document.body.classList.contains("article-page");
+// 🚫 Article pages should NEVER show breaking layout
+if (isArticlePage) {
+  const breakingStack = document.querySelector(".breaking-stack");
+  const todayBreaking = document.querySelector(".today-breaking-section");
+
+  breakingStack && breakingStack.remove();
+  todayBreaking && todayBreaking.remove();
+}
+
 
 function highlightActiveNav() {
   const navLinks = document.querySelectorAll(".masthead-nav a");

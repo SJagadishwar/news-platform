@@ -188,26 +188,6 @@ function loadHomepage() {
   const params = new URLSearchParams(window.location.search);
   const selectedCategory = params.get("category");
 
-  if (selectedCategory) {
-    const todaySection = document.querySelector(".today-breaking-section");
-    if (todaySection) {
-      todaySection.remove();
-    }
-  }
-
-
-
-  // 🔥 CATEGORY PAGE: completely bypass homepage logic
-  if (selectedCategory) {
-    fetch(`/api/news?category=${selectedCategory}&page=${currentPage}&limit=${PAGE_LIMIT}`)
-      .then(res => res.json())
-      .then(catData => {
-        renderCategory(catData);
-      })
-      .catch(err => console.error("Category load failed", err));
-    return;
-  }
-
   const breakingList = qs("breaking-list");
   const latestList = qs("latest-list");
   const newsList = qs("news-list");

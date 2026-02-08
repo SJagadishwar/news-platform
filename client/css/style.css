@@ -3258,3 +3258,20 @@ body.login-page .masthead-inner {
   text-transform: uppercase;
   margin-bottom: 8px;
 }
+
+/* ===== ADMIN : FIX MANUAL AD TEXTAREA ===== */
+
+.admin-page #sponsoredAd {
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  min-height: 140px;
+  width: 100%;
+  background: #0f0f0f;
+  color: #ffffff;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 12px;
+  font-family: monospace;
+  resize: vertical;
+}

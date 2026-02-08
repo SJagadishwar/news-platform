@@ -5,10 +5,10 @@ const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 const mongoose = require("mongoose");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
-const nodemailer = require("nodemailer");
-
+const { Resend } = require("resend");
 const sanitizeHtml = require("sanitize-html");
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const r2 = new S3Client({
   region: "auto",
@@ -73,22 +73,6 @@ const ALLOWED_ADMIN_EMAIL = "jagadhii.09.09.1999@gmail.com".toLowerCase().trim()
 
 // -------------------- CONTACT EMAIL RECEIVER --------------------
 const CONTACT_RECEIVER_EMAIL = "jagadhii.09.09.1999@gmail.com";
-
-
-// -------------------- EMAIL CONFIG --------------------
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || "smtp.gmail.com",
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: false, // MUST be false for TLS
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-
 
 
 
@@ -294,8 +278,8 @@ app.post("/api/send-otp", async (req, res) => {
     expires: Date.now() + 5 * 60 * 1000
   };
 
-  await transporter.sendMail({
-    from: `"Sangareddy News Contact" <jagadhii.09.09.1999@gmail.com>`,
+  await resend.emails.send({
+    from: "Sangareddy News <onboarding@resend.dev>",
     to: email,
     subject: "Your Admin Login OTP",
     html: `
@@ -308,7 +292,6 @@ app.post("/api/send-otp", async (req, res) => {
       </div>
     `
   });
-
 
   res.json({ success: true });
 });

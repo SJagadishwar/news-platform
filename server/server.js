@@ -77,12 +77,18 @@ const CONTACT_RECEIVER_EMAIL = "jagadhii.09.09.1999@gmail.com";
 
 // -------------------- EMAIL CONFIG --------------------
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: process.env.SMTP_HOST || "smtp.gmail.com",
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: false, // MUST be false for TLS
   auth: {
-    user: "jagadhii.09.09.1999@gmail.com",   // YOUR gmail
-    pass: "iuwt mcyd jzui qgyi"      // paste app password here
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
   }
 });
+
 
 
 

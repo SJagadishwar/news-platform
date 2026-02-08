@@ -3250,3 +3250,11 @@ body.login-page .masthead-inner {
   background: linear-gradient(to right, transparent, #333, transparent);
   margin: 40px 0;
 }
+
+.sponsored-label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #ff4d4d;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}

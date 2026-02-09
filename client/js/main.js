@@ -249,15 +249,19 @@ function loadHomepage() {
             todayBreakingList.innerHTML += `
               <div class="news-card today-breaking-item">
                 <div class="news-card-body">
-                  <div class="meta">
-                    ${article.category} • ${article.date}
-                  </div>
+
                   <h3>
                     <a href="article.html?id=${article._id}">
                       ${article.title}
                     </a>
                   </h3>
+
                   <p class="summary">${article.summary}</p>
+
+                  <div class="meta">
+                    ${article.category} • ${article.date}
+                  </div>
+
                 </div>
 
                 <img 
@@ -266,7 +270,6 @@ function loadHomepage() {
                   data-images='${JSON.stringify(article.images || [])}'
                   alt="${article.title}"
                 />
-
               </div>
             `;
           });
@@ -292,6 +295,7 @@ function loadHomepage() {
             <a href="article.html?id=${heroBreaking._id}" class="breaking-link">
               <img src="${heroBreaking.image}" alt="${heroBreaking.title}" />
               <h2>${heroBreaking.title}</h2>
+              <p class="summary">${heroBreaking.summary || ""}</p>
               <div class="breaking-meta">
                 ${heroBreaking.category} • ${heroBreaking.date}
               </div>
@@ -315,7 +319,10 @@ function loadHomepage() {
               />
               <div class="breaking-text">
                 <h2>${article.title}</h2>
-                <div class="breaking-meta">${article.category} • ${article.date}</div>
+                <p class="summary">${article.summary || ""}</p>
+                <div class="breaking-meta">
+                  ${article.category} • ${article.date}
+                </div>
               </div>
             </a>
           </div>
@@ -741,13 +748,19 @@ function renderCategory(catData) {
       <div class="news-card">
         <img src="${article.image || '/assets/news-placeholder.jpg'}">
         <div class="news-card-body">
-          <div class="meta">${article.category} • ${article.date}</div>
+
           <h3>
             <a href="article.html?id=${article._id}">
               ${article.title}
             </a>
           </h3>
+
           <p class="summary">${article.summary}</p>
+
+          <div class="meta">
+            ${article.category} • ${article.date}
+          </div>
+
         </div>
       </div>
     `;

@@ -1879,6 +1879,22 @@ body.login-page .masthead-brand h1 {
   display: flex;
   align-items: center;
   gap: 24px;
+
+  position: relative;
+  padding-left: 20px;
+  margin-left: 4px;
+}
+
+/* 🔴 Vertical red line for Today's Breaking News */
+.today-breaking-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  background: #ff2b2b;
+  border-radius: 2px;
 }
 
 .today-breaking-thumb {

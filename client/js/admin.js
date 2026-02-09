@@ -57,7 +57,8 @@ function publishNews() {
 
       // EXIT EDIT MODE (🔥 THIS IS THE FIX)
       EDITING_ARTICLE_ID = null;
-      document.querySelector("button[onclick='publishNews()']").innerText = "Publish";
+      document.getElementById("publish-btn").innerText = "Publish";
+
 
       // Show "Add Another Article" button
       document.getElementById("add-another-btn").style.display = "inline-block";
@@ -284,7 +285,15 @@ function editArticle(id) {
     article.ads?.google?.enabled ?? true;
 
   // 🔁 Switch button to Update mode
-  document.querySelector("button[onclick='publishNews()']").innerText =
+  document.getElementById("publish-btn").innerText =
     "Update Article";
+
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const publishBtn = document.getElementById("publish-btn");
+
+  if (publishBtn) {
+    publishBtn.addEventListener("click", publishNews);
+  }
+});

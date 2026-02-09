@@ -3321,3 +3321,41 @@ body.admin-page button {
   z-index: 20;
   pointer-events: auto !important;
 }
+
+#sponsoredAd {
+  width: 100%;
+  height: 180px;
+  padding: 14px;
+  background: #000;
+  color: #fff;
+  border: 2px solid #ff2b2b;
+  border-radius: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ===============================
+   ADMIN — MANUAL AD TEXTAREA (FIX)
+================================ */
+
+.admin-textarea-wrap {
+  width: 100%;
+  display: block;
+}
+
+.admin-textarea-wrap textarea {
+  width: 100%;
+  min-height: 180px;
+  height: 180px;
+  padding: 14px;
+  background: #000;
+  color: #fff;
+  border: 2px solid #ff2b2b;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  box-sizing: border-box;
+}

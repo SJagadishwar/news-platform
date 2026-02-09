@@ -247,14 +247,13 @@ app.get("/api/news", async (req, res) => {
 
       let data = [...global.PUBLISHED_NEWS];
 
-      // Homepage → last 7 days
-      if (type === "homepage") {
-        const sevenDaysAgo = new Date();
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
+      // Apply 3-day rule ONLY for pure homepage (no category)
+      if (type === "homepage" && !category) {
+        const threeDaysAgo = new Date();
+        threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
         data = data.filter(a => {
           const articleDate = new Date(a.date);
-          return articleDate >= sevenDaysAgo;
+          return articleDate >= threeDaysAgo;
         });
       }
 
@@ -280,16 +279,16 @@ app.get("/api/news", async (req, res) => {
     // ===============================
     const query = {};
 
-    if (type === "homepage") {
-      const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-      query.createdAt = { $gte: sevenDaysAgo };
+    // Apply 3-day rule ONLY for pure homepage (no category)
+    if (type === "homepage" && !category) {
+      const threeDaysAgo = new Date();
+      threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+      query.createdAt = { $gte: threeDaysAgo };
     }
 
     if (category) {
       query.category = category;
     }
-
     // ===============================
     // BREAKING NEWS (CATEGORY-AWARE)
     // ===============================
@@ -335,10 +334,25 @@ app.post("/api/send-otp", async (req, res) => {
     });
   }
   
-  if (!resend) {
-    console.log("📭 OTP skipped (email disabled)");
+  // ===============================
+  // DEV MODE OTP (SAFE LOCAL LOGIN)
+  // ===============================
+  if (
+    process.env.NODE_ENV === "development" &&
+    !process.env.RESEND_API_KEY
+  ) {
+    const devOtp = "123456";
+
+    otpStore[email] = {
+      otp: devOtp,
+      expires: Date.now() + 10 * 60 * 1000 // 10 minutes
+    };
+
+    console.log("🔐 DEV OTP (local only):", devOtp);
     return res.json({ success: true });
   }
+
+
 
   // Generate 6-digit OTP
   const otp = Math.floor(100000 + Math.random() * 900000).toString();

@@ -178,9 +178,6 @@ function highlightActiveNav() {
     
   }
 
-
-
-
 /* =========================================================
    HOMEPAGE LOGIC
 ========================================================= */
@@ -202,8 +199,11 @@ function loadHomepage() {
     <div class="skeleton skeleton-text"></div>
     <div class="skeleton skeleton-text short"></div>
   `;
-
-  fetch("/api/news?type=homepage&limit=20")
+  let apiUrl = "/api/news?type=homepage&limit=20";
+  if (selectedCategory) {
+    apiUrl += `&category=${encodeURIComponent(selectedCategory)}`;
+  }
+  fetch(apiUrl)
     .then(res => res.json())
     .then(data => {
       const allArticles = [

@@ -1208,14 +1208,7 @@ button:hover {
    TODAY'S BREAKING — ALIGNMENT FIX
 ================================ */
 
-#today-breaking-list .today-breaking-item {
-  display: flex;
-  align-items: center;          /* 🔥 THIS fixes up-down issue */
-  justify-content: space-between;
-  gap: 24px;
-  padding: 18px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
+
 
 #today-breaking-list .today-text {
   flex: 1;
@@ -1569,10 +1562,12 @@ img {
 
 /* 🔥 Fix breaking news summary color */
 .breaking-text .summary {
-  color: #e6e6e6;      /* same as Today’s / More Stories */
+  color: #e6e6e6;
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.55;
+  margin-bottom: 4px;
 }
+
 
 .breaking-thumb {
   width: 150px;
@@ -1585,7 +1580,8 @@ img {
 
 .breaking-text h2 {
   font-size: 28px;          /* more authority */
-  line-height: 1.25;
+  line-height: 1.22;
+  margin-bottom: 4px;
   margin: 0 0 8px;
   font-weight: 700;
   letter-spacing: -0.3px;
@@ -1595,7 +1591,7 @@ img {
 .breaking-meta {
   font-size: 12px;
   color: #999;
-  margin-top: 10px;
+  margin-top: 2px;
 }
 
 /* ===============================
@@ -1848,11 +1844,25 @@ body.login-page .masthead-brand h1 {
 }
 
 
-
-
 /* ===============================
    TODAY'S BREAKING NEWS
 ================================ */
+
+/* ===============================
+   TODAY'S BREAKING NEWS — FINAL
+================================ */
+
+#today-breaking-list .news-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  padding: 22px 0 22px 20px;
+  margin-bottom: 22px;
+
+  border-left: 4px solid #b30000;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
 
 .today-breaking-section {
   margin-top: 60px;
@@ -1886,23 +1896,7 @@ body.login-page .masthead-brand h1 {
   flex-shrink: 0;
 }
 
-/* ✅ TODAY'S BREAKING — FINAL ALIGNMENT (CLEAN FLEX) */
 
-.today-breaking-item {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-
-  position: relative;
-  padding-left: 20px;
-  margin-left: 4px;
-}
-
-/* ✅ TODAY’S BREAKING — editorial red line like More Stories */
-.today-breaking-item {
-  border-left: 4px solid #b30000;
-  padding-left: 20px;
-}
 
 .today-breaking-thumb {
   width: 160px;

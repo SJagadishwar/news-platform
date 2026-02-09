@@ -209,7 +209,16 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const CLIENT_PATH = path.join(ROOT_DIR, "client");
 
 
-app.use(express.static(CLIENT_PATH));
+app.use(
+  express.static(CLIENT_PATH, {
+    setHeaders: (res, path) => {
+      if (path.endsWith(".css")) {
+        res.setHeader("Cache-Control", "no-store");
+      }
+    }
+  })
+);
+
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

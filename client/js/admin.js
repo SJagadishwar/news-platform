@@ -2,7 +2,7 @@ function publishNews() {
   const formData = new FormData();
   formData.append("title", document.getElementById("title").value);
   formData.append("summary", document.getElementById("summary").value);
-  formData.append("content", document.getElementById("content").value);
+  formData.append("content", document.getElementById("articleContent").value);
   formData.append("category", document.getElementById("category").value);
   formData.append("breaking", document.getElementById("breaking").checked);
   const images = document.getElementById("image").files;
@@ -234,7 +234,7 @@ function resetPublishForm() {
   // Clear text inputs
   document.getElementById("title").value = "";
   document.getElementById("summary").value = "";
-  document.getElementById("content").value = "";
+  document.getElementById("articleContent").value = "";
   document.getElementById("authorName").value = "";
   document.getElementById("video").value = "";
   document.getElementById("sponsoredAd").value = "";
@@ -269,7 +269,7 @@ function editArticle(id) {
 
   document.getElementById("title").value = article.title;
   document.getElementById("summary").value = article.summary;
-  document.getElementById("content").value = article.content;
+  document.getElementById("articleContent").value = article.content;
   document.getElementById("category").value = article.category;
   document.getElementById("authorName").value = article.authorName || "";
   document.getElementById("video").value = article.video || "";

@@ -3492,3 +3492,47 @@ body.admin-page #sponsoredAd {
   margin-bottom: 0;
   padding-bottom: 0;
 }
+
+@media (max-width: 768px) {
+  .masthead-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .masthead-nav {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .masthead-nav a {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
+
+/* ===============================
+   MOBILE LAYOUT STACK FIX
+================================ */
+@media (max-width: 768px) {
+  .news-fold,
+  .article-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .news-right,
+  .article-sidebar {
+    margin-top: 40px;
+  }
+}
+
+/* ===============================
+   MOBILE PADDING COMFORT FIX
+================================ */
+@media (max-width: 768px) {
+  .homepage,
+  .container {
+    padding: 20px 16px 60px;
+  }
+}

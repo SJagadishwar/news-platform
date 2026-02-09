@@ -3301,3 +3301,23 @@ body.admin-page textarea {
   visibility: visible;
   resize: vertical;
 }
+
+/* =========================================
+   ADMIN — FORCE INTERACTION LAYER FIX
+========================================= */
+
+body.admin-page {
+  position: relative;
+  z-index: 10;
+}
+
+body.admin-page .container,
+body.admin-page .admin-card,
+body.admin-page textarea,
+body.admin-page input,
+body.admin-page select,
+body.admin-page button {
+  position: relative;
+  z-index: 20;
+  pointer-events: auto !important;
+}

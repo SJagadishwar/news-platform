@@ -2233,31 +2233,6 @@ body.login-page .masthead-inner {
 }
 
 /* ===============================
-   ADMIN – MANUAL AD TEXTAREA FIX
-================================ */
-
-.admin-textarea-wrap {
-  width: 100%;
-  display: block;
-}
-
-.admin-textarea-wrap textarea {
-  width: 100%;
-  min-height: 160px;
-  height: 160px;
-  padding: 12px;
-  background: #111;
-  color: #fff;
-  border: 1px solid #333;
-  border-radius: 6px;
-  font-size: 14px;
-  line-height: 1.6;
-  resize: vertical;
-  display: block;
-}
-
-
-/* ===============================
    ADMIN FILTER BAR (PREMIUM)
 ================================ */
 
@@ -3145,7 +3120,6 @@ body.login-page .masthead-inner {
   }
 }
 
-
 /* =========================================
    STATIC PAGES — PREMIUM READING MODE
    (About, Disclaimer, Privacy, Terms)
@@ -3159,8 +3133,6 @@ body.login-page .masthead-inner {
   max-width: 860px;
   margin: 32px auto 100px;   /* 🔥 reduced top margin */
   padding: 36px 56px;       /* 🔥 reduced top padding */
-
-
 
   background:
     linear-gradient(
@@ -3178,14 +3150,12 @@ body.login-page .masthead-inner {
 }
 
 /* ---------- STATIC PAGE TYPOGRAPHY ---------- */
-
 .static-page h1 {
   font-size: 38px;
   letter-spacing: -0.4px;
   margin-bottom: 12px;
   color: #ff2b2b; /* 🔴 Brand red for main headings */
 }
-
 
 .page-subtitle {
   font-size: 17px;
@@ -3322,20 +3292,6 @@ body.admin-page button {
   pointer-events: auto !important;
 }
 
-#sponsoredAd {
-  width: 100%;
-  height: 180px;
-  padding: 14px;
-  background: #000;
-  color: #fff;
-  border: 2px solid #ff2b2b;
-  border-radius: 8px;
-  resize: vertical;
-  box-sizing: border-box;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
 /* ===============================
    ADMIN — MANUAL AD TEXTAREA (FIX)
 ================================ */
@@ -3361,15 +3317,22 @@ body.admin-page button {
 }
 
 /* =========================================
-   ADMIN PAGE — FORCE MANUAL AD TEXTAREA
+   ADMIN — SPONSORED AD FIELD (FINAL FIX)
 ========================================= */
 
-body.admin-page textarea#sponsoredAd {
-  display: block;
-  width: 100%;
-  min-height: 180px;
+.admin-ad-section {
+  position: relative;
+  z-index: 9999;              /* 🔥 bring above admin-card layers */
+  margin-top: 10px;
+}
 
-  background-color: #000 !important;
+body.admin-page #sponsoredAd {
+  display: block !important;
+  width: 100% !important;
+  min-height: 180px;
+  height: 180px;
+
+  background: #000 !important;
   color: #fff !important;
 
   border: 2px solid #ff2b2b !important;
@@ -3380,4 +3343,8 @@ body.admin-page textarea#sponsoredAd {
   line-height: 1.6;
 
   resize: vertical;
+  box-sizing: border-box;
+
+  z-index: 10000;             /* 🔥 above gradients */
+  position: relative;
 }

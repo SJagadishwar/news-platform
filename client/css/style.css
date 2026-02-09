@@ -1561,6 +1561,12 @@ img {
   min-width: 0; /* 🔥 THIS LINE IS CRITICAL */
 }
 
+/* 🔥 Force summary color in Breaking News (prevent purple visited links) */
+.breaking-text .summary,
+.breaking-hero .summary {
+  color: #e6e6e6 !important;
+}
+
 /* 🔥 Fix breaking news summary color */
 .breaking-text .summary {
   color: #e6e6e6;      /* same as Today’s / More Stories */
@@ -1892,19 +1898,11 @@ body.login-page .masthead-brand h1 {
   margin-left: 4px;
 }
 
-/* 🔴 Today’s Breaking — subtle editorial red line */
-.today-breaking-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 36px;
-  background: #ff2b2b;
-  border-radius: 2px;
+/* ✅ TODAY’S BREAKING — editorial red line like More Stories */
+.today-breaking-item {
+  border-left: 4px solid #b30000;
+  padding-left: 20px;
 }
-
 
 .today-breaking-thumb {
   width: 160px;
@@ -1913,8 +1911,6 @@ body.login-page .masthead-brand h1 {
   border-radius: 8px;
   flex-shrink: 0;
 }
-
-
 
 /* =========================================
    ADMIN & LOGIN PAGE — HEADER LOGO FIX

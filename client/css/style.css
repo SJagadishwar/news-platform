@@ -3359,3 +3359,25 @@ body.admin-page button {
   resize: vertical;
   box-sizing: border-box;
 }
+
+/* =========================================
+   ADMIN PAGE — FORCE MANUAL AD TEXTAREA
+========================================= */
+
+body.admin-page textarea#sponsoredAd {
+  display: block;
+  width: 100%;
+  min-height: 180px;
+
+  background-color: #000 !important;
+  color: #fff !important;
+
+  border: 2px solid #ff2b2b !important;
+  border-radius: 8px;
+
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+
+  resize: vertical;
+}

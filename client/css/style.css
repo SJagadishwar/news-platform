@@ -2232,29 +2232,6 @@ body.login-page .masthead-inner {
   color: #ffffff;
 }
 
-/* ===== ADMIN MANUAL AD – STABLE FIX ===== */
-
-.admin-textarea-wrap {
-  width: 100%;
-  margin-top: 8px;
-}
-
-.admin-textarea-wrap textarea {
-  display: block;
-  width: 100%;
-  min-height: 160px;
-  resize: vertical;
-
-  background: #0f0f0f;
-  color: #fff;
-  border: 1px solid #444;
-  border-radius: 8px;
-
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
 
 /* ===============================
    ADMIN FILTER BAR (PREMIUM)
@@ -3283,56 +3260,20 @@ body.login-page .masthead-inner {
   margin-bottom: 8px;
 }
 
-/* ===== ADMIN : FIX MANUAL AD TEXTAREA ===== */
-
-.admin-page #sponsoredAd {
-  display: block !important;
-  visibility: visible !important;
-  height: auto !important;
-  min-height: 140px;
-  width: 100%;
-  background: #0f0f0f;
-  color: #ffffff;
-  border: 1px solid #333;
-  border-radius: 6px;
-  padding: 12px;
-  font-family: monospace;
-  resize: vertical;
-}
-
-
-/* ===============================
-   ADMIN — FORCE MANUAL AD BOX
-   (FINAL OVERRIDE – DO NOT MOVE)
-================================ */
-
-body.admin-page #sponsoredAd {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-
-  min-height: 160px !important;
-  height: 160px !important;
-  width: 100% !important;
-
-  margin-top: 12px !important;
-  margin-bottom: 12px !important;
-
-  background: #0f0f0f !important;
-  color: #ffffff !important;
-
-  border: 1px solid #444 !important;
-  border-radius: 8px !important;
-
-  font-family: monospace !important;
-  font-size: 14px !important;
-  line-height: 1.5 !important;
-
-  resize: vertical !important;
-}
-
 /* prevent any parent clipping */
 body.admin-page .admin-card,
 body.admin-page .container {
   overflow: visible !important;
+}
+
+/* ===============================
+   ADMIN — TEXTAREA HEIGHT FIX
+   =============================== */
+
+body.admin-page textarea {
+  min-height: 160px;
+  height: 160px;        /* 🔒 lock height */
+  display: block;
+  visibility: visible;
+  resize: vertical;
 }

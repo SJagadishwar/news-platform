@@ -377,25 +377,24 @@ function loadHomepage() {
       /* -------- MORE STORIES (ALL REMAINING) -------- */
       const remaining = nonBreaking;
 
-
-
       remaining.forEach(article => {
         newsList.innerHTML += `
           <div class="news-card">
-            <img
-              src="${article.image || '/assets/news-placeholder.jpg'}"
-              data-images='${JSON.stringify(article.images || [])}'
-              loading="lazy"
-            >
+            <img src="${article.image || '/assets/news-placeholder.jpg'}">
             <div class="news-card-body">
 
-              <div class="meta">${article.category} • ${article.date}</div>
               <h3>
                 <a href="article.html?id=${article._id}">
                   ${article.title}
                 </a>
               </h3>
+
               <p class="summary">${article.summary}</p>
+
+              <div class="meta">
+                ${article.category} • ${article.date}
+              </div>
+
             </div>
           </div>
         `;

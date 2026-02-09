@@ -1561,6 +1561,13 @@ img {
   min-width: 0; /* 🔥 THIS LINE IS CRITICAL */
 }
 
+/* 🔥 Fix breaking news summary color */
+.breaking-text .summary {
+  color: #e6e6e6;      /* same as Today’s / More Stories */
+  font-size: 16px;
+  line-height: 1.6;
+}
+
 .breaking-thumb {
   width: 150px;
   height: 90px;
@@ -1885,17 +1892,19 @@ body.login-page .masthead-brand h1 {
   margin-left: 4px;
 }
 
-/* 🔴 Vertical red line for Today's Breaking News */
+/* 🔴 Today’s Breaking — subtle editorial red line */
 .today-breaking-item::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 10px;
-  bottom: 10px;
-  width: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 36px;
   background: #ff2b2b;
   border-radius: 2px;
 }
+
 
 .today-breaking-thumb {
   width: 160px;

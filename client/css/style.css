@@ -2232,6 +2232,30 @@ body.login-page .masthead-inner {
   color: #ffffff;
 }
 
+/* ===============================
+   ADMIN – MANUAL AD TEXTAREA FIX
+================================ */
+
+.admin-textarea-wrap {
+  width: 100%;
+  display: block;
+}
+
+.admin-textarea-wrap textarea {
+  width: 100%;
+  min-height: 160px;
+  height: 160px;
+  padding: 12px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  display: block;
+}
+
 
 /* ===============================
    ADMIN FILTER BAR (PREMIUM)

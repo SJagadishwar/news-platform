@@ -150,6 +150,27 @@ const NewsSchema = new mongoose.Schema(
 
 const News = mongoose.model("News", NewsSchema);
 
+// ✅ ENSURE ADS STRUCTURE ALWAYS EXISTS (PRODUCTION FIX)
+NewsSchema.pre("save", function (next) {
+  if (!this.ads) {
+    this.ads = {
+      sponsored: { content: "" },
+      google: { enabled: false }
+    };
+  }
+
+  if (!this.ads.sponsored) {
+    this.ads.sponsored = { content: "" };
+  }
+
+  if (!this.ads.google) {
+    this.ads.google = { enabled: false };
+  }
+
+  next();
+});
+
+
 
 // -------------------- PREVIEW STORAGE (PERSISTENT) --------------------
 const PREVIEW_FILE = path.join(__dirname, "preview.json");

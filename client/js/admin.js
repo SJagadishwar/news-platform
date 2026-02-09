@@ -296,4 +296,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (publishBtn) {
     publishBtn.addEventListener("click", publishNews);
   }
+
+  /* =========================================================
+     MANUAL ARTICLE AD — FIX (SAFE LOAD)
+  ========================================================= */
+  const sponsoredAdTextarea = document.getElementById("sponsoredAd");
+
+  if (sponsoredAdTextarea) {
+    sponsoredAdTextarea.style.display = "block";
+  }
 });
+
+

@@ -4191,7 +4191,7 @@ img {
 }
 
 /* =========================================
-   MOBILE — STICKY SECTION HEADINGS (FINAL)
+   MOBILE — STICKY SECTION HEADINGS (LOCKED)
 ========================================= */
 @media (max-width: 768px) {
 
@@ -4200,16 +4200,15 @@ img {
   .today-breaking-section .section-heading,
   .older-stories .section-heading {
     position: sticky;
-    top: 72px; /* compact masthead height */
-    z-index: 20;
+    top: 64px;                 /* matches compact masthead */
+    z-index: 50;
 
     background: #0e0e0e;
-    padding: 10px 0;
-
-    margin-bottom: 14px;
+    padding: 8px 0;
+    margin-bottom: 12px;
   }
-
 }
+
 
 /* =========================================
    MOBILE — COMPACT MASTHEAD (FINAL)
@@ -4398,4 +4397,104 @@ img {
     padding-bottom: 18px;
   }
 
+}
+
+/* =========================================
+   MOBILE — PREVENT LAYOUT SHIFT (FINAL FIX)
+========================================= */
+@media (max-width: 768px) {
+
+  /* Lock image wrappers */
+  .breaking-hero,
+  .breaking-item,
+  .latest-item,
+  .older-stories .news-card {
+    overflow: hidden;
+  }
+
+  /* Lock ALL story images */
+  .breaking-hero img,
+  .breaking-thumb,
+  .latest-item img,
+  .older-stories .news-card img,
+  .today-breaking-thumb {
+    width: 100%;
+    height: 200px;        /* 🔒 HARD LOCK */
+    object-fit: cover;
+    display: block;
+  }
+}
+
+/* =========================================
+   MOBILE — MASTHEAD HEIGHT OPTIMIZATION
+========================================= */
+@media (max-width: 768px) {
+
+  .masthead {
+    padding: 0;
+    border-bottom: 2px solid #ff2b2b;
+  }
+
+  .masthead-inner {
+    padding: 6px 10px;
+  }
+
+  .brand-seal {
+    width: 48px;
+    height: 48px;
+  }
+
+  .masthead-brand h1 {
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  .masthead-brand h1 span {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+}
+
+/* =========================================
+   MOBILE — MORE STORIES CARD REBUILD
+========================================= */
+@media (max-width: 768px) {
+
+  .older-stories .news-card {
+    background: none;
+    border: none;
+    padding: 0 0 18px 0;
+    margin-bottom: 18px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    border-bottom: 1px solid rgba(255, 43, 43, 0.35);
+  }
+
+  .older-stories .news-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .older-stories .news-card h3,
+  .older-stories .summary,
+  .older-stories .meta {
+    padding-left: 6px;
+    padding-right: 6px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .breaking-item,
+  .latest-item,
+  .older-stories .news-card {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
 }

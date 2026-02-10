@@ -3536,3 +3536,544 @@ body.admin-page #sponsoredAd {
     padding: 20px 16px 60px;
   }
 }
+
+/* =========================================================
+   MOBILE FOUNDATION — BALANCED, CALM, PREMIUM
+========================================================= */
+@media (max-width: 768px) {
+
+  /* Force single column everywhere */
+  .news-fold,
+  .article-layout,
+  .homepage-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Remove desktop sidebars on mobile */
+  .news-right,
+  .article-sidebar {
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  /* Reduce visual noise */
+  .section-heading,
+  .latest-heading,
+  .breaking-label {
+    margin-bottom: 10px;
+  }
+
+  /* Make sections breathe */
+  section,
+  .news-section {
+    margin-bottom: 36px;
+  }
+
+  /* Calm overall spacing */
+  body {
+    font-size: 15px;
+  }
+}
+
+/* =====================================================
+   MOBILE RESPONSIVE FIXES
+   ===================================================== */
+
+/* ---------- GLOBAL ---------- */
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- CONTAINERS ---------- */
+.container,
+.homepage,
+.news-fold,
+.news-section {
+  padding: 12px;
+}
+
+/* =====================================================
+   HEADER / NAV
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .masthead-inner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .masthead-brand {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .masthead-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .masthead-nav a {
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+}
+
+/* =====================================================
+   HOMEPAGE MOBILE STACKING
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .news-fold {
+    flex-direction: column;
+  }
+
+  .news-left,
+  .news-right {
+    width: 100%;
+  }
+
+  .news-section {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-top: 24px;
+  }
+}
+
+/* =====================================================
+   ARTICLE PAGE MOBILE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .article-layout {
+    flex-direction: column;
+  }
+
+  .article-surface {
+    width: 100%;
+  }
+
+  .article-sidebar {
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .article-hero img {
+    border-radius: 6px;
+  }
+
+  .article-content p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+/* =====================================================
+   NEWS CARDS
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .news-card,
+  .breaking-item,
+  .today-breaking-item,
+  .archive-card {
+    flex-direction: column;
+  }
+
+  .news-card img,
+  .breaking-item img,
+  .archive-thumb {
+    width: 100%;
+    height: auto;
+  }
+
+  .news-card-body {
+    padding: 12px;
+  }
+}
+
+/* =====================================================
+   FOOTER MOBILE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .footer-col {
+    width: 100%;
+  }
+}
+
+/* =====================================================
+   ADMIN MOBILE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .admin-card {
+    padding: 14px;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .admin-article-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-article-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* ===============================
+   MOBILE HEADER POLISH (V2)
+================================ */
+
+@media (max-width: 768px) {
+
+  .masthead {
+    padding-bottom: 6px;
+  }
+
+  .masthead-nav {
+    gap: 14px;
+    justify-content: flex-start;
+    padding: 6px 0 8px;
+  }
+
+  .masthead-nav::-webkit-scrollbar {
+    display: none; /* clean swipe feel */
+  }
+
+  .masthead-nav a {
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .masthead-nav a.active {
+    background: rgba(255,43,43,0.15);
+  }
+}
+
+/* ===============================
+   MOBILE ABOVE-THE-FOLD TIGHTEN
+================================ */
+
+@media (max-width: 768px) {
+
+  .homepage {
+    padding-top: 12px;
+  }
+
+  section {
+    margin-bottom: 28px;
+  }
+}
+
+/* ===============================
+   ARTICLE MOBILE READING MODE
+================================ */
+
+@media (max-width: 768px) {
+
+  #content {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .article-content p {
+    margin-bottom: 18px;
+  }
+
+  .engagement-bar {
+    margin-top: 40px;
+    padding-top: 16px;
+  }
+
+  .comments-section {
+    margin-top: 50px;
+  }
+}
+
+/* ===============================
+   MOBILE IMAGE IMMERSION
+================================ */
+
+@media (max-width: 768px) {
+
+  .breaking-hero img,
+  .article-hero img {
+    border-radius: 10px;
+  }
+
+  .news-card img,
+  .archive-thumb {
+    border-radius: 12px;
+  }
+}
+
+/* ===============================
+   MOBILE FOOTER COMPACT MODE
+================================ */
+
+@media (max-width: 768px) {
+
+  .footer-inner {
+    gap: 28px;
+  }
+
+  .footer-col h4 {
+    font-size: 14px;
+  }
+
+  .footer-col p,
+  .footer-col a {
+    font-size: 13px;
+  }
+}
+
+/* =========================================
+   MOBILE APP-LIKE BOTTOM NAVIGATION
+========================================= */
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: rgba(15,15,15,0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .mobile-bottom-nav .nav-item {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    text-decoration: none;
+    padding: 6px 0;
+  }
+
+  .mobile-bottom-nav .nav-item.active {
+    color: #ff2b2b;
+    font-weight: 600;
+  }
+
+  /* Prevent content hiding behind bottom nav */
+  body {
+    padding-bottom: 64px;
+  }
+}
+
+/* =========================================
+   MOBILE: HIDE TOP CATEGORY NAV
+========================================= */
+
+@media (max-width: 768px) {
+
+  .masthead-nav {
+    display: none;
+  }
+
+  .masthead {
+    padding-bottom: 10px;
+  }
+}
+
+/* =========================================
+   MOBILE BOTTOM NAV — UX POLISH
+========================================= */
+
+@media (max-width: 768px) {
+
+  .mobile-bottom-nav {
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.6);
+  }
+
+  .mobile-bottom-nav .nav-item {
+    letter-spacing: 0.4px;
+  }
+}
+
+/* ===============================
+   MOBILE SECTIONS BOTTOM SHEET
+================================ */
+
+.mobile-sections-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+  background: #0f0f0f;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  padding: 16px;
+  z-index: 10000;
+  transition: bottom 0.3s ease;
+}
+
+.mobile-sections-sheet.open {
+  bottom: 56px; /* sits above bottom nav */
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.sheet-header button {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 18px;
+}
+
+.sheet-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.sheet-links a {
+  padding: 12px;
+  background: #151515;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* ===============================
+   MOBILE FLOATING ACTIONS
+================================ */
+
+@media (max-width: 768px) {
+  .mobile-floating-actions {
+    position: fixed;
+    right: 16px;
+    bottom: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 9999;
+  }
+
+  .mobile-floating-actions button,
+  .mobile-floating-actions a {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #b30000;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .breaking-thumb,
+  .today-breaking-thumb,
+  .news-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+/* ===============================
+   MOBILE SCROLL COMFORT
+================================ */
+
+@media (max-width: 768px) {
+
+  body {
+    overscroll-behavior-y: contain;
+  }
+
+  .homepage section {
+    margin-bottom: 26px;
+  }
+
+  h2.section-heading {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  .summary {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .news-card,
+  .breaking-item,
+  .latest-item {
+    cursor: pointer;
+  }
+
+  .news-card:active,
+  .breaking-item:active {
+    transform: scale(0.985);
+  }
+}
+
+@media (max-width: 768px) {
+  .breaking-label {
+    animation: pulse 1.8s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+}
+

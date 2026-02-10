@@ -10,6 +10,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="/" />
   <meta property="og:image" content="/assets/logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#b30000">
+
+
 
   <!-- Premium Fonts Test Pack -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +25,7 @@
   <link rel="stylesheet" href="css/style.css?v=4" />
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 </head>
+
 <body>
 
 <header class="masthead">
@@ -174,6 +180,36 @@
   </div>
 
 </footer>
+
+<nav class="mobile-bottom-nav">
+  <a href="/" class="nav-item active">Home</a>
+  <a href="/?category=Latest" class="nav-item">Latest</a>
+
+  <button class="nav-item nav-sections-btn" id="openSections">
+    Sections
+  </button>
+
+  <a href="/archive.html" class="nav-item">Time</a>
+  <a href="/contact.html" class="nav-item">Contact</a>
+</nav>
+
+<!-- MOBILE SECTIONS SHEET -->
+<div class="mobile-sections-sheet" id="sectionsSheet">
+  <div class="sheet-header">
+    <span>Sections</span>
+    <button id="closeSections">✕</button>
+  </div>
+
+  <div class="sheet-links">
+    <a href="/?category=Politics">Politics</a>
+    <a href="/?category=Local">Local</a>
+    <a href="/?category=Crime">Crime</a>
+    <a href="/?category=Sports">Sports</a>
+    <a href="/?category=Agriculture">Agriculture</a>
+    <a href="/archive.html">Time Travel</a>
+  </div>
+</div>
+
 
 
 <script src="js/main.js?v=2"></script>

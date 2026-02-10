@@ -1,5 +1,37 @@
 [
   {
+    "title": "India Clinches Victory in T20 Series  ",
+    "summary": "Team India defeats Australia in thrilling finale.",
+    "content": "tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium. vtar batsman’s century sealed the win at Mumbai stadium. tar batsman’s century sealed the win at Mumbai stadium.",
+    "category": "Sports",
+    "breaking": true,
+    "sponsored": false,
+    "image": "/uploads/1770646074085-15.png",
+    "images": [
+      "/uploads/1770646074085-15.png",
+      "/uploads/1770646074087-14.png",
+      "/uploads/1770646074088-13.png"
+    ],
+    "video": null,
+    "date": "2026-02-09",
+    "author": {
+      "name": "RAmu",
+      "photo": "/uploads/1770646074089-16.png",
+      "verified": true
+    },
+    "ads": {
+      "sponsored": {
+        "content": ""
+      },
+      "google": {
+        "enabled": true
+      }
+    },
+    "views": 0,
+    "likes": 0,
+    "comments": []
+  },
+  {
     "title": "Zaheerabad Bus Terminal Upgrade Announced  ",
     "summary": "Authorities unveil plans for a modernized transport hub.",
     "content": "The new terminal will include digital ticketing, solar panels, and improved passenger amenities to ease congestion.",
@@ -24,38 +56,6 @@
       },
       "google": {
         "enabled": true
-      }
-    },
-    "views": 0,
-    "likes": 0,
-    "comments": []
-  },
-  {
-    "_id": "1770384238676",
-    "title": "Telangana Farmers Adopt Drip Irrigation  ",
-    "summary": " Water-efficient farming gains popularity.",
-    "content": "Subsidies encourage farmers to switch to modern irrigation methods.",
-    "category": "Agriculture",
-    "breaking": false,
-    "sponsored": false,
-    "image": "/uploads/1770384238673-10.png",
-    "images": [
-      "/uploads/1770384238673-10.png",
-      "/uploads/1770384238674-8.png"
-    ],
-    "video": null,
-    "date": "2026-02-06",
-    "author": {
-      "name": "Mohan",
-      "photo": "/uploads/1770384238675-16.png",
-      "verified": true
-    },
-    "ads": {
-      "sponsored": {
-        "content": ""
-      },
-      "google": {
-        "enabled": false
       }
     },
     "views": 0,

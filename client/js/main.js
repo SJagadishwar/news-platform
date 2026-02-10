@@ -1215,3 +1215,47 @@ if (clearBtn) {
 
   });
 }
+
+//MOBILE//
+/* =========================================
+   MOBILE BOTTOM NAV ACTIVE STATE
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const bottomLinks = document.querySelectorAll(".mobile-bottom-nav a");
+  const path = window.location.pathname;
+
+  bottomLinks.forEach(link => {
+    link.classList.remove("active");
+
+    if (
+      (path === "/" && link.getAttribute("href") === "/") ||
+      (path.includes("archive") && link.getAttribute("href").includes("archive")) ||
+      (path.includes("contact") && link.getAttribute("href").includes("contact"))
+    ) {
+      link.classList.add("active");
+    }
+  });
+});
+
+// ===============================
+// MOBILE SECTIONS TOGGLE
+// ===============================
+const openBtn = document.getElementById("openSections");
+const closeBtn = document.getElementById("closeSections");
+const sheet = document.getElementById("sectionsSheet");
+
+openBtn && openBtn.addEventListener("click", () => {
+  sheet.classList.add("open");
+});
+
+closeBtn && closeBtn.addEventListener("click", () => {
+  sheet.classList.remove("open");
+});
+
+// ===============================
+// PWA SERVICE WORKER
+// ===============================
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js");
+}

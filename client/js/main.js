@@ -344,25 +344,28 @@ function loadHomepage() {
       const latest = nonBreaking.slice(0, 5);
 
       latest.forEach(article => {
-        const imgSrc = article.image && article.image.trim() !== ""
-          ? article.image
-          : "/assets/news-placeholder.jpg";
-
         latestList.innerHTML += `
           <div class="latest-item">
             <img
               src="${article.image || '/assets/news-placeholder.jpg'}"
               data-images='${JSON.stringify(article.images || [])}'
-              loading="lazy"
-            >
-            <h4>
-              <a href="article.html?id=${article._id}">
-                ${article.title}
-              </a>
-            </h4>
+            />
+
+            <div class="latest-text">
+              <h4>
+                <a href="article.html?id=${article._id}">
+                  ${article.title}
+                </a>
+              </h4>
+              
+              <div class="meta">
+                ${article.category} • ${article.date}
+              </div>
+            </div>
           </div>
         `;
       });
+
 
       // 🔵 Latest Headlines — FADE animation
       document.querySelectorAll(".latest-item img").forEach(img => {
@@ -380,7 +383,10 @@ function loadHomepage() {
       remaining.forEach(article => {
         newsList.innerHTML += `
           <div class="news-card">
-            <img src="${article.image || '/assets/news-placeholder.jpg'}">
+            <img
+              src="${article.image || '/assets/news-placeholder.jpg'}"
+              data-images='${JSON.stringify(article.images || [])}'
+            >
             <div class="news-card-body">
 
               <h3>
@@ -745,7 +751,11 @@ function renderCategory(catData) {
   catData.articles.forEach(article => {
     newsList.innerHTML += `
       <div class="news-card">
-        <img src="${article.image || '/assets/news-placeholder.jpg'}">
+        <img
+          src="${article.image || '/assets/news-placeholder.jpg'}"
+          data-images='${JSON.stringify(article.images || [])}'
+        >
+
         <div class="news-card-body">
 
           <h3>
@@ -764,8 +774,15 @@ function renderCategory(catData) {
       </div>
     `;
   });
-}
 
+  // 🟢 Category More Stories — SLIDESHOW animation
+  document.querySelectorAll(".news-card img").forEach(img => {
+    try {
+      const images = JSON.parse(img.dataset.images || "[]");
+      startSlideshow(img, images, "slide");
+    } catch (e) {}
+  });
+}
 
 
 function renderPagination(page, totalPages) {

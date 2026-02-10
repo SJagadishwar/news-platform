@@ -4189,3 +4189,97 @@ img {
   }
 
 }
+
+/* =========================================
+   MOBILE — STICKY SECTION HEADINGS (FINAL)
+========================================= */
+@media (max-width: 768px) {
+
+  .breaking-label,
+  .latest-heading,
+  .today-breaking-section .section-heading,
+  .older-stories .section-heading {
+    position: sticky;
+    top: 72px; /* compact masthead height */
+    z-index: 20;
+
+    background: #0e0e0e;
+    padding: 10px 0;
+
+    margin-bottom: 14px;
+  }
+
+}
+
+/* =========================================
+   MOBILE — COMPACT MASTHEAD (FINAL)
+========================================= */
+@media (max-width: 768px) {
+
+  .masthead {
+    padding: 4px 0;
+  }
+
+  .masthead-inner {
+    padding: 6px 12px;
+  }
+
+  .brand-seal {
+    width: 44px;
+    height: 44px;
+  }
+
+  .masthead-brand h1 {
+    font-size: 18px;
+  }
+
+  .masthead-brand h1 span {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+}
+
+/* =========================================
+   MOBILE — UNIFIED STORY CARD STYLE
+========================================= */
+@media (max-width: 768px) {
+
+  /* Breaking + More Stories cards behave like Latest */
+  .breaking-item,
+  .older-stories .news-card {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 43, 43, 0.35);
+  }
+
+  .breaking-item:last-child,
+  .older-stories .news-card:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+}
+
+/* =========================================
+   MOBILE — MORE STORIES MATCH LATEST STYLE
+========================================= */
+@media (max-width: 768px) {
+
+  .older-stories .news-card {
+    gap: 10px;
+  }
+
+  .older-stories .news-card img {
+    height: 160px;
+    border-radius: 12px;
+  }
+
+  .older-stories .news-card h3 {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+}
+

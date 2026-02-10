@@ -4665,3 +4665,104 @@ body.admin-page #sponsoredAd {
     text-align: left;
   }
 }
+
+/* =========================================================
+   DESKTOP FIX — MORE STORIES FULL HEIGHT THUMBNAIL
+   (SAFE OVERRIDE — DO NOT MOVE)
+========================================================= */
+
+@media (min-width: 769px) {
+
+  /* Only More Stories cards */
+  .older-stories .news-card {
+    display: grid !important;
+    grid-template-columns: 240px 1fr;
+    align-items: stretch;     /* 🔑 image matches text height */
+    gap: 28px;
+  }
+
+  /* Thumbnail fills full card height */
+  .older-stories .news-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+
+    /* Prevent animation from shifting layout */
+    display: block;
+    will-change: opacity, transform;
+  }
+
+  /* Text side stays stable */
+  .older-stories .news-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+/* =========================================================
+   LATEST HEADLINES — META TYPOGRAPHY FIX (FINAL)
+   Category · Date should match site font system
+========================================================= */
+
+#latest-list .meta {
+  font-family: var(--font-primary) !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+/* =========================================================
+   EDITORIAL META — HOMEPAGE CONSISTENCY FIX (FINAL)
+   Applies to: Today’s Breaking + More Stories
+========================================================= */
+
+/* Today’s Breaking News — category & date */
+.today-breaking-section .breaking-meta {
+  font-family: var(--font-primary) !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+/* More Stories — category & date */
+.older-stories .news-card .meta {
+  font-family: var(--font-primary) !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+/* =========================================================
+   FINAL BREAKING META — HERO + TODAY FIX (LOCKED)
+   Fixes:
+   1) Main Breaking HERO category · date
+   2) Today’s Breaking cards inheriting wrong font
+========================================================= */
+
+/* 🔴 MAIN BREAKING NEWS — HERO (latest breaking) */
+.breaking-hero .breaking-meta {
+  font-family: var(--font-primary) !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+/* 🔴 TODAY'S BREAKING — fallback meta inside cards */
+.today-breaking-section .news-card .meta {
+  font-family: var(--font-primary) !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #aaa;
+}

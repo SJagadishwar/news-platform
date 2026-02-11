@@ -507,15 +507,22 @@ function loadArticlePage() {
       if (sidebarCategory && relatedList && article.category) {
         sidebarCategory.innerText = article.category;
 
-        fetch("/api/news")
+        fetch("/api/news?limit=50")
           .then(res => res.json())
-          .then(all => {
-            const related = all
+          .then(data => {
+
+            const combined = [
+              ...(data.breaking || []),
+              ...(data.articles || [])
+            ];
+
+            const related = combined
               .filter(a =>
                 a.category === article.category &&
                 a._id !== article._id
               )
               .slice(0, 5);
+
 
             relatedList.innerHTML = related.length
               ? related.map(a => `

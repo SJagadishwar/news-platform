@@ -41,6 +41,12 @@ function startSlideshow(imgEl, images, mode = "fade") {
     return;
   }
 
+  if (mode === "rotate") {
+    setupRotateAnimation(imgEl, images);
+    return;
+  }
+
+
   // default fallback
   setupFadeAnimation(imgEl, images);
 }
@@ -108,6 +114,38 @@ function setupZoomAnimation(imgEl, images) {
     }, 400);
   }, 4800);
 }
+
+/* ---------- ARCHIVE: ROTATE ANTI-CLOCKWISE ---------- */
+function setupRotateAnimation(imgEl, images) {
+  let index = 0;
+
+  imgEl.style.transition =
+    "opacity 0.8s ease, transform 0.8s ease";
+  imgEl.style.transformOrigin = "center center";
+  imgEl.style.opacity = "1";
+
+  setInterval(() => {
+
+    // rotate anti-clockwise and fade out
+    imgEl.style.transform = "rotate(-12deg) scale(0.95)";
+    imgEl.style.opacity = "0";
+
+    setTimeout(() => {
+      index = (index + 1) % images.length;
+      imgEl.src = images[index];
+
+      // reset rotation before fading back
+      imgEl.style.transform = "rotate(12deg) scale(0.95)";
+    }, 400);
+
+    setTimeout(() => {
+      imgEl.style.transform = "rotate(0deg) scale(1)";
+      imgEl.style.opacity = "1";
+    }, 450);
+
+  }, 5000);
+}
+
 
 /* ---------- MORE STORIES: CROSS FADE (VERY SUBTLE) ---------- */
 function setupCrossfadeAnimation(imgEl, images) {
@@ -948,6 +986,7 @@ function fetchArchive(date) {
           <img
             class="archive-thumb"
             src="${article.image || '/assets/news-placeholder.jpg'}"
+            data-images='${JSON.stringify(article.images || [])}'
             alt="${article.title}"
           />
           <div class="archive-content">
@@ -964,6 +1003,14 @@ function fetchArchive(date) {
         `;
 
         results.appendChild(card);
+      });
+
+      // 🔵 Archive Thumbnail Slideshow — ENABLE ANIMATION
+      document.querySelectorAll(".archive-thumb").forEach(img => {
+        try {
+          const images = JSON.parse(img.dataset.images || "[]");
+          startSlideshow(img, images, "rotate");
+        } catch (e) {}
       });
     });
 }

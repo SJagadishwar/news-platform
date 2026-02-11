@@ -1,20 +1,43 @@
 /* =========================================================
-   GLOBAL FONT SWITCH (SAFE / OPTIONAL)
+   DESIGN SYSTEM — SINGLE SOURCE OF TRUTH
+   (Phase 2 · Step 1 — NO VISUAL CHANGE)
 ========================================================= */
 
 :root {
-  /* Font options */
+
+  /* ===============================
+     FONT SYSTEM
+     =============================== */
+
   --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-poppins: 'Poppins', system-ui, sans-serif;
   --font-montserrat: 'Montserrat', system-ui, sans-serif;
-  --white-editorial: #e6e6e6;   /* the white you liked */
-  --white-muted: #bdbdbd;
-  --white-subtle: #9e9e9e;
 
-  --brand-red: #ff2b2b;
-  /* ACTIVE FONT — change only this line */
+  /* Active editorial font (used everywhere) */
   --font-primary: var(--font-montserrat);
+
+
+  /* ===============================
+     COLOR SYSTEM — EDITORIAL
+     =============================== */
+
+  /* Primary text colors */
+  --white-editorial: #e6e6e6;   /* main article & titles */
+  --white-muted: #bdbdbd;       /* summaries */
+  --white-subtle: #9e9e9e;      /* meta / timestamps */
+
+  /* Brand */
+  --brand-red: #ff2b2b;
+
+  /* Backgrounds */
+  --bg-main: #0e0e0e;
+  --bg-card: #151515;
+  --bg-card-hover: #1c1c1c;
+
+  /* Borders */
+  --border-soft: rgba(255,255,255,0.08);
 }
+
 
 /* ---------------- RESET ---------------- */
 * {
@@ -22,6 +45,87 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* =========================================================
+   GLOBAL TYPOGRAPHY BASELINE
+   (Phase 2 · Step 2 — NO VISUAL CHANGE)
+========================================================= */
+
+html, body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-main);
+  color: var(--white-editorial);
+}
+
+/* =========================================================
+   BASE TEXT ELEMENTS
+   (Phase 2 · Step 3 — NO VISUAL CHANGE)
+========================================================= */
+
+/* Headings — editorial defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--white-editorial);
+}
+
+/* Paragraphs & common text */
+p {
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  color: var(--white-muted);
+}
+
+/* Links inherit text styling by default */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   META TEXT BASELINE (Category · Date · Labels)
+   (Phase 2 · Step 4 — NO VISUAL CHANGE)
+========================================================= */
+
+.meta,
+.breaking-meta,
+.article-meta {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--white-subtle);
+  letter-spacing: 0.4px;
+  margin-bottom: 22px;
+}
+
+/* =========================================================
+   FONT USAGE NOTES (FOR CLEANUP — NO EFFECT)
+   (Phase 2 · Step 6)
+========================================================= */
+
+/*
+GLOBAL RULE:
+- Default text uses --font-primary (Montserrat)
+
+INTENTIONAL OVERRIDES (DO NOT REMOVE):
+- Arial is used ONLY for:
+  • sponsored labels
+  • engagement / utility UI
+  • system-like indicators
+
+ARTICLE & EDITORIAL:
+- Headlines, summaries, meta → --font-primary
+- Article body → --font-primary
+- Category & date → --font-primary
+
+NOTE:
+Any repeated font-family declarations below this point
+are legacy / section-specific and will be reviewed later.
+*/
+
+
 
 /* =========================================================
    TYPOGRAPHY FOUNDATION (EDITORIAL)
@@ -36,6 +140,71 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* =========================================================
+   CARD STRUCTURE BASELINE
+   (Phase 2 · Step 5 — NO VISUAL CHANGE)
+========================================================= */
+
+/* All editorial cards share the same structural rules */
+.news-card,
+.breaking-item,
+.latest-item,
+.archive-card,
+.story-card {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+/* Images inside cards must never affect layout flow */
+.news-card img,
+.breaking-item img,
+.latest-item img,
+.archive-card img,
+.story-card img {
+  display: block;
+  max-width: 100%;
+}
+
+/* =========================================================
+   THUMBNAIL LAYOUT ISOLATION (STRUCTURE ONLY)
+   (Phase 3 · Step 1 — NO VISUAL CHANGE)
+========================================================= */
+
+/*
+RULE:
+- Layout is controlled by a fixed container
+- Animation will later be applied ONLY to the inner image
+- This prevents reflow during image swaps
+*/
+
+.thumbnail-frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Lock thumbnail height for editorial cards */
+.news-card .thumbnail-frame,
+.breaking-item .thumbnail-frame,
+.latest-item .thumbnail-frame {
+  height: 140px;       /* desktop baseline — matches current visual */
+}
+
+/* Ensure image fills the frame, animation-safe */
+.thumbnail-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+  /* Animation isolation — FINAL */
+  will-change: opacity, transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 
 
 /* ---------- VIEWPORT CONSTRAINT (PREMIUM READING) ---------- */
@@ -237,7 +406,6 @@ header h1 {
     inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
-/* ---------- AUTHOR CARD (PREMIUM) ---------- */
 /* =========================================================
    AUTHOR CREDIBILITY — TRUST SIGNAL (LAYER 3.1)
 ========================================================= */
@@ -267,7 +435,7 @@ header h1 {
 
 .author-name {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: #fff;
 }
 
@@ -508,9 +676,7 @@ button:hover {
   height: 130px;
   border-radius: 6px;
 }
-.news-card-body {
-  padding: 18px 0;
-}
+
 .homepage .news-card h3 {
   font-size: 22px;
   line-height: 1.3;
@@ -522,14 +688,7 @@ button:hover {
   color: #fff;
   text-decoration: none;
 }
-.news-card .meta {
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  color: #999;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
+
 .news-card .summary {
   font-size: 16px;
   color: #ccc;
@@ -538,6 +697,7 @@ button:hover {
   color: #c00;
   font-weight: bold;
 }
+
 
 /* ---------- HOMEPAGE: MORE STORIES ---------- */
 .older-stories #news-list {
@@ -555,6 +715,8 @@ button:hover {
 }
 .older-stories .news-card h3 {
   font-size: 24px;
+  margin: 0;
+  line-height: 1.2;
 }
 
 /* ---------------- TRENDING ---------------- */
@@ -920,7 +1082,9 @@ button:hover {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 40px;
+  align-items: start;
 }
+
 
 /* ---------- SIDEBAR ---------- */
 
@@ -930,8 +1094,8 @@ button:hover {
   margin-top: 0px;
 
   position: sticky;
-  top: calc(100px + 20px); /* masthead height + spacing */              /* below masthead */
-  align-self: flex-start;  /* REQUIRED for grid */
+  top: 120px; /* masthead height + spacing */              /* below masthead */
+  align-self: start;  /* REQUIRED for grid */
 }
 
 
@@ -1015,8 +1179,6 @@ button:hover {
   padding: 40px 56px 100px;
 }
 
-
-
 .news-fold {
   display: grid;
   grid-template-columns: minmax(0, 75%) minmax(0, 25%);
@@ -1035,15 +1197,11 @@ button:hover {
   max-width: 100%;
 }
 
-
 .news-right {
   padding-left: 0;
   padding-top: 6px;
   padding-bottom: 0px;   /* 🔥 THIS creates real separation */
 }
-
-
-
 
 .latest-heading {
   font-size: 14px;
@@ -1077,9 +1235,7 @@ button:hover {
   text-decoration: underline;
 }
 
-.older-stories {
-  margin-top: 0px;
-}
+
 
 /* ---------- LATEST HEADLINES (VERTICAL INSIDE SAME WIDTH) ---------- */
 
@@ -1092,7 +1248,7 @@ button:hover {
 
 .latest-item img {
   width: 100%;
-  height: 110px;
+  height: 120px;
   object-fit: cover;
   border-radius: 12px;
 }
@@ -1114,15 +1270,12 @@ button:hover {
 /* ===============================
    TODAY'S BREAKING — ALIGNMENT FIX
 ================================ */
-
-
-
 #today-breaking-list .today-text {
   flex: 1;
 }
 
 #today-breaking-list .today-breaking-thumb {
-  width: 180px;
+  width: 200px;
   height: 105px;
   object-fit: cover;
   border-radius: 8px;
@@ -1149,12 +1302,7 @@ button:hover {
   margin-bottom: 12px;
 }
 
-.article-meta {
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  color: #999;
-  margin-bottom: 22px;
-}
+
 
 /* ---------- ARTICLE CONTENT ---------- */
 
@@ -1291,15 +1439,11 @@ section {
   margin-bottom: 80px;
 }
 
-/* ⛔ DO NOT add margin after breaking block */
+
 section.news-fold {
   margin-bottom: 0 !important;
 }
 
-
-/* -----------------------------------------
-   REMOVE GAP BETWEEN BREAKING & MORE STORIES
------------------------------------------- */
 
 /* Breaking + Latest block should push content naturally */
 .news-fold {
@@ -1416,7 +1560,7 @@ img {
 }
 
 .breaking-item {
-  margin-bottom: 22px;
+  margin-bottom: 24px;
 }
 
 .breaking-item a {
@@ -1437,15 +1581,10 @@ img {
   margin-top: 6px;
 }
 
-/* Breaking News Thumbnail */
-.breaking-item {
-  margin-bottom: 32px;
-}
-
 .breaking-link {
   display: flex;
-  gap: 22px;
-  align-items: center;
+  gap: 21px;
+  align-items: flex-start;
   text-decoration: none;
   width: 100%;
   overflow: hidden;
@@ -1475,10 +1614,9 @@ img {
   margin-bottom: 2px;
 }
 
-
 .breaking-thumb {
-  width: 150px;
-  height: 90px;
+  width: 200px;
+  height: 120px;
   object-fit: cover;
   border-radius: 10px;     /* softer, premium */
   flex-shrink: 0;
@@ -1499,6 +1637,7 @@ img {
   font-size: 12px;
   color: #999;
   margin-top: 0px;
+  font-weight: 700;
 }
 
 /* ===============================
@@ -1567,8 +1706,8 @@ img {
 ================================ */
 
 .live-dot {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   background: #ff2b2b;
   border-radius: 50%;
   display: inline-block;
@@ -1627,7 +1766,7 @@ img {
 .breaking-hero img {
   width: 100%;
   max-width: 100%;
-  height: 300px;        /* 👈 fills the previous gap */
+  height: 450px;        /* 👈 fills the previous gap */
   object-fit: cover;
   border-radius: 16px;
   margin-bottom: 18px;
@@ -1652,15 +1791,6 @@ img {
 /* ===============================
    MOST READ — EDITORIAL MODULE
 ================================ */
-
-
-#trending h3 {
-  font-size: 14px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  color: #ddd;
-}
 
 #trending-list p {
   line-height: 1.6;
@@ -1687,15 +1817,13 @@ section.news-fold + section.news-section {
   margin-top: 0 !important;
 }
 #trending {
-  margin-left: 0;                     /* ❌ remove fake margin */
-  padding-left: 24px;                 /* ✅ REAL visible spacing */
-  padding-right: 20px;
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding: 20px;  /* balanced spacing */
   border-left: 3px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.04);
   max-width: 360px;
+  margin-top: 0;
 }
+
 
 /* =========================================
    ADMIN / LOGIN — LOGO SCALE BALANCE
@@ -1723,20 +1851,9 @@ body.login-page .masthead-brand h1 {
 }
 
 .older-stories .section-heading {
-  position: sticky;
-  top: 120px; /* below masthead */
-  z-index: 5;
-
-  background: #0e0e0e;
-  padding: 12px 0;
-
-  margin-bottom: 24px;
+  margin-bottom: 14px;
 }
 
-
-/* ===============================
-   TODAY'S BREAKING NEWS
-================================ */
 
 /* ===============================
    TODAY'S BREAKING NEWS — FINAL
@@ -2255,8 +2372,6 @@ body.login-page .masthead-inner {
   transform: translateY(-1px);
 }
 
-
-
 #clear-filters {
   background: rgba(255,255,255,0.04);
   color: #aaa;
@@ -2359,11 +2474,19 @@ body.login-page .masthead-inner {
 
 .archive-card {
   display: flex;
-  gap: 22px;
-  padding: 22px 0;
+  gap: 21px;
+  padding: 22px 0 22px 20px;  /* add left padding */
+  border-left: 4px solid transparent;  /* base state */
   border-bottom: 1px solid rgba(255,255,255,0.08);
   align-items: flex-start;
+  transition: all 0.25s ease;
 }
+
+.archive-card:hover {
+  border-left-color: #b30000;
+  background: rgba(255,255,255,0.02);
+}
+
 
 .archive-thumb {
   width: 220px;
@@ -2396,9 +2519,10 @@ body.login-page .masthead-inner {
 
 .archive-content .meta {
   font-size: 12px;
-  color: #999;
+  color: #aaa;
   letter-spacing: 0.4px;
   text-transform: uppercase;
+  font-weight: 700;
 }
 
 /* Mobile */
@@ -3292,8 +3416,8 @@ body.admin-page #sponsoredAd {
 }
 /* Hero summary — balanced readability */
 .breaking-hero .summary {
-  color: rgba(255, 255, 255, 0.78) !important;
-  font-weight: 400;
+  color: #ddd;
+  font-weight: 700;
 }
 /* Hero category + date — improve visibility */
 .breaking-hero .breaking-meta {
@@ -3302,48 +3426,14 @@ body.admin-page #sponsoredAd {
   letter-spacing: 0.3px;
 }
 
-/* =========================================================
-   FINAL CONTENT HIERARCHY & COLOR FIX (LOCK)
-========================================================= */
-/* 1️⃣ MAIN BREAKING NEWS — FORCE PURE WHITE TITLE */
-.breaking-hero h2 {
-  color: #ffffff !important;   /* pure white */
-  font-weight: 600 !important;
-}
-/* 2️⃣ SUMMARY TEXT — MAKE BOLD EVERYWHERE (EDITORIAL) */
-.summary,
-.breaking-text .summary,
-.breaking-hero .summary,
-.today-breaking-section .summary,
-.news-card .summary,
-.archive-content .summary {
-  font-weight: 600 !important;     /* semi-bold, readable */
-}
-
-/* 3️⃣ SECTION HEADINGS — BRAND RED */
-
-/* Latest Headlines */
-.latest-heading,
-.latest-block h3,
-.sidebar h3 {
-  color: #ff2b2b !important;
-}
-/* More Stories */
-.older-stories .section-heading,
-.older-stories h2 {
-  color: #ff2b2b !important;
-}
-/* Most Read */
-#trending h3 {
-  color: #ff2b2b !important;
-}
 
 /* =========================================================
    FINAL EDITORIAL COLOR SYSTEM (SINGLE SOURCE OF TRUTH)
 ========================================================= */
 /* 🔴 HERO (latest breaking) — pure white */
 .breaking-hero h2 {
-  color: #ffffff !important;
+  
+  color: #ddd !important;
 }
 /* 📰 STANDARD TITLES — same as Most Read */
 .breaking-item h2,
@@ -3362,7 +3452,7 @@ body.admin-page #sponsoredAd {
 .archive-content .summary,
 #latest-list p {
   color: #ddd !important;
-  font-weight: 600;
+  font-weight: 700;
 }
 /* 🕒 META (category · date) — muted but readable */
 .breaking-meta,
@@ -3378,13 +3468,13 @@ body.admin-page #sponsoredAd {
 .footer-col p,
 .footer-col ul li a,
 .footer-bottom {
-  color: #aaa !important;
+  color: #ddd !important;
 }
 /* 🔴 SECTION HEADINGS — brand red + bold */
 .latest-heading,
 .today-breaking-section .section-heading,
 .older-stories .section-heading,
-#trending h3 {
+.sidebar .section-heading {
   color: #ff2b2b !important;
   font-weight: 700;
 }
@@ -3579,10 +3669,7 @@ body.admin-page #sponsoredAd {
    MOBILE RESPONSIVE FIXES
    ===================================================== */
 
-/* ---------- GLOBAL ---------- */
-* {
-  box-sizing: border-box;
-}
+
 
 /* ---------- CONTAINERS ---------- */
 .container,
@@ -4666,40 +4753,6 @@ body.admin-page #sponsoredAd {
   }
 }
 
-/* =========================================================
-   DESKTOP FIX — MORE STORIES FULL HEIGHT THUMBNAIL
-   (SAFE OVERRIDE — DO NOT MOVE)
-========================================================= */
-
-@media (min-width: 769px) {
-
-  /* Only More Stories cards */
-  .older-stories .news-card {
-    display: grid !important;
-    grid-template-columns: 240px 1fr;
-    align-items: stretch;     /* 🔑 image matches text height */
-    gap: 28px;
-  }
-
-  /* Thumbnail fills full card height */
-  .older-stories .news-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-
-    /* Prevent animation from shifting layout */
-    display: block;
-    will-change: opacity, transform;
-  }
-
-  /* Text side stays stable */
-  .older-stories .news-card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-}
 
 /* =========================================================
    LATEST HEADLINES — META TYPOGRAPHY FIX (FINAL)
@@ -4766,3 +4819,46 @@ body.admin-page #sponsoredAd {
   text-transform: uppercase;
   color: #aaa;
 }
+
+
+
+/* =========================================================
+   DESKTOP FIX — MORE STORIES FULL HEIGHT THUMBNAIL
+   (SAFE OVERRIDE — DO NOT MOVE)
+========================================================= */
+
+@media (min-width: 769px) {
+
+  /* Only More Stories cards */
+  .older-stories .news-card {
+    display: grid !important;
+    grid-template-columns: 250px 1fr;
+    align-items: start !important;    
+    gap: 21px;
+  }
+
+  /* Thumbnail fills full card height */
+  .older-stories .news-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+
+    /* Prevent animation from shifting layout */
+    display: block;
+    will-change: opacity, transform;
+  }
+
+  /* Text side stays stable */
+  .older-stories .news-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;   /* 🔥 Align content to top */
+    gap: 3px;                     /* 🔥 Controlled spacing */
+    margin-top: 0; 
+    padding: 0px 0px;
+  }
+
+}
+
+

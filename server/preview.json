@@ -381,38 +381,6 @@
     "comments": []
   },
   {
-    "_id": "1770384196158",
-    "title": "Organic Farming Sees Growth in Medak District ",
-    "summary": "Farmers shift to chemical-free cultivation.",
-    "content": " Demand for organic produce is rising in urban markets.",
-    "category": "Agriculture",
-    "breaking": false,
-    "sponsored": false,
-    "image": "/uploads/1770384196152-10.png",
-    "images": [
-      "/uploads/1770384196152-10.png",
-      "/uploads/1770384196152-9.png"
-    ],
-    "video": null,
-    "date": "2026-02-06",
-    "author": {
-      "name": "Dinesh",
-      "photo": "/uploads/1770384196153-16.png",
-      "verified": true
-    },
-    "ads": {
-      "sponsored": {
-        "content": ""
-      },
-      "google": {
-        "enabled": false
-      }
-    },
-    "views": 0,
-    "likes": 0,
-    "comments": []
-  },
-  {
     "_id": "1770384149289",
     "title": "New Hybrid Seed Boosts Paddy Yield  ",
     "summary": "Scientists introduce high-yield rice variety.",
@@ -697,7 +665,7 @@
       }
     },
     "views": 0,
-    "likes": 0,
+    "likes": 1,
     "comments": []
   },
   {

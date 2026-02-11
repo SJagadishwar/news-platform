@@ -367,11 +367,20 @@ header h1 {
   letter-spacing: -0.3px;
 }
 
+/* =========================================================
+   ARTICLE PAGE — META TYPOGRAPHY ALIGNMENT (FINAL)
+========================================================= */
+
 #date {
-  font-size: 14px;
-  color: #999;
-  margin-bottom: 6px;
+  font-family: var(--font-primary) !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 14px;
 }
+
 
 #content {
   font-size: 20px;
@@ -521,7 +530,6 @@ button:hover {
 /* ---------------- SPONSORED / META TEXT ONLY ---------------- */
 .sponsored,
 .sponsored-label,
-.article-meta,
 .section-label,
 .engagement-bar,
 .video-label {
@@ -835,12 +843,17 @@ button:hover {
 /* ---------- COMMENTS (PREMIUM) ---------- */
 .comments-section {
   max-width: 760px;
-  margin: 70px auto;
+  margin: 30px auto 60px;
 }
 .comments-section h3 {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  color: #ff2b2b;
+  font-weight: 700;
 }
+
 .comment-form input,
 .comment-form textarea {
   width: 100%;
@@ -1242,8 +1255,8 @@ button:hover {
 .latest-item {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 30px;
+  gap: 6px;
+  margin-bottom: 18px;
 }
 
 .latest-item img {
@@ -1343,7 +1356,7 @@ button:hover {
 
 .engagement-bar {
   max-width: 720px;
-  margin: 60px auto 40px;
+  margin: 40px auto 20px;
   padding-top: 20px;
   border-top: 1px solid rgba(255,255,255,0.08);
   display: flex;
@@ -1383,7 +1396,8 @@ button:hover {
 
 .engagement-right span {
   margin-right: 6px;
-  color: #777;
+  color: #ff2b2b !important;
+  font-weight: 700 !important;
 }
 
 .engagement-right a {
@@ -1997,23 +2011,28 @@ body.login-page .masthead-inner {
 
 .article-layout {
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 48px;
+  grid-template-columns: minmax(0, 75%) minmax(0, 25%);
+  gap: 30px;
   align-items: start;
 }
+
 
 .article-sidebar {
   position: sticky;
   top: 120px;
   background: rgba(255,255,255,0.02);
   border-left: 3px solid rgba(255,255,255,0.12);
-  padding: 28px 24px;
+  padding: 16px 24px 20px;
 }
 
 .article-sidebar .latest-item {
-  padding-bottom: 18px;
-  margin-bottom: 18px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
   border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.article-sidebar .latest-item .meta {
+  margin-bottom: 4px !important;
 }
 
 
@@ -3473,7 +3492,8 @@ body.admin-page #sponsoredAd {
 .latest-heading,
 .today-breaking-section .section-heading,
 .older-stories .section-heading,
-.sidebar .section-heading {
+.sidebar .section-heading,
+.article-sidebar .section-heading {
   color: #ff2b2b !important;
   font-weight: 700;
 }
@@ -4859,5 +4879,6 @@ body.admin-page #sponsoredAd {
   }
 
 }
+
 
 

@@ -84,14 +84,37 @@ function loadAdminNews(forceRender = false) {
       ];
 
 
-      if (forceRender || SHOW_ALL_ADMIN_NEWS) {
+      if (forceRender) {
         renderAdminArticles(ALL_ADMIN_ARTICLES);
+      } else if (SHOW_ALL_ADMIN_NEWS) {
+        applyCurrentFilters();
       }
+
     })
     .catch(err => console.error("Admin news load failed", err));
 }
 
 
+
+function applyCurrentFilters() {
+  const dateVal = document.getElementById("filter-date").value;
+  const categoryVal = document.getElementById("filter-category").value;
+
+  if (!dateVal) {
+    renderAdminArticles([]);
+    return;
+  }
+
+  let filtered = [...ALL_ADMIN_ARTICLES];
+
+  filtered = filtered.filter(a => a.date === dateVal);
+
+  if (categoryVal) {
+    filtered = filtered.filter(a => a.category === categoryVal);
+  }
+
+  renderAdminArticles(filtered);
+}
 
 
 
@@ -225,6 +248,7 @@ function deleteNews(id) {
     .then(res => res.json())
     .then(() => {
       loadAdminNews();
+      applyCurrentFilters();   // 🔥 reapply filters
     });
 }
 

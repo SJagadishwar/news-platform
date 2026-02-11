@@ -964,23 +964,19 @@ button:hover {
   letter-spacing: 0.4px;
   font-weight: 700;
   color: #ffffff;
-  line-height: 1;
+  line-height: 1.5;
   margin: 0;
+  flex-direction: column;   /* Force tagline below */
+  align-items: center; 
 }
-.masthead-brand h1::after {
-  content: "";
-  display: block;
-  width: 36px;
-  height: 2px;
-  background: #b30000;
-  margin-top: 6px;
-}
+
 .masthead-brand h1 span {
+  display: block; 
   font-size: 12px;
   letter-spacing: 1.5px;
-  margin-left: 8px;
+  margin-left: 0px;
   color: #b30000;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* ---------- SECTION NAV ---------- */
@@ -2817,6 +2813,7 @@ body.login-page .masthead-inner {
   border-top: 1px solid #222;
   padding-top: 14px;
 }
+
 
 /* =========================================
    ARTICLE PAGE — FOOTER FULL-BLEED FIX
@@ -4880,5 +4877,19 @@ body.admin-page #sponsoredAd {
 
 }
 
+/* =========================================
+   FOOTER CONTACT — FINAL ALIGNMENT FIX
+========================================= */
+
+.footer-col .contact-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.footer-col .contact-line span {
+  display: inline-block;
+}
 
 

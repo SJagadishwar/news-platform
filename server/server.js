@@ -364,7 +364,7 @@ app.post("/api/send-otp", async (req, res) => {
   };
 
   await resend.emails.send({
-    from: "Sangareddy News <onboarding@resend.dev>",
+    from: "మంజీరా ధార న్యూస్ <onboarding@resend.dev>",
     to: email,
     subject: "Your Admin Login OTP",
     html: `
@@ -830,9 +830,9 @@ app.post("/api/contact", async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: `"Sangareddy News Contact" <${CONTACT_RECEIVER_EMAIL}>`,
+      from: `"మంజీరా ధార న్యూస్ Contact" <${CONTACT_RECEIVER_EMAIL}>`,
       to: CONTACT_RECEIVER_EMAIL,
-      subject: "New Contact Message – Sangareddy News",
+      subject: "New Contact Message – మంజీరా ధార న్యూస్",
       html: `
         <h3>New Contact Message</h3>
         <p><strong>Name:</strong> ${name}</p>

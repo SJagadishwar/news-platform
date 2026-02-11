@@ -2010,13 +2010,12 @@ body.login-page .masthead-inner {
   padding: 28px 24px;
 }
 
-.sidebar-heading {
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 22px;
-  color: #ddd;
+.article-sidebar .latest-item {
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 0, 0, 0.2);
 }
+
 
 #related-list a {
   display: block;

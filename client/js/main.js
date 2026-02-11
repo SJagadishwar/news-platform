@@ -532,11 +532,18 @@ function loadArticlePage() {
                       data-images='${JSON.stringify(a.images || [])}'
                       alt="${a.title}"
                     />
-                    <h4>
-                      <a href="article.html?id=${a._id}">
-                        ${a.title}
-                      </a>
-                    </h4>
+
+                    <div class="latest-text">
+                      <h4>
+                        <a href="article.html?id=${a._id}">
+                          ${a.title}
+                        </a>
+                      </h4>
+
+                      <div class="meta">
+                        ${a.category} • ${a.date}
+                      </div>
+                    </div>
                   </div>
                 `).join("")
               : `<p style="color:#777;font-size:14px;">No more articles in this category.</p>`;

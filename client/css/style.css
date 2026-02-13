@@ -5369,4 +5369,183 @@ body.admin-page #sponsoredAd {
 
 
 
+/* =====================================================
+   EPAPER GENERATOR MODULE
+   ===================================================== */
+
+.epaper-generator-box {
+  margin: 60px auto 30px auto;
+  text-align: center;
+}
+
+#generate-epaper-btn {
+  background: linear-gradient(135deg, #b30000, #7a0000);
+  color: #fff;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(179, 0, 0, 0.3);
+}
+
+#generate-epaper-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(179, 0, 0, 0.4);
+}
+
+/* ================= MODAL ================= */
+
+.epaper-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.epaper-modal.hidden {
+  display: none;
+}
+
+.epaper-modal-content {
+  background: #111;
+  width: 95%;
+  max-width: 1100px;
+  height: 95vh;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ================= HEADER ================= */
+
+.epaper-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+#close-epaper {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ================= LOADING ================= */
+
+.epaper-loading {
+  text-align: center;
+  color: #ccc;
+  margin: 30px 0;
+}
+
+/* ================= CAROUSEL ================= */
+
+.epaper-carousel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.epaper-carousel img {
+  max-height: 80vh;
+  max-width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ================= CONTROLS ================= */
+
+.epaper-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: 15px;
+}
+
+.epaper-controls button {
+  background: #b30000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.epaper-controls button:hover {
+  background: #8c0000;
+}
+
+#epaper-page-indicator {
+  color: #fff;
+  font-size: 14px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .epaper-modal-content {
+    padding: 12px;
+  }
+
+  #generate-epaper-btn {
+    width: 90%;
+  }
+}
+
+/* =========================================
+   EPAPER — LIGHT PAPER MODE FIX
+========================================= */
+
+.epaper-page {
+  background: #ffffff;
+  color: #111111;
+  font-family: var(--font-primary);
+}
+
+/* Title */
+.epaper-page h1,
+.epaper-page .epaper-title {
+  color: #111111 !important;
+  font-weight: 700;
+}
+
+/* Meta (date | category) */
+.epaper-page .epaper-meta {
+  color: #555555 !important;
+  font-weight: 600;
+}
+
+/* Body content */
+.epaper-page p,
+.epaper-page .epaper-content {
+  color: #222222 !important;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   EPAPER — CLEAN LIGHT MODE (NO FONT OVERRIDE)
+========================================================= */
+
+.epaper-page {
+  background: #ffffff;
+  color: #111111;
+}
+
 

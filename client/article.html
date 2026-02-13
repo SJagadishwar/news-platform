@@ -118,7 +118,16 @@
 
       <br />
       <a href="/">← Back to News</a>
+      
+      <!-- ============================= -->
+      <!-- EPAPER GENERATOR TRIGGER -->
+      <!-- ============================= -->
 
+      <div class="epaper-generator-box">
+        <button id="generate-epaper-btn">
+          📄 Generate ePaper Clip
+        </button>
+      </div>
     </div>
 
     <!-- RIGHT SIDEBAR -->
@@ -150,6 +159,7 @@
 
 <!-- Google Ad (Network) -->
 <div id="google-ad-slot"></div>
+
 
 
 <div class="engagement-bar">
@@ -189,6 +199,37 @@
   <div id="comments"></div>
 </div>
 
+
+
+<!-- ============================= -->
+<!-- EPAPER MODAL -->
+<!-- ============================= -->
+
+<div id="epaper-modal" class="epaper-modal hidden">
+  <div class="epaper-modal-content">
+
+    <div class="epaper-header">
+      <span>ePaper Preview</span>
+      <button id="close-epaper">&times;</button>
+    </div>
+
+    <div id="epaper-loading" class="epaper-loading">
+      Generating premium ePaper...
+    </div>
+
+    <div id="epaper-carousel" class="epaper-carousel"></div>
+
+    <div class="epaper-controls">
+      <button id="prev-epaper">←</button>
+      <span id="epaper-page-indicator"></span>
+      <button id="next-epaper">→</button>
+      <button id="download-all-epaper">Download All</button>
+      <button id="download-pdf-epaper">Download PDF</button>
+      <button id="share-epaper-btn">Share</button>
+    </div>
+
+  </div>
+</div>
 
 
 <footer class="site-footer">
@@ -300,7 +341,11 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script src="js/main.js"></script>
 </body>
 </html>
+
+

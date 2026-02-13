@@ -1393,3 +1393,355 @@ document.addEventListener("DOMContentLoaded", function() {
   overlay.addEventListener("click", closeDrawer);
 
 });
+
+
+
+
+/* =========================================================
+   EPAPER GENERATOR ENGINE
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const generateBtn = document.getElementById("generate-epaper-btn");
+  const modal = document.getElementById("epaper-modal");
+  const closeBtn = document.getElementById("close-epaper");
+  const loading = document.getElementById("epaper-loading");
+  const carousel = document.getElementById("epaper-carousel");
+  const prevBtn = document.getElementById("prev-epaper");
+  const nextBtn = document.getElementById("next-epaper");
+  const indicator = document.getElementById("epaper-page-indicator");
+  const downloadAllBtn = document.getElementById("download-all-epaper");
+
+  if (!generateBtn) return;
+
+  let pages = [];
+  let currentIndex = 0;
+
+  generateBtn.addEventListener("click", async () => {
+    modal.classList.remove("hidden");
+    loading.style.display = "block";
+    carousel.innerHTML = "";
+    pages = [];
+    currentIndex = 0;
+
+    await generateEpaperPages();
+
+    loading.style.display = "none";
+    renderPage();
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  prevBtn.addEventListener("click", () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      renderPage();
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    if (currentIndex < pages.length - 1) {
+      currentIndex++;
+      renderPage();
+    }
+  });
+
+  downloadAllBtn.addEventListener("click", () => {
+    pages.forEach((dataUrl, index) => {
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `epaper-page-${index + 1}.png`;
+      link.click();
+    });
+  });
+
+  const downloadPdfBtn = document.getElementById("download-pdf-epaper");
+  const shareBtn = document.getElementById("share-epaper-btn");
+
+if (shareBtn) {
+  shareBtn.addEventListener("click", async () => {
+    const shareUrl = window.location.href;
+    const shareTitle = document.getElementById("title")?.innerText || "News Article";
+
+    // Native Share (Mobile)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareTitle,
+          url: shareUrl
+        });
+      } catch (err) {
+        console.log("Share cancelled");
+      }
+    } else {
+      // Fallback (Desktop)
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareTitle + " " + shareUrl)}`;
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl)}`;
+
+      window.open(whatsappUrl, "_blank");
+      window.open(twitterUrl, "_blank");
+    }
+  });
+}
+
+  if (downloadPdfBtn) {
+    downloadPdfBtn.addEventListener("click", () => {
+      downloadAsPDF(pages);
+    });
+  }
+
+
+  function renderPage() {
+    if (!pages.length) return;
+
+    carousel.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = pages[currentIndex];
+    carousel.appendChild(img);
+
+    indicator.textContent = `Page ${currentIndex + 1} of ${pages.length}`;
+  }
+
+  async function generateEpaperPages() {
+    const title = document.getElementById("title").innerText;
+    const date = document.getElementById("date").innerText;
+    const category = document.getElementById("category-label").innerText;
+    const reporterEl = document.querySelector(".author-name");
+    const reporter = reporterEl ? reporterEl.innerText : "";
+    
+    const heroImg = document.getElementById("article-image");
+    const heroSrc = heroImg ? heroImg.src : null;
+
+
+    const contentDiv = document.getElementById("content");
+    const elements = Array.from(contentDiv.children);
+
+    const currentPage = document.createElement("div");
+    currentPage.style.position = "absolute";
+    currentPage.style.left = "-9999px";
+    document.body.appendChild(currentPage);
+
+    let pageWrapper = createPageWrapper(title, date, category, heroSrc, 1, reporter);
+
+
+    currentPage.appendChild(pageWrapper);
+
+    let contentWrapper = pageWrapper.querySelector(".page-content");
+
+    pages = [];
+
+    for (let el of elements) {
+      const cloned = el.cloneNode(true);
+
+      // Reset text styles for paper clarity (clean override)
+      cloned.style.color = "#000";
+      cloned.style.fontWeight = "500";
+      cloned.style.opacity = "1";
+
+      cloned.querySelectorAll("*").forEach(child => {
+        child.style.color = "#000";
+        child.style.fontWeight = "500";
+        child.style.opacity = "1";
+      });
+
+      contentWrapper.appendChild(cloned);
+
+      if (contentWrapper.scrollHeight > contentWrapper.clientHeight) {
+        contentWrapper.removeChild(cloned);
+
+        const canvas = await html2canvas(currentPage, {
+          scale: 1.5,
+          useCORS: true
+        });
+
+        pages.push(canvas.toDataURL("image/png"));
+
+        currentPage.innerHTML = "";
+        pageWrapper = createPageWrapper(title, date, category, heroSrc, pages.length + 1, reporter);
+        currentPage.appendChild(pageWrapper);
+        contentWrapper = pageWrapper.querySelector(".page-content");
+
+        contentWrapper.appendChild(cloned);
+      }
+    }
+
+    const finalCanvas = await html2canvas(currentPage, {
+      scale: 1.5,
+      useCORS: true
+    });
+
+    pages.push(finalCanvas.toDataURL("image/png"));
+
+    document.body.removeChild(currentPage); 
+  }
+
+
+  function createPageWrapper(title, date, category, imageSrc, pageNumber, reporter) {
+    const wrapper = document.createElement("div");
+    wrapper.style.height = "1130px";
+    wrapper.style.width = "800px";
+    wrapper.style.background = "#ffffff";
+    wrapper.style.padding = "35px 55px";
+    wrapper.style.boxSizing = "border-box";
+    wrapper.style.display = "flex";
+    wrapper.style.flexDirection = "column";
+    
+    wrapper.style.color = "#000";
+
+    wrapper.innerHTML = `
+      <!-- Masthead -->
+      <div style="
+        text-align:center;
+        margin-bottom:25px;
+        background:#b30000;
+        padding:9px 18px;
+      ">
+        <div style="
+          font-size:45px;
+          font-weight:800;
+          font-family: var(--font-primary);
+          color:#ffffff;
+        ">
+          మంజీరధార
+        </div>
+
+        <div style="
+          font-size:13px;
+          font-weight:700;
+          margin-top:0px;
+          color:#ffffff;
+          opacity:0.9;
+
+          text-transform:uppercase;
+          letter-spacing:1px;
+        ">
+          ${date} | ${category}
+        </div>
+      </div>
+
+      <!-- Red Separator Line -->
+      <div style="
+        height:3px;
+        background:#b30000;
+        margin:1px 0 20px 0;
+      "></div>
+
+      <!-- Headline -->
+      <h2 style="
+        font-size:30px;
+        line-height:1.25;
+        margin-bottom:2px;
+        font-weight:800;
+        text-align:left;
+        font-family: var(--font-primary);
+        color:#000;
+      ">
+        ${title}
+      </h2>
+
+      ${reporter ? `
+        <div style="
+          font-size:14px;
+          font-weight:700;
+          margin:6px 0 14px 0;
+          color:#444;
+          font-family: var(--font-primary);
+        ">
+          By ${reporter}
+        </div>
+      ` : ""}
+
+      ${imageSrc ? `
+        <img 
+          src="${imageSrc}" 
+          style="
+            width:100%;
+            height:280px;
+            object-fit:cover;
+            margin:12px 0 18px 0;
+            border-radius:0px;
+          "
+        />
+      ` : ""}
+
+      <!-- Article Content -->
+      <div 
+        class="page-content" 
+        style="
+          flex:1;
+          font-size:19px;
+          line-height:1.9;
+          text-align:justify;
+          font-family: var(--font-primary);
+          color:#000;
+          font-weight:500;
+        ">
+      </div>
+
+      <!-- Footer -->
+      <div style="
+        margin-top:25px;
+        font-size:12px;
+        font-weight:600;
+        color:#ff2b2b;
+        border-top:1px solid #ff2b2b;
+        padding-top:12px;
+        text-align:center;
+        letter-spacing:0.5px;
+      ">
+        www.manjeeradhaarnews.com
+        <span style="float:right;">Page ${pageNumber}</span>
+      </div>
+    `;
+  return wrapper;
+}
+
+});
+
+async function downloadAsPDF(pages) {
+  if (!pages || pages.length === 0) return;
+
+  const { jsPDF } = window.jspdf;
+
+  const pdf = new jsPDF({
+    orientation: "portrait",
+    unit: "px",
+    format: [800, 1130]
+  });
+
+  for (let i = 0; i < pages.length; i++) {
+    if (i > 0) pdf.addPage();
+
+    pdf.addImage(
+      pages[i],
+      "PNG",
+      0,
+      0,
+      800,
+      1130
+    );
+  }
+
+  const titleEl = document.getElementById("title");
+  const dateEl = document.getElementById("date");
+
+  let fileTitle = titleEl ? titleEl.innerText : "epaper";
+  let fileDate = dateEl ? dateEl.innerText : "";
+
+  // Clean filename (remove special characters)
+  fileTitle = fileTitle
+    .replace(/[^a-zA-Z0-9 ]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+
+  fileDate = fileDate.replace(/\s+/g, "");
+
+  const fileName = `${fileTitle}-${fileDate}.pdf`;
+
+  pdf.save(fileName);
+
+}
+

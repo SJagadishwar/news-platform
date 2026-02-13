@@ -1553,6 +1553,19 @@ if (shareBtn) {
 
 
     currentPage.appendChild(pageWrapper);
+    // 🔥 Ensure hero image inside wrapper fully loads before canvas
+    const insertedImg = currentPage.querySelector("img");
+    if (insertedImg) {
+      await new Promise(resolve => {
+        if (insertedImg.complete) {
+          resolve();
+        } else {
+          insertedImg.onload = resolve;
+          insertedImg.onerror = resolve;
+        }
+      });
+    }
+
 
     let contentWrapper = pageWrapper.querySelector(".page-content");
 
@@ -1590,6 +1603,18 @@ if (shareBtn) {
         currentPage.innerHTML = "";
         pageWrapper = createPageWrapper(title, date, category, heroSrc, pages.length + 1, reporter);
         currentPage.appendChild(pageWrapper);
+        // 🔥 Wait for hero image again (mobile safety)
+        const newInsertedImg = currentPage.querySelector("img");
+        if (newInsertedImg) {
+          await new Promise(resolve => {
+            if (newInsertedImg.complete) {
+              resolve();
+            } else {
+              newInsertedImg.onload = resolve;
+              newInsertedImg.onerror = resolve;
+            }
+          });
+        }
         contentWrapper = pageWrapper.querySelector(".page-content");
 
         contentWrapper.appendChild(cloned);
@@ -1718,8 +1743,6 @@ if (shareBtn) {
       // 🔥 MOBILE SAFE IMAGE INSERTION
       if (imageSrc) {
         const img = document.createElement("img");
-        img.src = imageSrc;
-        img.crossOrigin = "anonymous";
 
         img.style.width = "100%";
         img.style.height = "280px";
@@ -1727,9 +1750,17 @@ if (shareBtn) {
         img.style.margin = "12px 0 18px 0";
         img.style.borderRadius = "0px";
 
-        const contentDiv = wrapper.querySelector(".page-content");
-          wrapper.insertBefore(img, contentDiv);
+        // Only set crossOrigin if it's NOT base64
+        if (!imageSrc.startsWith("data:")) {
+          img.crossOrigin = "anonymous";
         }
+
+        img.src = imageSrc;
+
+        const contentDiv = wrapper.querySelector(".page-content");
+        wrapper.insertBefore(img, contentDiv);
+      }
+
   return wrapper;
 }
 

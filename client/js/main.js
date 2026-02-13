@@ -1295,26 +1295,7 @@ if (clearBtn) {
 }
 
 //MOBILE//
-/* =========================================
-   MOBILE BOTTOM NAV ACTIVE STATE
-========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  const bottomLinks = document.querySelectorAll(".mobile-bottom-nav a");
-  const path = window.location.pathname;
-
-  bottomLinks.forEach(link => {
-    link.classList.remove("active");
-
-    if (
-      (path === "/" && link.getAttribute("href") === "/") ||
-      (path.includes("archive") && link.getAttribute("href").includes("archive")) ||
-      (path.includes("contact") && link.getAttribute("href").includes("contact"))
-    ) {
-      link.classList.add("active");
-    }
-  });
-});
 
 // ===============================
 // MOBILE SECTIONS TOGGLE
@@ -1337,3 +1318,78 @@ closeBtn && closeBtn.addEventListener("click", () => {
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/sw.js");
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const navItems = document.querySelectorAll(".mobile-bottom-nav .nav-item");
+
+  function setActive(type) {
+    navItems.forEach(item => item.classList.remove("active"));
+    document.querySelector(`[data-mobile="${type}"]`)?.classList.add("active");
+  }
+
+  const path = window.location.pathname;
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category");
+
+  // ===== ROUTE DETECTION (FIXED ORDER) =====
+  if ((path === "/" || path.includes("index.html")) && !category) {
+    setActive("home");
+  }
+  else if (category && category.toLowerCase() === "latest") {
+    setActive("latest");
+  }
+  else if (path.includes("archive.html")) {
+    setActive("time");
+  }
+  else if (path.includes("contact.html")) {
+    setActive("contact");
+  }
+  else {
+    setActive("sections");
+  }
+
+
+  // ===== FORCE SECTIONS ACTIVE ON CLICK =====
+  const openBtn = document.getElementById("openSections");
+
+  openBtn?.addEventListener("click", function (e) {
+    e.preventDefault();
+    setActive("sections");
+
+    const sheet = document.getElementById("sectionsSheet");
+    sheet?.classList.add("open");
+  });
+
+});
+
+
+
+// ===============================
+// MOBILE DRAWER MENU
+// ===============================
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  const menuBtn = document.getElementById("mobileMenuBtn");
+  const drawer = document.getElementById("mobileDrawer");
+  const overlay = document.getElementById("mobileDrawerOverlay");
+  const closeBtn = document.getElementById("closeDrawer");
+
+  if (!menuBtn) return;
+
+  function openDrawer() {
+    drawer.classList.add("open");
+    overlay.classList.add("open");
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove("open");
+    overlay.classList.remove("open");
+  }
+
+  menuBtn.addEventListener("click", openDrawer);
+  closeBtn.addEventListener("click", closeDrawer);
+  overlay.addEventListener("click", closeDrawer);
+
+});

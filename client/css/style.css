@@ -1,3 +1,15 @@
+/* =========================================
+   MOBILE COMPONENTS — HIDDEN ON DESKTOP
+========================================= */
+
+
+.mobile-drawer,
+.mobile-drawer-overlay {
+  display: none;
+}
+
+
+
 /* =========================================================
    DESIGN SYSTEM — SINGLE SOURCE OF TRUTH
    (Phase 2 · Step 1 — NO VISUAL CHANGE)
@@ -422,7 +434,7 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-top: 18  px;
+  margin-top: 8px;
   margin-bottom: 24px;
   padding: 18px 20px;
   background: rgba(255,255,255,0.025);
@@ -899,17 +911,18 @@ button:hover {
 .engagement-right i {
   font-size: 16px;
 }
+
 @media (max-width: 768px) {
   .article-surface {
     max-width: 100%;
     padding: 26px 18px;
     border-radius: 0;
   }
-
   body::before,
   body::after {
     display: none;
   }
+  
 }
 
 /* =========================================================
@@ -919,11 +932,22 @@ button:hover {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: #141414;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+
+  background: linear-gradient(
+    180deg,
+    #141414 0%,
+    #0f0f0f 100%
+  );
+
+
+  border-bottom: none;
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.6);
 }
+
 .masthead-inner {
-  max-width: 1200px;
+  max-width: 1250px;
   margin: 0 auto;
   padding: 14px 56px;
   display: flex;
@@ -939,45 +963,42 @@ button:hover {
   margin-top: 0;
   gap: 0px;
 }
-.brand-seal {
-  width: 80px;
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.brand-seal img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 8px; /* keeps square clean */
-}
-.brand-seal img {
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
-}
+
 .masthead-brand h1 {
   font-family: var(--font-primary);
-  font-size: 30px;
-  letter-spacing: 0.5px;
-  margin-top: 6px;
-  letter-spacing: 0.4px;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.5;
-  margin: 0;
-  flex-direction: column;   /* Force tagline below */
-  align-items: center; 
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  line-height: 1.15;
+
+  padding: 12px 24px 10px 24px;
+
+  background: #b30000;   /* 🔥 unified brand red */
+
+  border-radius: 8px;
+}
+
+.masthead-brand h1 {
+  transition: all 0.25s ease;
+}
+
+.masthead-brand h1:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 22px rgba(225, 6, 0, 0.45),
+    inset 0 1px 0 rgba(255,255,255,0.3);
 }
 
 .masthead-brand h1 span {
-  display: block; 
-  font-size: 12px;
+  font-size: 9px;
+  font-weight: 800;
   letter-spacing: 1.5px;
-  margin-left: 0px;
-  color: #b30000;
-  font-weight: 700;
+  margin-top: 5px;
+  color: #ddd;
+  opacity: 0.85;
 }
+
+
 
 /* ---------- SECTION NAV ---------- */
 .masthead-nav {
@@ -1005,36 +1026,17 @@ button:hover {
 .masthead::after {
   content: "";
   display: block;
-  height: 6px;
+  height: 18px;
   background: linear-gradient(
     to bottom,
-    rgba(20,20,20,1),
-    rgba(14,14,14,1)
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0)
   );
+  pointer-events: none;
 }
 
-/* ---------- MOBILE ---------- */
-@media (max-width: 768px) {
-  .masthead-inner {
-    padding: 14px 32px;
-  }
-  .masthead-brand h1 {
-    font-size: 24px;
-  }
-  .masthead-nav {
-    gap: 16px;
-    overflow-x: auto;
-    padding-bottom: 6px;
-  }
-  .masthead-nav a {
-    font-size: 12px;
-    white-space: nowrap;
-  }
-  .brand-seal {
-    width: 72px;
-    height: 72px;
-  }
-}
+
+
 
 /* ---------- MOBILE TYPOGRAPHY ---------- */
 @media (max-width: 768px) {
@@ -1048,6 +1050,8 @@ button:hover {
   .news-card h3 {
     font-size: 22px;
   }
+  
+
 }
 
 /* =========================================================
@@ -1818,10 +1822,7 @@ img {
 /* =========================================
    ARTICLE PAGE — LOGO SCALE BALANCE
 ========================================= */
-body.article-page .brand-seal {
-  width: 80px;
-  height: 72px;
-}
+
 /* 🔥 REMOVE GAP BETWEEN BREAKING & MORE STORIES */
 section.news-fold + section.news-section {
   margin-top: 0 !important;
@@ -1838,11 +1839,6 @@ section.news-fold + section.news-section {
 /* =========================================
    ADMIN / LOGIN — LOGO SCALE BALANCE
 ========================================= */
-body.admin-page .brand-seal,
-body.login-page .brand-seal {
-  width: 80px;
-  height: 72px;
-}
 
 body.admin-page .masthead-brand h1,
 body.login-page .masthead-brand h1 {
@@ -2417,6 +2413,8 @@ body.login-page .masthead-inner {
   font-weight: 600;
 }
 
+
+
 .masthead-nav a.active::after {
   content: "";
   position: absolute;
@@ -2748,6 +2746,8 @@ body.login-page .masthead-inner {
   font-size: 14px;
   cursor: pointer;
 }
+
+
 
 /* ===============================
    SITE FOOTER (GLOBAL)
@@ -3526,14 +3526,7 @@ body.admin-page #sponsoredAd {
   color: #ddd !important;
 }
 
-/* =========================================================
-   🔒 MASTHEAD BRAND TEXT CONSISTENCY (FINAL)
-========================================================= */
-/* Ensure brand name + NEWS use same font */
-.masthead-brand h1,
-.masthead-brand h1 span {
-  font-family: var(--font-primary) !important;
-}
+
 
 /* =========================================================
    FINAL ARTICLE PAGE TITLE SIZE TUNE (FIXED)
@@ -3599,24 +3592,6 @@ body.admin-page #sponsoredAd {
   padding-bottom: 0;
 }
 
-@media (max-width: 768px) {
-  .masthead-inner {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .masthead-nav {
-    width: 100%;
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 6px;
-  }
-
-  .masthead-nav a {
-    padding: 8px 10px;
-    font-size: 11px;
-  }
-}
 
 /* ===============================
    MOBILE LAYOUT STACK FIX
@@ -3699,30 +3674,7 @@ body.admin-page #sponsoredAd {
    HEADER / NAV
    ===================================================== */
 
-@media (max-width: 768px) {
 
-  .masthead-inner {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .masthead-brand {
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  .masthead-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .masthead-nav a {
-    font-size: 13px;
-    padding: 6px 8px;
-  }
-}
 
 /* =====================================================
    HOMEPAGE MOBILE STACKING
@@ -3925,8 +3877,7 @@ body.admin-page #sponsoredAd {
 
 @media (max-width: 768px) {
 
-  .breaking-hero img,
-  .article-hero img {
+  .breaking-hero img {
     border-radius: 10px;
   }
 
@@ -3992,8 +3943,10 @@ body.admin-page #sponsoredAd {
 
   .mobile-bottom-nav .nav-item.active {
     color: #ff2b2b;
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(255,43,43,0.6);
   }
+
 
   /* Prevent content hiding behind bottom nav */
   body {
@@ -4040,13 +3993,42 @@ body.admin-page #sponsoredAd {
   left: 0;
   right: 0;
   bottom: -100%;
-  background: #0f0f0f;
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
-  padding: 16px;
+  background: linear-gradient(
+    180deg,
+    #141414,
+    #0e0e0e
+  );
+
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+
+  padding: 22px 18px 26px;
   z-index: 10000;
-  transition: bottom 0.3s ease;
+
+  box-shadow:
+    0 -12px 40px rgba(0,0,0,0.65),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
+  transition: bottom 0.35s ease;
 }
+
+.mobile-sections-sheet {
+  backdrop-filter: blur(18px);
+}
+
+
+.mobile-sections-sheet::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.2);
+}
+
 
 .mobile-sections-sheet.open {
   bottom: 56px; /* sits above bottom nav */
@@ -4054,19 +4036,27 @@ body.admin-page #sponsoredAd {
 
 .sheet-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 16px;
+  justify-content: center;   /* 🔥 center the title */
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.sheet-header button {
-  background: none;
-  border: none;
-  color: #aaa;
-  font-size: 18px;
+
+.sheet-header span {
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  font-weight: 700;
 }
+
+.sheet-header span {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ff2b2b;
+}
+
 
 .sheet-links {
   display: grid;
@@ -4075,14 +4065,47 @@ body.admin-page #sponsoredAd {
 }
 
 .sheet-links a {
-  padding: 12px;
-  background: #151515;
-  border-radius: 10px;
+  padding: 14px 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
+
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+
   text-align: center;
   color: #fff;
   text-decoration: none;
   font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.25s ease;
 }
+
+.sheet-links a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,43,43,0.6);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.mobile-sections-sheet.open {
+  bottom: 56px;
+  animation: sheetReveal 0.35s ease;
+}
+
+@keyframes sheetReveal {
+  from {
+    transform: translateY(20px);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 
 /* ===============================
    MOBILE FLOATING ACTIONS
@@ -4175,28 +4198,7 @@ body.admin-page #sponsoredAd {
   }
 }
 
-@media (max-width: 768px) {
 
-  .masthead-inner {
-    padding: 10px 14px;
-  }
-
-  .brand-seal {
-    width: 56px;
-    height: 56px;
-  }
-
-  .masthead-brand h1 {
-    font-size: 20px;
-    line-height: 1;
-  }
-
-  .masthead-brand h1 span {
-    font-size: 10px;
-    margin-left: 6px;
-  }
-
-}
 
 @media (max-width: 768px) {
 
@@ -4308,34 +4310,7 @@ body.admin-page #sponsoredAd {
 }
 
 
-/* =========================================
-   MOBILE — COMPACT MASTHEAD (FINAL)
-========================================= */
-@media (max-width: 768px) {
 
-  .masthead {
-    padding: 4px 0;
-  }
-
-  .masthead-inner {
-    padding: 6px 12px;
-  }
-
-  .brand-seal {
-    width: 44px;
-    height: 44px;
-  }
-
-  .masthead-brand h1 {
-    font-size: 18px;
-  }
-
-  .masthead-brand h1 span {
-    font-size: 9px;
-    letter-spacing: 1px;
-  }
-
-}
 
 /* =========================================
    MOBILE — UNIFIED STORY CARD STYLE
@@ -4407,33 +4382,6 @@ body.admin-page #sponsoredAd {
 
     background: #0e0e0e;
     padding: 8px 0;
-  }
-
-}
-
-@media (max-width: 768px) {
-
-  .masthead {
-    padding: 0;
-    border-bottom: 2px solid #ff2b2b; /* 🔴 red divider */
-  }
-
-  .masthead-inner {
-    padding: 6px 12px;
-  }
-
-  .brand-seal {
-    width: 52px;
-    height: 52px;
-  }
-
-  .masthead-brand h1 {
-    font-size: 20px;
-    line-height: 1;
-  }
-
-  .masthead-brand h1 span {
-    font-size: 10px;
   }
 
 }
@@ -4529,28 +4477,51 @@ body.admin-page #sponsoredAd {
 @media (max-width: 768px) {
 
   .masthead {
-    padding: 0;
-    border-bottom: 2px solid #ff2b2b;
+    background: #0f0f0f;
+    padding: 12px 6px;
+    border-bottom: none;
   }
 
   .masthead-inner {
-    padding: 6px 10px;
+    max-width: 100% !important;   /* 🔥 ADD THIS */
+    margin: 0 !important;  
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-
-  .brand-seal {
-    width: 48px;
-    height: 48px;
+   
+  .masthead-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    margin-right: 162px;     
   }
-
+ 
   .masthead-brand h1 {
-    font-size: 19px;
-    line-height: 1;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.1;
+    border-radius: 6px;
+    padding: 9px 14px 9px 14px;
+
+    background: #b30000 !important;
+    box-shadow: none !important;
   }
+
 
   .masthead-brand h1 span {
-    font-size: 9px;
-    letter-spacing: 1px;
-  }
+    display: block;
+    font-size: 7px;
+    letter-spacing: 0.85px;
+    margin-top: 3px; 
+    text-align: left;
+    color: #dddddd;
+
+    
+  } 
 }
 
 /* =========================================
@@ -4763,8 +4734,8 @@ body.admin-page #sponsoredAd {
   .older-stories .news-card h3,
   .older-stories .summary,
   .older-stories .meta {
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 1px;
+    padding-right: 0px;
     text-align: left;
   }
 }
@@ -4891,5 +4862,511 @@ body.admin-page #sponsoredAd {
 .footer-col .contact-line span {
   display: inline-block;
 }
+
+/*=============== MOBILE===================*/
+/* =========================================
+   MOBILE — UNIFY TODAY & MORE WITH LATEST
+========================================= */
+@media (max-width: 768px) {
+
+  /* 1️⃣ TODAY'S BREAKING → behave like latest-item */
+  .today-breaking-section .news-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+    padding: 0 0 18px 0 !important;
+    margin-bottom: 18px !important;
+    border-left: none !important;
+    border-bottom: 1px solid rgba(255,43,43,0.35);
+  }
+
+  .today-breaking-section .today-breaking-thumb {
+    width: 100% !important;
+    height: 180px !important;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  /* 2️⃣ MORE STORIES → match latest vertical stack */
+  .older-stories .news-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 9px;
+    padding: 0 0 6px 0 !important;
+    margin-bottom: 21px !important;
+    border-left: none !important;
+    border-bottom: 3px solid rgba(255,43,43,0.35);
+  }
+
+  .older-stories .news-card img {
+    width: 100% !important;
+    height: 150px !important;
+    object-fit: cover;
+    border-radius: 0px;
+  }
+
+  .older-stories .news-card:last-child {
+    border-bottom: 3px solid rgba(255,43,43,0.35) !important;
+  }
+
+}
+
+/* =========================================
+   MOBILE — TODAY BREAKING CORRECT ORDER
+========================================= */
+@media (max-width: 768px) {
+
+  .today-breaking-section .news-card {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .today-breaking-section .today-breaking-thumb {
+    order: 1;
+  }
+
+  .today-breaking-section .news-card-body {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .today-breaking-section .news-card-body h3 {
+    order: 1;
+  }
+
+  .today-breaking-section .summary {
+    order: 2;
+  }
+
+  .today-breaking-section .meta {
+    order: 3;
+  }
+
+  .today-breaking-section .news-card {
+    border-bottom: 1px solid rgba(255,43,43,0.35) !important;
+    padding-bottom: 18px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .today-breaking-section .news-card:last-child {
+    border-bottom: 1px solid rgba(255,43,43,0.35) !important;
+  }
+
+  /* 🔧 Reduce vertical gap between thumbnail and title */
+  .today-breaking-section .news-card {
+    gap: 4px !important;
+  }
+}
+
+
+/* =========================================
+   MOBILE — LATEST THUMBNAIL HEIGHT TUNE
+========================================= */
+@media (max-width: 768px) {
+
+  .latest-item img {
+    height: 150px !important;
+  }
+}
+
+/* =========================================
+   MOBILE — TITLE SIZE TUNE
+========================================= */
+@media (max-width: 768px) {
+
+  .breaking-text h2,
+  .latest-item h4,
+  .older-stories .news-card h3,
+  .today-breaking-section .news-card h3 {
+    font-size: 17px !important;
+    font-weight: 700;
+    line-height: 1.25 !important;
+    letter-spacing: -0.2px;
+  }
+  
+}
+
+/* =========================================
+   MOBILE — HERO TITLE SIZE TUNE
+========================================= */
+@media (max-width: 768px) {
+
+  .breaking-hero h2 {
+    font-size: 17px !important;
+    font-weight: 700;
+    line-height: 1.25 !important;
+  }
+
+}
+
+/* =========================================
+   MOBILE — SUMMARY SIZE REDUCTION
+========================================= */
+@media (max-width: 768px) {
+
+  .breaking-hero .summary,
+  .breaking-text .summary,
+  .today-breaking-section .summary,
+  .older-stories .summary,
+  .latest-item .summary {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
+}
+
+/* =========================================
+   MOBILE — META SIZE REDUCTION
+========================================= */
+@media (max-width: 768px) {
+
+  .breaking-meta,
+  .today-breaking-section .meta,
+  .older-stories .meta,
+  #latest-list .meta {
+    font-size: 10px !important;
+    letter-spacing: 0.3px !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .article-surface {
+    padding: 12px 16px 24px;
+  }
+
+  .article-hero {
+    margin-bottom: 12px;
+    border-radius: 0;
+    height: 220px;
+  }
+
+  .article-hero img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+@media (max-width: 768px) {
+  .article-hero,
+  .article-hero img {
+    border-radius: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #title {
+    font-size: 21px !important;
+    line-height: 1.25 !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .article-sidebar .latest-item img {
+    margin-bottom: 8px;   /* increase space below image */
+  }
+
+  .article-sidebar .latest-item h4 {
+    margin-bottom: 2px;   /* tighten title → meta */
+  }
+
+  .article-sidebar .latest-item .meta {
+    margin-top: 2px;
+  }
+
+}
+
+/* =========================================
+   MOBILE ARTICLE PAGE — MASTHEAD ALIGN FIX
+========================================= */
+@media (max-width: 768px) {
+  
+  body.article-page .masthead-inner {
+    padding: 6px 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  body.article-page .masthead-brand {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+ 
+  body.article-page .masthead-brand h1 {
+    font-size: 16px;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  body.article-page .masthead-brand h1 span {
+    font-size: 7px;
+    margin-top: 3px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE ARTICLE PAGE — ENGAGEMENT ALIGN FIX
+========================================= */
+@media (max-width: 768px) {
+
+  /* 1️⃣ Like + Share row */
+  .engagement-bar {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* 2️⃣ Discussion section wrapper */
+  .comments-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* 3️⃣ Discussion heading */
+  .comments-section h3 {
+    padding-left: 0;
+  }
+
+  /* 4️⃣ Comment form alignment */
+  .comment-form {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+}
+
+/* =========================================
+   MOBILE ARTICLE PAGE — LIKE + SHARE INLINE
+========================================= */
+@media (max-width: 768px) {
+
+  .engagement-bar {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 0 !important;
+  }
+
+  .like-pill {
+    display: flex;
+    align-items: center;
+  }
+
+  .engagement-right {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+  }
+
+}
+
+ /* =========================================
+   FOOTER CONTACT — PERFECT CENTER ALIGN
+========================================= */
+
+.footer-col {
+  text-align: center;
+}
+
+.footer-col .contact-line {
+  justify-content: center;
+}
+
+/* =========================================
+   TIME TRAVEL — ACTION BUTTONS FIX
+========================================= */
+
+.archive-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.archive-actions button {
+  flex: 1;
+  border-radius: 12px;
+}
+
+/* Clear button visual separation */
+#archive-clear {
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ccc;
+}
+
+#archive-clear:hover {
+  background: #2a2a2a;
+}
+
+.mobile-sections-sheet {
+  background: linear-gradient(
+    180deg,
+    #0e0e0e 0%,
+    #121212 100%
+  );
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,43,43,0.25);
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.sheet-header span {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #ff2b2b;
+}
+
+.sheet-links a {
+  background: linear-gradient(
+    145deg,
+    #141414,
+    #1a1a1a
+  );
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.sheet-links a:hover {
+  border-color: #ff2b2b;
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   MOBILE RIGHT DRAWER MENU (PREMIUM)
+========================================= */
+
+.mobile-menu-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .mobile-menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px 10px 27px 0px;
+       
+  }
+
+  .mobile-menu-btn span {
+    width: 27px;
+    height: 2px;
+    background: #ff2b2b;
+    display: block;
+    border-radius: 2px;
+  }
+
+  .mobile-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 9998;
+  }
+
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      #141414,
+      #0e0e0e
+    );
+    box-shadow: -8px 0 30px rgba(0,0,0,0.7);
+    transition: right 0.35s ease;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-drawer.open {
+    right: 0;
+  }
+
+  .mobile-drawer-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 12px 18px 24px;   /* reduce right padding */
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .drawer-header span {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ff2b2b;
+  }
+
+  .drawer-header button {
+    background: none;
+    border: none;
+    color: #ff2b2b;
+    font-size: 21px;
+    cursor: pointer;
+    padding: 0px;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin-left: 180px;
+  }
+
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .drawer-links a {
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    color: #ddd;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.25s ease;
+  }
+
+  .drawer-links a:hover {
+    background: rgba(255,43,43,0.15);
+    border: 1px solid rgba(255,43,43,0.5);
+  }
+
+}
+
+
+
+
 
 

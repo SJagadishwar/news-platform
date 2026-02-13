@@ -1523,20 +1523,20 @@ if (shareBtn) {
       }
     }
 
-    // 🛑 MOBILE FIX — WAIT FOR IMAGE TO LOAD
+    // 🔥 Convert hero image to Base64 (Mobile-safe canvas fix)
     if (heroSrc) {
-      await new Promise((resolve) => {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.src = heroSrc;
+      try {
+        const response = await fetch(heroSrc);
+        const blob = await response.blob();
 
-        if (img.complete) {
-          resolve();
-        } else {
-          img.onload = () => resolve();
-          img.onerror = () => resolve(); // prevent freeze
-        }
-      });
+        heroSrc = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(blob);
+        });
+      } catch (err) {
+        console.warn("Hero image conversion failed:", err);
+      }
     }
 
 
@@ -1578,7 +1578,7 @@ if (shareBtn) {
         contentWrapper.removeChild(cloned);
 
         const canvas = await html2canvas(currentPage, {
-          scale: 1.5,
+          scale: 2,
           useCORS: true,
           allowTaint: false,
           backgroundColor: "#ffffff"
@@ -1597,7 +1597,7 @@ if (shareBtn) {
     }
 
     const finalCanvas = await html2canvas(currentPage, {
-      scale: 1.5,
+      scale: 2,
       useCORS: true,
       allowTaint: false,
       backgroundColor: "#ffffff"

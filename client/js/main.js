@@ -1554,8 +1554,11 @@ if (shareBtn) {
 
         const canvas = await html2canvas(currentPage, {
           scale: 1.5,
-          useCORS: true
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: "#ffffff"
         });
+
 
         pages.push(canvas.toDataURL("image/png"));
 
@@ -1570,8 +1573,11 @@ if (shareBtn) {
 
     const finalCanvas = await html2canvas(currentPage, {
       scale: 1.5,
-      useCORS: true
+      useCORS: true,
+      allowTaint: false,
+      backgroundColor: "#ffffff"
     });
+
 
     pages.push(finalCanvas.toDataURL("image/png"));
 
@@ -1656,7 +1662,8 @@ if (shareBtn) {
 
       ${imageSrc ? `
         <img 
-          src="${imageSrc}" 
+          src="${imageSrc}"
+          crossorigin="anonymous"
           style="
             width:100%;
             height:280px;
@@ -1666,6 +1673,7 @@ if (shareBtn) {
           "
         />
       ` : ""}
+
 
       <!-- Article Content -->
       <div 

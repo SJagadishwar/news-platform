@@ -1581,8 +1581,10 @@ if (shareBtn) {
           scale: 1.5,
           useCORS: true,
           allowTaint: false,
-          backgroundColor: "#ffffff"
+          backgroundColor: "#ffffff",
+          foreignObjectRendering: true
         });
+
 
 
         pages.push(canvas.toDataURL("image/png"));
@@ -1596,15 +1598,18 @@ if (shareBtn) {
       }
     }
 
-    const finalCanvas = await html2canvas(currentPage, {
+    const canvas = await html2canvas(currentPage, {
       scale: 1.5,
       useCORS: true,
       allowTaint: false,
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
+      foreignObjectRendering: true
     });
 
 
-    pages.push(finalCanvas.toDataURL("image/png"));
+
+    pages.push(canvas.toDataURL("image/png"));
+
 
     document.body.removeChild(currentPage); 
   }
@@ -1684,22 +1689,7 @@ if (shareBtn) {
           By ${reporter}
         </div>
       ` : ""}
-
-      ${imageSrc ? `
-        <img 
-          src="${imageSrc}"
-          crossorigin="anonymous"
-          style="
-            width:100%;
-            height:280px;
-            object-fit:cover;
-            margin:12px 0 18px 0;
-            border-radius:0px;
-          "
-        />
-      ` : ""}
-
-
+      
       <!-- Article Content -->
       <div 
         class="page-content" 
@@ -1729,6 +1719,22 @@ if (shareBtn) {
         <span style="float:right;">Page ${pageNumber}</span>
       </div>
     `;
+      
+      // 🔥 MOBILE SAFE IMAGE INSERTION
+      if (imageSrc) {
+        const img = document.createElement("img");
+        img.src = imageSrc;
+        img.crossOrigin = "anonymous";
+
+        img.style.width = "100%";
+        img.style.height = "280px";
+        img.style.objectFit = "cover";
+        img.style.margin = "12px 0 18px 0";
+        img.style.borderRadius = "0px";
+
+        const contentDiv = wrapper.querySelector(".page-content");
+          wrapper.insertBefore(img, contentDiv);
+        }
   return wrapper;
 }
 

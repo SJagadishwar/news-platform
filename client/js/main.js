@@ -476,9 +476,6 @@ function loadHomepage() {
     });
 }
 
-
-
-
 /* =========================================================
    ARTICLE PAGE LOGIC
 ========================================================= */
@@ -1526,6 +1523,21 @@ if (shareBtn) {
       }
     }
 
+    // 🛑 MOBILE FIX — WAIT FOR IMAGE TO LOAD
+    if (heroSrc) {
+      await new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = heroSrc;
+
+        if (img.complete) {
+          resolve();
+        } else {
+          img.onload = () => resolve();
+          img.onerror = () => resolve(); // prevent freeze
+        }
+      });
+    }
 
 
 

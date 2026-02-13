@@ -5038,17 +5038,26 @@ body.admin-page #sponsoredAd {
     padding: 12px 16px 24px;
   }
 
+  @media (max-width: 768px) {
+
   .article-hero {
     margin-bottom: 12px;
     border-radius: 0;
     height: 220px;
+    position: relative;
   }
 
   .article-hero img {
-    height: 100%;
+    position: relative !important;   /* 🔥 CHANGE FROM absolute */
+    inset: auto !important;
+    width: 100% !important;
+    height: 220px !important;
     object-fit: cover;
+    opacity: 1 !important;           /* 🔥 remove animation effect */
   }
 }
+}
+
 @media (max-width: 768px) {
   .article-hero,
   .article-hero img {

@@ -496,6 +496,7 @@ function loadArticlePage() {
   fetch(`/api/news/${id}`)
     .then(res => res.json())
     .then(article => {
+      window.currentArticleData = article;
       qs("title").innerText = article.title;
       qs("date").innerText = article.date;
       qs("category-label").innerText = article.category || "News";
@@ -1512,22 +1513,19 @@ if (shareBtn) {
     const reporterEl = document.querySelector(".author-name");
     const reporter = reporterEl ? reporterEl.innerText : "";
     
-    const heroImg = document.getElementById("article-image");
+    // 🔥 ALWAYS use original article image (NOT slideshow state)
     let heroSrc = null;
 
-    if (heroImg && heroImg.src) {
-      heroSrc = heroImg.src;
+    if (window.currentArticleData) {
+      const article = window.currentArticleData;
 
-      // 🔥 FORCE WAIT until image fully loads (CRITICAL FIX)
-      await new Promise((resolve) => {
-        if (heroImg.complete) {
-          resolve();
-        } else {
-          heroImg.onload = resolve;
-          heroImg.onerror = resolve;
-        }
-      });
+      if (article.images && article.images.length > 0) {
+        heroSrc = article.images[0];
+      } else if (article.image) {
+        heroSrc = article.image;
+      }
     }
+
 
 
 

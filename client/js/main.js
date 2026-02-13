@@ -1608,8 +1608,7 @@ if (shareBtn) {
 
 
 
-    pages.push(canvas.toDataURL("image/png"));
-
+    pages.push(finalCanvas.toDataURL("image/png"));
 
     document.body.removeChild(currentPage); 
   }

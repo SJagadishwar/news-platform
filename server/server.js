@@ -1,3 +1,5 @@
+const fetch = require("node-fetch");
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -885,6 +887,28 @@ app.get("/login.html", (req, res) => {
 
 app.get("/admin.html", (req, res) => {
   res.sendFile(path.join(CLIENT_PATH, "admin.html"));
+});
+
+// ===============================
+// IMAGE PROXY (FOR EPAPER CANVAS)
+// ===============================
+app.get("/api/image-proxy", async (req, res) => {
+  const imageUrl = req.query.url;
+
+  if (!imageUrl) {
+    return res.status(400).send("No URL provided");
+  }
+
+  try {
+    const response = await fetch(imageUrl);
+    const buffer = await response.arrayBuffer();
+
+    res.set("Content-Type", response.headers.get("content-type"));
+    res.send(Buffer.from(buffer));
+  } catch (err) {
+    console.error("Image proxy failed:", err);
+    res.status(500).send("Image fetch failed");
+  }
 });
 
 

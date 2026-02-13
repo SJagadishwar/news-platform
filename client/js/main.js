@@ -1523,10 +1523,11 @@ if (shareBtn) {
       }
     }
 
-    // 🔥 Convert hero image to Base64 (Mobile-safe canvas fix)
-    if (heroSrc) {
+    // 🔥 Convert hero image using backend proxy (Android-safe)
+    if (heroSrc && !heroSrc.startsWith("data:")) {
       try {
-        const response = await fetch(heroSrc);
+        const proxyUrl = `/api/image-proxy?url=${encodeURIComponent(heroSrc)}`;
+        const response = await fetch(proxyUrl);
         const blob = await response.blob();
 
         heroSrc = await new Promise((resolve) => {
@@ -1538,8 +1539,6 @@ if (shareBtn) {
         console.warn("Hero image conversion failed:", err);
       }
     }
-
-
 
     const contentDiv = document.getElementById("content");
     const elements = Array.from(contentDiv.children);

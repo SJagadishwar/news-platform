@@ -4,6 +4,7 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "multer-storage-cloudinary": "^4.0.0",
+    "node-fetch": "^2.7.0",
     "resend": "^6.9.1"
   }
 }

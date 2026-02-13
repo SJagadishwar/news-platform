@@ -1581,10 +1581,8 @@ if (shareBtn) {
           scale: 1.5,
           useCORS: true,
           allowTaint: false,
-          backgroundColor: "#ffffff",
-          foreignObjectRendering: true
+          backgroundColor: "#ffffff"
         });
-
 
 
         pages.push(canvas.toDataURL("image/png"));
@@ -1598,14 +1596,12 @@ if (shareBtn) {
       }
     }
 
-    const canvas = await html2canvas(currentPage, {
+    const finalCanvas = await html2canvas(currentPage, {
       scale: 1.5,
       useCORS: true,
       allowTaint: false,
-      backgroundColor: "#ffffff",
-      foreignObjectRendering: true
+      backgroundColor: "#ffffff"
     });
-
 
 
     pages.push(finalCanvas.toDataURL("image/png"));

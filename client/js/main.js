@@ -1513,7 +1513,22 @@ if (shareBtn) {
     const reporter = reporterEl ? reporterEl.innerText : "";
     
     const heroImg = document.getElementById("article-image");
-    const heroSrc = heroImg ? heroImg.src : null;
+    let heroSrc = null;
+
+    if (heroImg && heroImg.src) {
+      heroSrc = heroImg.src;
+
+      // 🔥 FORCE WAIT until image fully loads (CRITICAL FIX)
+      await new Promise((resolve) => {
+        if (heroImg.complete) {
+          resolve();
+        } else {
+          heroImg.onload = resolve;
+          heroImg.onerror = resolve;
+        }
+      });
+    }
+
 
 
     const contentDiv = document.getElementById("content");

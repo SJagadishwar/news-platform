@@ -906,7 +906,7 @@ app.get("/sitemap.xml", async (req, res) => {
   const urls = articles.map(a => `
     <url>
       <loc>${BASE_URL}/article.html?id=${a._id}</loc>
-      <lastmod>${a.date}</lastmod>
+      <lastmod>${new Date(a.updatedAt || a.createdAt).toISOString()}</lastmod>
     </url>
   `).join("");
 

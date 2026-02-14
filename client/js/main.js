@@ -639,7 +639,7 @@ function loadArticlePage() {
 
 
       // SEO
-      document.title = `${article.title} | Sangareddy News`;
+      document.title = `${article.title} | Manjeeradhara News`;
       qs("meta-description")?.setAttribute(
         "content",
         article.summary || article.content.slice(0, 150)
@@ -651,6 +651,42 @@ function loadArticlePage() {
       );
       article.image &&
         qs("og-image")?.setAttribute("content", article.image);
+
+      // Canonical URL
+      const canonicalTag = document.getElementById("canonical-url");
+      if (canonicalTag) {
+        canonicalTag.setAttribute("href", window.location.href);
+      }
+      
+      // Structured Data (Google News)
+      const schemaTag = document.getElementById("schema");
+
+      if (schemaTag) {
+        const schemaData = {
+          "@context": "https://schema.org",
+          "@type": "NewsArticle",
+          "headline": article.title,
+          "description": article.summary || article.content.slice(0, 150),
+          "image": article.image ? [article.image] : [],
+          "datePublished": article.date,
+          "dateModified": article.date,
+          "author": {
+            "@type": "Person",
+            "name": article.author?.name || "Editorial Team"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "మంజీరధార",
+            "logo": {
+              "@type": "ImageObject",
+              "url": window.location.origin + "/assets/logo.png"
+            }
+          },
+          "mainEntityOfPage": window.location.href
+        };
+
+        schemaTag.textContent = JSON.stringify(schemaData);
+      }
 
       // Article Hero Image / Slideshow (SAME AS HOMEPAGE)
       const heroImg = qs("article-image");

@@ -893,13 +893,18 @@ app.get("/admin.html", (req, res) => {
 // IMAGE PROXY (FOR EPAPER CANVAS)
 // ===============================
 app.get("/api/image-proxy", async (req, res) => {
-  const imageUrl = req.query.url;
+  let imageUrl = req.query.url;
 
   if (!imageUrl) {
     return res.status(400).send("No URL provided");
   }
 
   try {
+    // 🔥 Handle local uploads
+    if (imageUrl.startsWith("/uploads")) {
+      imageUrl = `${BASE_URL}${imageUrl}`;
+    }
+
     const response = await fetch(imageUrl);
     const buffer = await response.arrayBuffer();
 
@@ -910,6 +915,7 @@ app.get("/api/image-proxy", async (req, res) => {
     res.status(500).send("Image fetch failed");
   }
 });
+
 
 
 /* -------------------- Start Server -------------------- */

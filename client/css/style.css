@@ -4478,7 +4478,7 @@ body.admin-page #sponsoredAd {
 
   .masthead {
     background: #0f0f0f;
-    padding: 12px 6px;
+    padding: 21px 6px;
     border-bottom: none;
   }
 
@@ -4497,7 +4497,7 @@ body.admin-page #sponsoredAd {
     align-items: flex-start;
     justify-content: center;
     text-align: left;
-    margin-right: 162px;     
+    margin-right: 200px;     
   }
  
   .masthead-brand h1 {
@@ -5277,8 +5277,8 @@ body.admin-page #sponsoredAd {
   }
 
   .mobile-menu-btn span {
-    width: 27px;
-    height: 2px;
+    width: 30px;
+    height: 3px;
     background: #ff2b2b;
     display: block;
     border-radius: 2px;
@@ -5439,7 +5439,7 @@ body.admin-page #sponsoredAd {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
+  color: #ff2b2b;
   font-weight: 700;
   margin-bottom: 10px;
 }
@@ -5447,7 +5447,7 @@ body.admin-page #sponsoredAd {
 #close-epaper {
   background: none;
   border: none;
-  color: #fff;
+  color: #ff2b2b;
   font-size: 22px;
   cursor: pointer;
 }
@@ -5509,14 +5509,38 @@ body.admin-page #sponsoredAd {
 /* ================= MOBILE ================= */
 
 @media (max-width: 768px) {
+
   .epaper-modal-content {
-    padding: 12px;
+    padding: 0px 14px 20px;
   }
 
-  #generate-epaper-btn {
-    width: 90%;
+  .epaper-header {
+    padding: 0px 4px;
   }
+
+  #close-epaper {
+    font-size: 24px;
+    margin-left: 245px;
+  }
+
+  .epaper-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 81px;
+  }
+
+    .epaper-controls button {
+    width: auto !important;        /* 🔥 override global 100% */
+    min-width: 120px;              /* optional clean size */
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+
 }
+
 
 /* =========================================
    EPAPER — LIGHT PAPER MODE FIX

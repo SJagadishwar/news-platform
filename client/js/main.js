@@ -1650,13 +1650,14 @@ if (shareBtn) {
       <!-- Masthead -->
       <div style="
         text-align:center;
-        margin-bottom:25px;
+        margin-bottom:9px;
         background:#b30000;
         padding:9px 18px;
       ">
         <div style="
           font-size:45px;
           font-weight:800;
+          margin-bottom:0px;
           font-family: var(--font-primary);
           color:#ffffff;
         ">
@@ -1714,12 +1715,13 @@ if (shareBtn) {
         class="page-content" 
         style="
           flex:1;
-          font-size:19px;
-          line-height:1.9;
+          font-size:18px;
+          line-height:1.25;
           text-align:justify;
           font-family: var(--font-primary);
           color:#000;
-          font-weight:500;
+          font-weight:600;
+          
         ">
       </div>
 
@@ -1744,10 +1746,14 @@ if (shareBtn) {
         const img = document.createElement("img");
 
         img.style.width = "100%";
-        img.style.height = "280px";
+        img.style.maxWidth = "700px";
+        img.style.height = "270px";
         img.style.objectFit = "cover";
-        img.style.margin = "12px 0 18px 0";
+        img.style.margin = "15px auto 15px auto";
+        img.style.display = "block";
         img.style.borderRadius = "0px";
+
+
 
         // Only set crossOrigin if it's NOT base64
         if (!imageSrc.startsWith("data:")) {

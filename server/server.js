@@ -513,12 +513,11 @@ app.post(
 
     // ---------- HANDLE IMAGES ----------
     const imageFiles = req.files?.images || [];
-    const imageUrls = [];
 
-    for (const img of imageFiles) {
-      const url = await uploadToR2(img, "news");
-      imageUrls.push(url);
-    }
+    const imageUrls = await Promise.all(
+      imageFiles.map(img => uploadToR2(img, "news"))
+    );
+
 
     const mainImage = imageUrls[0] || null;
 
@@ -691,11 +690,11 @@ app.put(
     let imageUrls = [];
 
     if (req.files?.images?.length) {
-      for (const img of req.files.images) {
-        const url = await uploadToR2(img, "news");
-        imageUrls.push(url);
-      }
+      imageUrls = await Promise.all(
+        req.files.images.map(img => uploadToR2(img, "news"))
+      );
     }
+
 
     let authorPhotoUrl = null;
     if (req.files?.authorPhoto?.[0]) {

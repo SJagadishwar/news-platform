@@ -1716,7 +1716,7 @@ if (shareBtn) {
         style="
           flex:1;
           font-size:18px;
-          line-height:1.25;
+          line-height:1.1;
           text-align:justify;
           font-family: var(--font-primary);
           color:#000;

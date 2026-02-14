@@ -683,6 +683,28 @@ app.put(
     // ===============================
     // PRODUCTION MODE (MongoDB)
     // ===============================
+    // ===============================
+    // PRODUCTION MODE (MongoDB)
+    // ===============================
+
+    // ---------- HANDLE IMAGES ----------
+    let imageUrls = [];
+
+    if (req.files?.images?.length) {
+      for (const img of req.files.images) {
+        const url = await uploadToR2(img, "news");
+        imageUrls.push(url);
+      }
+    }
+
+    let authorPhotoUrl = null;
+    if (req.files?.authorPhoto?.[0]) {
+      authorPhotoUrl = await uploadToR2(
+        req.files.authorPhoto[0],
+        "authors"
+      );
+    }
+
     const update = {
       title: req.body.title,
       summary: req.body.summary,
@@ -697,6 +719,18 @@ app.put(
       updatedAt: new Date()
     };
 
+    // 🔥 Replace images only if new ones uploaded
+    if (imageUrls.length > 0) {
+      update.image = imageUrls[0];
+      update.images = imageUrls;
+    }
+
+    // 🔥 Replace author photo only if new uploaded
+    if (authorPhotoUrl) {
+      update["author.photo"] = authorPhotoUrl;
+    }
+
+    // 🔥 Handle video removal
     if (req.body.video === "__REMOVE__") {
       update.video = undefined;
     } else if (req.body.video) {
@@ -705,6 +739,7 @@ app.put(
 
     await News.findByIdAndUpdate(id, update);
     res.json({ success: true });
+
   }
 );
 

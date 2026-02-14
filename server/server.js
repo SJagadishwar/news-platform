@@ -853,37 +853,45 @@ app.delete("/api/news/:id", auth, async (req, res) => {
 });
 
 // ===============================
-// CONTACT FORM API
+// CONTACT FORM API (FIXED - USING RESEND)
 // ===============================
 
 app.post("/api/contact", async (req, res) => {
-  
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
     return res.status(400).json({ success: false });
   }
 
+  if (!resend) {
+    console.error("Resend not configured");
+    return res.status(500).json({ success: false });
+  }
+
   try {
-    await transporter.sendMail({
-      from: `"మంజీరా ధార న్యూస్ Contact" <${CONTACT_RECEIVER_EMAIL}>`,
+    await resend.emails.send({
+      from: "మంజీరా ధార న్యూస్ <onboarding@resend.dev>",
       to: CONTACT_RECEIVER_EMAIL,
       subject: "New Contact Message – మంజీరా ధార న్యూస్",
       html: `
-        <h3>New Contact Message</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <div style="font-family:Arial;line-height:1.6">
+          <h3>New Contact Message</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message}</p>
+        </div>
       `
     });
 
     res.json({ success: true });
+
   } catch (err) {
     console.error("Contact form error:", err);
     res.status(500).json({ success: false });
   }
 });
+
 
 
 /* -------------------- Sitemap -------------------- */

@@ -1571,54 +1571,74 @@ if (shareBtn) {
     pages = [];
 
     for (let el of elements) {
-      const cloned = el.cloneNode(true);
 
-      // Reset text styles for paper clarity (clean override)
-      cloned.style.color = "#000";
-      cloned.style.fontWeight = "500";
-      cloned.style.opacity = "1";
+      const text = el.innerText;
+      const words = text.split(" ");
+      let tempParagraph = document.createElement("p");
 
-      cloned.querySelectorAll("*").forEach(child => {
-        child.style.color = "#000";
-        child.style.fontWeight = "500";
-        child.style.opacity = "1";
-      });
+      tempParagraph.style.color = "#000";
+      tempParagraph.style.fontWeight = "500";
 
-      contentWrapper.appendChild(cloned);
+      for (let i = 0; i < words.length; i++) {
 
-      if (contentWrapper.scrollHeight > contentWrapper.clientHeight) {
-        contentWrapper.removeChild(cloned);
+        tempParagraph.innerText += words[i] + " ";
 
-        const canvas = await html2canvas(currentPage, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: false,
-          backgroundColor: "#ffffff"
-        });
-
-
-        pages.push(canvas.toDataURL("image/png"));
-
-        currentPage.innerHTML = "";
-        pageWrapper = createPageWrapper(title, date, category, heroSrc, pages.length + 1, reporter);
-        currentPage.appendChild(pageWrapper);
-        // 🔥 Wait for hero image again (mobile safety)
-        const newInsertedImg = currentPage.querySelector("img");
-        if (newInsertedImg) {
-          await new Promise(resolve => {
-            if (newInsertedImg.complete) {
-              resolve();
-            } else {
-              newInsertedImg.onload = resolve;
-              newInsertedImg.onerror = resolve;
-            }
-          });
+        if (!contentWrapper.contains(tempParagraph)) {
+          contentWrapper.appendChild(tempParagraph);
         }
-        contentWrapper = pageWrapper.querySelector(".page-content");
 
-        contentWrapper.appendChild(cloned);
+
+        if (contentWrapper.scrollHeight > contentWrapper.clientHeight) {
+
+          tempParagraph.innerText =
+            tempParagraph.innerText.replace(words[i] + " ", "");
+
+          contentWrapper.removeChild(tempParagraph);
+
+          const canvas = await html2canvas(currentPage, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: false,
+            backgroundColor: "#ffffff"
+          });
+
+          pages.push(canvas.toDataURL("image/png"));
+
+          currentPage.innerHTML = "";
+          pageWrapper = createPageWrapper(
+            title,
+            date,
+            category,
+            heroSrc,
+            pages.length + 1,
+            reporter
+          );
+
+          currentPage.appendChild(pageWrapper);
+
+          const newImg = currentPage.querySelector("img");
+          if (newImg) {
+            await new Promise(resolve => {
+              if (newImg.complete) resolve();
+              else {
+                newImg.onload = resolve;
+                newImg.onerror = resolve;
+              }
+            });
+          }
+
+          contentWrapper = pageWrapper.querySelector(".page-content");
+
+          tempParagraph = document.createElement("p");
+          tempParagraph.style.color = "#000";
+          tempParagraph.style.fontWeight = "500";
+          tempParagraph.innerText = words[i] + " ";
+
+          contentWrapper.appendChild(tempParagraph);
+        }
       }
     }
+
 
     const finalCanvas = await html2canvas(currentPage, {
       scale: 2,
@@ -1714,14 +1734,14 @@ if (shareBtn) {
       <div 
         class="page-content" 
         style="
-          flex:1;
+          height: 650px;
+          overflow: hidden;
           font-size:18px;
-          line-height:1.1;
+          line-height:1.4;
           text-align:justify;
           font-family: var(--font-primary);
           color:#000;
           font-weight:600;
-          
         ">
       </div>
 

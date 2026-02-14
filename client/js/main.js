@@ -494,7 +494,7 @@ function loadArticlePage() {
     }
   }
 
-  if (!id || !qs("title")) return;
+  if (!id) return;
 
 
   qs("content").innerHTML = `

@@ -905,7 +905,7 @@ app.get("/sitemap.xml", async (req, res) => {
 
   const urls = articles.map(a => `
     <url>
-      <loc>${BASE_URL}/article.html?id=${a._id}</loc>
+      <loc>${BASE_URL}/news/${a._id}</loc>
       <lastmod>${new Date(a.updatedAt || a.createdAt).toISOString()}</lastmod>
     </url>
   `).join("");
@@ -919,6 +919,92 @@ app.get("/sitemap.xml", async (req, res) => {
 // ===============================
 // HTML ROUTES (PRODUCTION FIX)
 // ===============================
+// ===============================
+// SEO ARTICLE ROUTE (SERVER RENDERED)
+// ===============================
+app.get("/news/:id", async (req, res) => {
+  try {
+    const article = await News.findById(req.params.id);
+
+    if (!article) {
+      return res.status(404).send("Article not found");
+    }
+
+    const filePath = path.join(CLIENT_PATH, "article.html");
+    let html = fs.readFileSync(filePath, "utf-8");
+
+    const title = article.title + " | మంజీరధార";
+    const description = article.summary || article.content.slice(0, 160);
+    const image = article.image || "";
+    const url = `${BASE_URL}/news/${article._id}`;
+
+    // Replace meta tags
+    html = html.replace(/<title[^>]*>.*?<\/title>/,
+      `<title>${title}</title>`);
+
+    html = html.replace(
+      `<meta name="description" id="meta-description" content="" />`,
+      `<meta name="description" content="${description}" />`
+    );
+
+    html = html.replace(
+      `<meta property="og:title" id="og-title" content="" />`,
+      `<meta property="og:title" content="${title}" />`
+    );
+
+    html = html.replace(
+      `<meta property="og:description" id="og-description" content="" />`,
+      `<meta property="og:description" content="${description}" />`
+    );
+
+    html = html.replace(
+      `<meta property="og:image" id="og-image" content="" />`,
+      `<meta property="og:image" content="${image}" />`
+    );
+
+    html = html.replace(
+      `<link rel="canonical" id="canonical-url" href="" />`,
+      `<link rel="canonical" href="${url}" />`
+    );
+
+    // Structured Data
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      headline: article.title,
+      description: description,
+      image: image ? [image] : [],
+      datePublished: article.createdAt,
+      dateModified: article.updatedAt,
+      author: {
+        "@type": "Person",
+        name: article.author?.name || "Editorial Team"
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "మంజీరధార",
+        logo: {
+          "@type": "ImageObject",
+          url: `${BASE_URL}/assets/logo.png`
+        }
+      },
+      mainEntityOfPage: url
+    };
+
+    html = html.replace(
+      `<script type="application/ld+json" id="schema"></script>`,
+      `<script type="application/ld+json">${JSON.stringify(schema)}</script>`
+    );
+
+    res.send(html);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(CLIENT_PATH, "index.html"));
 });

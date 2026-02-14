@@ -502,11 +502,11 @@ function loadArticlePage() {
   fetch(`/api/news/${id}`)
     .then(res => res.json())
     .then(article => {
-      if (!article || !article._id) {
+      if (!article) {
         qs("content").innerHTML = "<p>Article not found.</p>";
         return;
       }
-
+     
       window.currentArticleData = article;
       qs("title").innerText = article.title;
       qs("date").innerText = article.date;

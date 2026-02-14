@@ -349,6 +349,31 @@
 
 <script src="js/main.js?v=5"></script>
 
+<script>
+  // SAFE FALLBACK — Only runs if content is empty
+  window.addEventListener("DOMContentLoaded", function () {
+    const contentDiv = document.getElementById("content");
+    const imageEl = document.getElementById("article-image");
+
+    if (contentDiv && contentDiv.innerHTML.trim() === "") {
+      console.log("Fallback activated — content empty");
+
+      const fallbackData = window.__ARTICLE_DATA__;
+
+      if (fallbackData) {
+        if (fallbackData.content) {
+          contentDiv.innerHTML = fallbackData.content;
+        }
+
+        if (fallbackData.image) {
+          imageEl.src = fallbackData.image;
+        }
+      }
+    }
+  });
+</script>
+
+
 </body>
 </html>
 

@@ -480,9 +480,22 @@ function loadHomepage() {
    ARTICLE PAGE LOGIC
 ========================================================= */
 function loadArticlePage() {
+  let id = null;
+
+  // 1️⃣ Check query param (old system)
   const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  id = params.get("id");
+
+  // 2️⃣ If no query param, check /news/:id route (new SEO route)
+  if (!id) {
+    const pathParts = window.location.pathname.split("/");
+    if (pathParts[1] === "news" && pathParts[2]) {
+      id = pathParts[2];
+    }
+  }
+
   if (!id || !qs("title")) return;
+
 
   qs("content").innerHTML = `
     <span class="skeleton skeleton-text"></span>

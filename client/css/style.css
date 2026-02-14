@@ -5456,7 +5456,7 @@ body.admin-page #sponsoredAd {
 
 .epaper-loading {
   text-align: center;
-  color: #ccc;
+  color: #aaa;
   margin: 30px 0;
 }
 
@@ -5515,7 +5515,7 @@ body.admin-page #sponsoredAd {
   }
 
   .epaper-header {
-    padding: 0px 4px;
+    padding: 30px 4px;
   }
 
   #close-epaper {
@@ -5527,7 +5527,7 @@ body.admin-page #sponsoredAd {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    padding-bottom: 81px;
+    padding-bottom: 50px;
   }
 
     .epaper-controls button {
@@ -5536,6 +5536,8 @@ body.admin-page #sponsoredAd {
     padding: 8px 14px;
     font-size: 13px;
     border-radius: 8px;
+    font-family: var(--font-primary);
+    font-weight: 500;
   }
 
 

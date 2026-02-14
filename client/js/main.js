@@ -920,9 +920,15 @@ function renderPagination(page, totalPages) {
 ========================================================= */
 if (isArticlePage) {
   loadArticlePage();
-} else {
+} 
+else if (
+  window.location.pathname === "/" ||
+  window.location.pathname.includes("index.html") ||
+  window.location.search.includes("category=")
+) {
   loadHomepage();
 }
+
 
 // 🔥 ALWAYS highlight active section
 highlightActiveNav();

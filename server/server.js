@@ -951,6 +951,12 @@ app.get("/api/image-proxy", async (req, res) => {
 });
 
 
+// ===============================
+// HEALTH CHECK (FOR UPTIME ROBOT)
+// ===============================
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
 
 /* -------------------- Start Server -------------------- */
 app.listen(PORT, () => {

@@ -1581,7 +1581,8 @@ if (shareBtn) {
 
       for (let i = 0; i < words.length; i++) {
 
-        tempParagraph.innerText += words[i] + " ";
+        tempParagraph.textContent += words[i] + " ";
+
 
         if (!contentWrapper.contains(tempParagraph)) {
           contentWrapper.appendChild(tempParagraph);
@@ -1737,13 +1738,15 @@ if (shareBtn) {
           height: 650px;
           overflow: hidden;
           font-size:18px;
-          line-height:1.4;
+          line-height:1.1;
           text-align:justify;
           font-family: var(--font-primary);
           color:#000;
           font-weight:600;
+          padding: 0 5px;
         ">
       </div>
+
 
       <!-- Footer -->
       <div style="

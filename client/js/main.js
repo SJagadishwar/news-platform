@@ -1898,3 +1898,24 @@ async function downloadAsPDF(pages) {
 
 }
 
+/* =========================================================
+   PAGE INITIALIZATION
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Homepage
+  if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
+    if (typeof loadHomepage === "function") {
+      loadHomepage();
+    }
+  }
+
+  // Article page
+  if (window.location.pathname.startsWith("/news/") || window.location.search.includes("id=")) {
+    if (typeof loadArticlePage === "function") {
+      loadArticlePage();
+    }
+  }
+
+});
+

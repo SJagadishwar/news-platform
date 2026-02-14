@@ -289,7 +289,7 @@ function loadHomepage() {
                 <div class="news-card-body">
 
                   <h3>
-                    <a href="article.html?id=${article._id}">
+                    <a href="/news/${article._id}">
                       ${article.title}
                     </a>
                   </h3>
@@ -330,7 +330,7 @@ function loadHomepage() {
       if (heroBreaking) {
         breakingList.innerHTML += `
           <div class="breaking-hero">
-            <a href="article.html?id=${heroBreaking._id}" class="breaking-link">
+            <a href="/news/${heroBreaking._id}" class="breaking-link">
               <img src="${heroBreaking.image}" alt="${heroBreaking.title}" />
               <h2>${heroBreaking.title}</h2>
               <p class="summary">${heroBreaking.summary || ""}</p>
@@ -349,7 +349,7 @@ function loadHomepage() {
       secondaryBreaking.forEach(article => {
         breakingList.innerHTML += `
           <div class="breaking-item">
-            <a href="article.html?id=${article._id}" class="breaking-link">
+            <a href="/news/${article._id}" class="breaking-link">
               <img 
                 src="${article.image || '/assets/news-placeholder.jpg'}"
                 class="breaking-thumb"
@@ -391,7 +391,7 @@ function loadHomepage() {
 
             <div class="latest-text">
               <h4>
-                <a href="article.html?id=${article._id}">
+                <a href="/news/${article._id}">
                   ${article.title}
                 </a>
               </h4>
@@ -428,7 +428,7 @@ function loadHomepage() {
             <div class="news-card-body">
 
               <h3>
-                <a href="article.html?id=${article._id}">
+                <a href="/news/${article._id}">
                   ${article.title}
                 </a>
               </h3>
@@ -462,7 +462,7 @@ function loadHomepage() {
         .forEach(article => {
           trendingList.innerHTML += `
             <p>
-              <a href="article.html?id=${article._id}">
+              <a href="/news/${article._id}">
                 ${article.title}
               </a>
             </p>
@@ -482,20 +482,16 @@ function loadHomepage() {
 function loadArticlePage() {
   let id = null;
 
-  // 1️⃣ Check query param (old system)
-  const params = new URLSearchParams(window.location.search);
-  id = params.get("id");
+  const pathParts = window.location.pathname.split("/");
 
-  // 2️⃣ If no query param, check /news/:id route (new SEO route)
-  if (!id) {
-    const pathParts = window.location.pathname.split("/");
-    if (pathParts[1] === "news" && pathParts[2]) {
-      id = pathParts[2];
-    }
+  if (pathParts[1] === "news" && pathParts[2]) {
+    id = pathParts[2];
+  } else {
+    const params = new URLSearchParams(window.location.search);
+    id = params.get("id");
   }
 
   if (!id) return;
-
 
   qs("content").innerHTML = `
     <span class="skeleton skeleton-text"></span>
@@ -506,6 +502,11 @@ function loadArticlePage() {
   fetch(`/api/news/${id}`)
     .then(res => res.json())
     .then(article => {
+      if (!article || !article._id) {
+        qs("content").innerHTML = "<p>Article not found.</p>";
+        return;
+      }
+
       window.currentArticleData = article;
       qs("title").innerText = article.title;
       qs("date").innerText = article.date;
@@ -546,7 +547,7 @@ function loadArticlePage() {
 
                     <div class="latest-text">
                       <h4>
-                        <a href="article.html?id=${a._id}">
+                        <a href="/news/${a._id}">
                           ${a.title}
                         </a>
                       </h4>
@@ -575,10 +576,9 @@ function loadArticlePage() {
 
           // Sidebar thumbnail slideshow (same premium animation)
           document.querySelectorAll(".sidebar-item img").forEach(img => {
-            const articleId = img.closest(".sidebar-item")
-              ?.querySelector("a")
-              ?.getAttribute("href")
-              ?.split("id=")[1];
+            const href = img.closest("a")?.getAttribute("href") || "";
+            const articleId = href.split("/news/")[1];
+
 
             if (!articleId) return;
 
@@ -592,10 +592,15 @@ function loadArticlePage() {
       }
 
 
-      qs("content").innerHTML = article.content
-        .split("\n")
-        .map(p => `<p>${p}</p>`)
-        .join("");
+      if (article.content && typeof article.content === "string") {
+        qs("content").innerHTML = article.content
+          .split("\n")
+          .map(p => `<p>${p}</p>`)
+          .join("");
+      } else {
+        qs("content").innerHTML = "<p>Content unavailable.</p>";
+      }
+
 
         // ===============================
         // RENDER SPONSORED AD (MANUAL)
@@ -833,7 +838,7 @@ function renderCategory(catData) {
   breaking.forEach(article => {
     breakingList.innerHTML += `
       <div class="breaking-item">
-        <a href="article.html?id=${article._id}" class="breaking-link">
+        <a href="/news/${article._id}" class="breaking-link">
           <img src="${article.image || '/assets/news-placeholder.jpg'}" />
           <div class="breaking-text">
             <h2>${article.title}</h2>
@@ -858,7 +863,7 @@ function renderCategory(catData) {
         <div class="news-card-body">
 
           <h3>
-            <a href="article.html?id=${article._id}">
+            <a href="/news/${article._id}">
               ${article.title}
             </a>
           </h3>
@@ -1015,7 +1020,7 @@ function fetchArchive(date) {
                 a => `
                 <div class="on-this-day-item">
                   <h3>
-                    <a href="/article.html?id=${a._id}">
+                    <a href="/news/${a._id}">
                       ${a.title}
                     </a>
                   </h3>
@@ -1058,7 +1063,7 @@ function fetchArchive(date) {
           />
           <div class="archive-content">
             <h3>
-              <a href="/article.html?id=${article._id}">
+              <a href="/news/${article._id}">
                 ${article.title}
               </a>
             </h3>

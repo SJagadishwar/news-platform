@@ -348,3 +348,78 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+/* =========================================================
+   ANALYTICS DASHBOARD
+========================================================= */
+
+function loadAnalytics() {
+
+  const token = sessionStorage.getItem("token");
+
+  // ---------- OVERVIEW ----------
+  fetch("/api/admin/analytics/overview", {
+    headers: { Authorization: "Bearer " + token }
+  })
+    .then(res => {
+      if (res.status === 401) {
+        alert("Session expired. Please login again.");
+        sessionStorage.removeItem("token");
+        window.location.href = "/login.html";
+        return Promise.reject("Unauthorized");
+      }
+      return res.json();
+    })
+    .then(data => {
+      document.getElementById("total-articles").innerText = data.totalArticles || 0;
+      document.getElementById("total-views").innerText = data.totalViews || 0;
+      document.getElementById("total-likes").innerText = data.totalLikes || 0;
+    });
+
+  // ---------- TOP ARTICLES ----------
+  fetch("/api/admin/analytics/top-articles", {
+    headers: { Authorization: "Bearer " + token }
+  })
+    .then(res => res.json())
+    .then(articles => {
+      const container = document.getElementById("top-articles-list");
+      container.innerHTML = "";
+
+      articles.forEach(a => {
+        const div = document.createElement("div");
+        div.className = "analytics-row";
+        div.innerHTML = `
+          <strong>${a.title}</strong>
+          <span>${a.views} views</span>
+        `;
+        container.appendChild(div);
+      });
+    });
+
+  // ---------- CATEGORY STATS ----------
+  fetch("/api/admin/analytics/categories", {
+    headers: { Authorization: "Bearer " + token }
+  })
+    .then(res => res.json())
+    .then(categories => {
+      const container = document.getElementById("category-stats-list");
+      container.innerHTML = "";
+
+      categories.forEach(cat => {
+        const div = document.createElement("div");
+        div.className = "analytics-row";
+        div.innerHTML = `
+          <strong>${cat._id}</strong>
+          <span>${cat.totalViews} views (${cat.totalArticles} articles)</span>
+        `;
+        container.appendChild(div);
+      });
+    });
+}
+
+
+// Load analytics when admin page loads
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.body.classList.contains("admin-page")) {
+    loadAnalytics();
+  }
+});

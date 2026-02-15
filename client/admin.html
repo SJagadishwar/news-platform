@@ -31,6 +31,37 @@
 
   <h1>Newsroom Control Desk</h1>
 
+  <!-- ===============================
+     ANALYTICS DASHBOARD
+  ================================ -->
+  <div class="admin-card" id="analytics-card">
+    <h2>📊 Performance Overview</h2>
+
+    <div class="analytics-overview">
+      <div class="analytics-box">
+        <h3 id="total-articles">0</h3>
+        <p>Total Articles</p>
+      </div>
+
+      <div class="analytics-box">
+        <h3 id="total-views">0</h3>
+        <p>Total Views</p>
+      </div>
+
+      <div class="analytics-box">
+        <h3 id="total-likes">0</h3>
+        <p>Total Likes</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:25px;">🔥 Top 10 Articles</h3>
+    <div id="top-articles-list"></div>
+
+    <h3 style="margin-top:25px;">📂 Category Performance</h3>
+    <div id="category-stats-list"></div>
+  </div>
+
+
   <button onclick="logout()" style="float:right;margin-top:-48px;">
     Logout
   </button>

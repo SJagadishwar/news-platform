@@ -12,7 +12,7 @@ const sanitizeHtml = require("sanitize-html");
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET || "SUPER_SECRET_CHANGE_THIS";
-const JWT_EXPIRES_IN = "2m";
+const JWT_EXPIRES_IN = "1h";
 
 let resend = null;
 
@@ -1077,6 +1077,76 @@ app.get("/api/image-proxy", async (req, res) => {
 
 
 // ===============================
+// ADMIN ANALYTICS - OVERVIEW
+// ===============================
+app.get("/api/admin/analytics/overview", auth, async (req, res) => {
+  try {
+    const totalArticles = await News.countDocuments();
+    const totalViewsAgg = await News.aggregate([
+      { $group: { _id: null, total: { $sum: "$views" } } }
+    ]);
+
+    const totalViews = totalViewsAgg[0]?.total || 0;
+
+    const totalLikesAgg = await News.aggregate([
+      { $group: { _id: null, total: { $sum: "$likes" } } }
+    ]);
+
+    const totalLikes = totalLikesAgg[0]?.total || 0;
+
+    res.json({
+      totalArticles,
+      totalViews,
+      totalLikes
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: "Analytics error" });
+  }
+});
+
+// ===============================
+// ADMIN ANALYTICS - TOP ARTICLES
+// ===============================
+app.get("/api/admin/analytics/top-articles", auth, async (req, res) => {
+  try {
+    const topArticles = await News.find()
+      .sort({ views: -1 })
+      .limit(10)
+      .select("title category views createdAt");
+
+    res.json(topArticles);
+
+  } catch (err) {
+    res.status(500).json({ error: "Analytics error" });
+  }
+});
+
+// ===============================
+// ADMIN ANALYTICS - CATEGORY STATS
+// ===============================
+app.get("/api/admin/analytics/categories", auth, async (req, res) => {
+  try {
+    const categoryStats = await News.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          totalArticles: { $sum: 1 },
+          totalViews: { $sum: "$views" }
+        }
+      },
+      { $sort: { totalViews: -1 } }
+    ]);
+
+    res.json(categoryStats);
+
+  } catch (err) {
+    res.status(500).json({ error: "Analytics error" });
+  }
+});
+
+
+// ===============================
 // HEALTH CHECK (FOR UPTIME ROBOT)
 // ===============================
 app.get("/health", (req, res) => {
@@ -1087,3 +1157,5 @@ app.get("/health", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+

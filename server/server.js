@@ -222,6 +222,8 @@ app.use(
 );
 
 
+
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
@@ -924,7 +926,17 @@ app.get("/sitemap.xml", async (req, res) => {
 // ===============================
 app.get("/news/:id", async (req, res) => {
   try {
-    const article = await News.findById(req.params.id);
+
+    let article = null;
+
+    if (process.env.NODE_ENV === "development") {
+      article = global.PUBLISHED_NEWS.find(
+        a => a._id === req.params.id
+      );
+    } else {
+      article = await News.findById(req.params.id);
+    }
+
 
     if (!article) {
       return res.status(404).send("Article not found");

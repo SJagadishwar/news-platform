@@ -12,7 +12,7 @@ const sanitizeHtml = require("sanitize-html");
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = process.env.JWT_SECRET || "SUPER_SECRET_CHANGE_THIS";
-const JWT_EXPIRES_IN = "3m";
+const JWT_EXPIRES_IN = "2m";
 
 let resend = null;
 

@@ -41,15 +41,22 @@ function publishNews() {
 
   fetch(url, {
     method,
-
     headers: {
       "Authorization": "Bearer " + sessionStorage.getItem("token")
     },
-
     body: formData
   })
-    .then(res => res.json())
+    .then(res => {
+      if (res.status === 401) {
+        alert("Session expired. Please login again.");
+        sessionStorage.removeItem("token");
+        window.location.href = "/login.html";
+        return Promise.reject("Unauthorized");
+      }
+      return res.json();
+    })
     .then(() => {
+
       document.getElementById("status").innerText =
         EDITING_ARTICLE_ID ? "Article updated ✅" : "News published ✅";
 
@@ -245,8 +252,17 @@ function deleteNews(id) {
       Authorization: "Bearer " + sessionStorage.getItem("token")
     }
   })
-    .then(res => res.json())
+    .then(res => {
+      if (res.status === 401) {
+        alert("Session expired. Please login again.");
+        sessionStorage.removeItem("token");
+        window.location.href = "/login.html";
+        return Promise.reject("Unauthorized");
+      }
+      return res.json();
+    })
     .then(() => {
+
       loadAdminNews();
       applyCurrentFilters();   // 🔥 reapply filters
     });

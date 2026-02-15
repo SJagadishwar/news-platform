@@ -9,6 +9,10 @@ const mongoose = require("mongoose");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const { Resend } = require("resend");
 const sanitizeHtml = require("sanitize-html");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.JWT_SECRET || "SUPER_SECRET_CHANGE_THIS";
+const JWT_EXPIRES_IN = "3m";
 
 let resend = null;
 
@@ -229,14 +233,23 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 /* -------------------- Auth -------------------- */
 function auth(req, res, next) {
-  const token = (req.headers.authorization || "").replace("Bearer ", "").trim();
+  const token = (req.headers.authorization || "")
+    .replace("Bearer ", "")
+    .trim();
 
-  if (token === "secure-token") {
-    return next();
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized" });
   }
 
-  return res.status(401).json({ error: "Unauthorized" });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.admin = decoded;
+    return next();
+  } catch (err) {
+    return res.status(401).json({ error: "Invalid or expired token" });
+  }
 }
+
 
 
 /* -------------------- News APIs -------------------- */
@@ -411,9 +424,15 @@ app.post("/api/verify-otp", (req, res) => {
   // OTP verified — delete it
   delete otpStore[email];
 
+  const token = jwt.sign(
+    { email },
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN }
+  );
+
   res.json({
     success: true,
-    token: "secure-token"
+    token
   });
 });
 

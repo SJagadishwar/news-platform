@@ -28,43 +28,63 @@
 
 
 <div class="container">
+  <div class="admin-dashboard-wrapper">
+    <!-- ADMIN TABS -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="analytics">Analytics</button>
+      <button class="admin-tab" data-tab="publish">Publish</button>
+      <button class="admin-tab" data-tab="published">Published</button>
+    </div>
+    <div class="admin-header">
+      <div>
+        <h1>Newsroom Control Desk</h1>
+        <p class="admin-subtitle">Media Intelligence Dashboard</p>
+      </div>
 
-  <h1>Newsroom Control Desk</h1>
+      <button onclick="logout()" class="logout-btn">
+        Logout
+      </button>
+    </div>
+
 
   <!-- ===============================
-     ANALYTICS DASHBOARD
+      ANALYTICS DASHBOARD
   ================================ -->
-  <div class="admin-card" id="analytics-card">
+  <div class="admin-section active" id="analytics">
+
+    <div class="admin-card">
+
     <h2>📊 Performance Overview</h2>
 
     <div class="analytics-overview">
-      <div class="analytics-box">
-        <h3 id="total-articles">0</h3>
-        <p>Total Articles</p>
+
+      <div class="analytics-box gradient-1">
+        <div class="stat-number" id="total-articles">0</div>
+        <div class="stat-label">Total Articles</div>
       </div>
 
-      <div class="analytics-box">
-        <h3 id="total-views">0</h3>
-        <p>Total Views</p>
+      <div class="analytics-box gradient-2">
+        <div class="stat-number" id="total-views">0</div>
+        <div class="stat-label">Total Views</div>
       </div>
 
-      <div class="analytics-box">
-        <h3 id="total-likes">0</h3>
-        <p>Total Likes</p>
+      <div class="analytics-box gradient-3">
+        <div class="stat-number" id="total-likes">0</div>
+        <div class="stat-label">Total Likes</div>
       </div>
+
     </div>
+
+
 
     <h3 style="margin-top:25px;">🔥 Top 10 Articles</h3>
     <div id="top-articles-list"></div>
 
     <h3 style="margin-top:25px;">📂 Category Performance</h3>
     <div id="category-stats-list"></div>
-  </div>
+    </div> <!-- CLOSE admin-card -->
+    </div> <!-- CLOSE analytics section -->
 
-
-  <button onclick="logout()" style="float:right;margin-top:-48px;">
-    Logout
-  </button>
 
   <!-- AUTH CHECK -->
   <script>
@@ -74,8 +94,10 @@
   </script>
 
   <!-- PUBLISH NEWS -->
-  <div class="admin-card">
-    <h2>Publish News</h2>
+  <div class="admin-section" id="publish">
+    <div class="admin-card">
+      <h2>Publish News</h2>
+
 
     <input id="title" placeholder="News Title" />
 
@@ -167,14 +189,17 @@
     </button>
 
     <p id="status"></p>
+    </div> <!-- CLOSE admin-card -->
+    </div> <!-- CLOSE publish section -->
 
-  </div>
+
   
   <!-- PUBLISHED NEWS -->
-  <div class="admin-card">
-    <h2>Published News</h2>
-    
-    <div style="margin: 12px 0;">
+  <div class="admin-section" id="published">
+    <div class="admin-card">
+          <h2>Published News</h2>
+
+    <div class="admin-published-wrapper">
       <div class="admin-filter-bar">
 
         <div class="filter-group">
@@ -193,19 +218,21 @@
             <option>Agriculture</option>
           </select>
         </div>
-
         <div class="filter-actions">
           <button id="show-all-news">Show All</button>
           <button id="clear-filters">Clear</button>
         </div>
-
       </div>
-
-
-    <div id="admin-news-list"></div>
+      <div id="admin-news-list">
+        <div class="admin-empty-state" style="display:none;">
+          No articles found.
+        </div>
+      </div>
+    </div>
   </div>
+</div> <!-- CLOSE admin-dashboard-wrapper -->
+</div> <!-- CLOSE MAIN CONTAINER -->
 
-</div>
 
 <script src="/js/admin.js"></script>
 

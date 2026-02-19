@@ -203,11 +203,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const categoryVal = document.getElementById("filter-category").value;
 
       // 🚫 Date is mandatory
-      if (!dateVal) {
-        renderAdminArticles([]);
-        alert("Please select a date to view published news.");
+      if (!dateVal && !categoryVal) {
+        renderAdminArticles(ALL_ADMIN_ARTICLES);
         return;
       }
+
 
       SHOW_ALL_ADMIN_NEWS = true;
 
@@ -229,17 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-const categoryFilter = document.getElementById("filter-category");
-const clearFiltersBtn = document.getElementById("clear-filters");
 
-
-
-clearFiltersBtn.addEventListener("click", () => {
-  SHOW_ALL_ADMIN_NEWS = false;
-  document.getElementById("filter-date").value = "";
-  categoryFilter.value = "All";
-  renderAdminArticles([]);
-});
 
 
 
@@ -370,9 +360,9 @@ function loadAnalytics() {
       return res.json();
     })
     .then(data => {
-      document.getElementById("total-articles").innerText = data.totalArticles || 0;
-      document.getElementById("total-views").innerText = data.totalViews || 0;
-      document.getElementById("total-likes").innerText = data.totalLikes || 0;
+      animateValue("total-articles", data.totalArticles || 0);
+      animateValue("total-views", data.totalViews || 0);
+      animateValue("total-likes", data.totalLikes || 0);
     });
 
   // ---------- TOP ARTICLES ----------
@@ -423,3 +413,47 @@ document.addEventListener("DOMContentLoaded", () => {
     loadAnalytics();
   }
 });
+
+/* =========================================================
+   ADMIN TAB SWITCHING
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const tabs = document.querySelectorAll(".admin-tab");
+  const sections = document.querySelectorAll(".admin-section");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+
+      tabs.forEach(t => t.classList.remove("active"));
+      sections.forEach(s => s.classList.remove("active"));
+
+      tab.classList.add("active");
+
+      const target = tab.getAttribute("data-tab");
+      document.getElementById(target).classList.add("active");
+
+    });
+  });
+
+});
+
+function animateValue(id, end) {
+  const element = document.getElementById(id);
+  const duration = 800;
+  const start = 0;
+  const range = end - start;
+  let current = start;
+  const increment = range / (duration / 16);
+
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= end) {
+      element.innerText = end;
+      clearInterval(timer);
+    } else {
+      element.innerText = Math.floor(current);
+    }
+  }, 16);
+}

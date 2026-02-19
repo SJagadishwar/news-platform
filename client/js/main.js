@@ -723,10 +723,12 @@ function loadArticlePage() {
 
         if (images.length > 0) {
 
-          // Always show first image
           heroImg.src = images[0];
 
-          // Only start slideshow if more than 1
+          // 🔥 FORCE VISIBILITY FOR SINGLE IMAGE
+          heroImg.style.opacity = "1";
+          heroImg.style.transform = "none";
+
           if (images.length > 1) {
             startSlideshow(heroImg, images, "slide");
           }

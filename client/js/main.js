@@ -1939,3 +1939,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+
+
+
+/* =========================================
+   SEARCH OVERLAY ENGINE
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const openBtn = document.getElementById("open-search-overlay");
+  const closeBtn = document.getElementById("close-search-overlay");
+  const overlay = document.getElementById("search-overlay");
+  const searchInput = document.getElementById("search-input");
+  const resultsContainer = document.getElementById("search-results");
+
+  if (!openBtn) return;
+
+  openBtn.addEventListener("click", () => {
+    overlay.classList.remove("hidden");
+    searchInput.focus();
+  });
+
+  closeBtn.addEventListener("click", () => {
+    overlay.classList.add("hidden");
+    resultsContainer.innerHTML = "";
+    searchInput.value = "";
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      overlay.classList.add("hidden");
+    }
+  });
+
+  searchInput.addEventListener("input", async () => {
+    const query = searchInput.value.trim();
+
+    if (!query) {
+      resultsContainer.innerHTML = "";
+      return;
+    }
+
+    const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+    const data = await res.json();
+
+    if (!data.articles.length) {
+      resultsContainer.innerHTML = "<p style='color:#888;'>No results found.</p>";
+      return;
+    }
+
+    resultsContainer.innerHTML = data.articles.map(article => `
+      <div class="news-card">
+        <h3>
+          <a href="/news/${article._id}">
+            ${article.title}
+          </a>
+        </h3>
+        <p>${article.summary || ""}</p>
+      </div>
+    `).join("");
+
+  });
+
+});

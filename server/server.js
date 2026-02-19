@@ -1153,6 +1153,53 @@ app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
 
+/* ================================
+   SEARCH API
+================================ */
+
+app.get("/api/search", async (req, res) => {
+  const { q } = req.query;
+
+  if (!q || q.trim() === "") {
+    return res.json({ articles: [] });
+  }
+
+  const keyword = q.trim();
+
+  // ===============================
+  // LOCAL PREVIEW MODE
+  // ===============================
+  if (process.env.NODE_ENV === "development") {
+    const results = global.PUBLISHED_NEWS.filter(article =>
+      article.title?.toLowerCase().includes(keyword.toLowerCase()) ||
+      article.summary?.toLowerCase().includes(keyword.toLowerCase()) ||
+      article.content?.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    return res.json({ articles: results });
+  }
+
+  // ===============================
+  // PRODUCTION MODE (MongoDB)
+  // ===============================
+  try {
+    const results = await News.find({
+      $or: [
+        { title: { $regex: keyword, $options: "i" } },
+        { summary: { $regex: keyword, $options: "i" } },
+        { content: { $regex: keyword, $options: "i" } }
+      ]
+    })
+    .sort({ createdAt: -1 })
+    .limit(20);
+
+    res.json({ articles: results });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Search failed" });
+  }
+});
+
 /* -------------------- Start Server -------------------- */
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

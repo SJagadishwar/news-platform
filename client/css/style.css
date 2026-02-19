@@ -5864,3 +5864,280 @@ body.admin-page #sponsoredAd {
 .admin-published-wrapper {
   margin: 12px 0;
 }
+
+/* =========================================
+   EDITORIAL SEARCH — PREMIUM MODE
+========================================= */
+
+.editorial-search {
+  margin: 40px 0 60px;
+  position: relative;
+}
+
+.editorial-search-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.02)
+  );
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.search-box:focus-within {
+  border-color: rgba(255,0,0,0.6);
+  box-shadow:
+    0 0 0 2px rgba(255,0,0,0.2),
+    0 10px 40px rgba(255,0,0,0.15);
+}
+
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 18px 22px;
+  font-size: 16px;
+  color: #fff;
+  outline: none;
+}
+
+.search-box input::placeholder {
+  color: #888;
+  letter-spacing: 0.3px;
+}
+
+.search-box button {
+  width: 70px;
+  height: 60px;
+  background: #b30000;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-box button:hover {
+  background: #ff1a1a;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("data:image/svg+xml,%3Csvg fill='white' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 2a8 8 0 105.3 14.1l4.3 4.3 1.4-1.4-4.3-4.3A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z'/%3E%3C/svg%3E");
+}
+
+/* ===============================
+   SEARCH RESULTS
+================================ */
+
+.search-results {
+  margin-top: 30px;
+  animation: fadeSearch 0.4s ease;
+}
+
+@keyframes fadeSearch {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.search-results .news-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.02)
+  );
+  padding: 20px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 18px;
+  transition: all 0.25s ease;
+}
+
+.search-results .news-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,0,0,0.4);
+}
+
+.search-results h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.search-results p {
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* =========================================
+   FULLSCREEN SEARCH OVERLAY
+========================================= */
+
+/* =========================
+   NAV SEARCH ICON FIX
+========================= */
+
+.search-toggle {
+  background: transparent;
+  border: none;
+  color: #ff2b2b;
+  font-size: 15px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  transition: all 0.25s ease;
+}
+
+.search-toggle svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;   /* makes SVG use brand red */
+}
+
+
+.search-toggle:hover {
+  background: rgba(255, 43, 43, 0.12);
+  transform: translateY(-1px);
+}
+
+
+.search-toggle i {
+  font-size: 14px;
+}
+
+.search-toggle svg {
+  display: block;
+}
+
+
+
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  padding-top: 120px;
+  transition: opacity 0.3s ease;
+}
+
+.search-overlay.hidden {
+  display: none;
+}
+
+.search-overlay-inner {
+  width: 100%;
+  max-width: 900px;
+  padding: 0 30px;
+}
+
+.search-overlay-header {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.search-overlay-header input {
+  flex: 1;
+  padding: 18px 22px;
+  font-size: 20px;
+  background: transparent;
+  border: 2px solid #444;
+  border-radius: 12px;
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-overlay-header input:focus {
+  border-color: #ff2b2b;
+  box-shadow: 0 0 20px rgba(255,43,43,0.3);
+}
+
+.search-overlay-header button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.search-overlay-results .news-card {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  transition: 0.25s ease;
+}
+
+.search-overlay-results .news-card:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* =========================================
+   PREMIUM NAV SEARCH ICON
+========================================= */
+
+.masthead-nav {
+  display: flex;
+  align-items: center;   /* 🔥 ensures vertical alignment */
+}
+
+.masthead-nav .search-toggle {
+  background: transparent;
+  border: none;
+  padding: 0px 0px 10px 0px;
+  margin-left: 0px;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.masthead-nav .search-toggle svg {
+  width: 20px;
+  height: 20px;
+
+  stroke: #ff2b2b;       /* brand red */
+  stroke-width: 2.4;     /* 🔥 stronger weight */
+  fill: none;
+
+  transition: all 0.25s ease;
+}
+
+/* Premium hover effect */
+.masthead-nav .search-toggle:hover svg {
+  stroke: #ff2b2b;
+  filter: drop-shadow(0 0 6px rgba(255, 43, 43, 0.5));
+  transform: scale(1.08);
+}
+

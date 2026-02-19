@@ -4497,7 +4497,7 @@ body.admin-page #sponsoredAd {
     align-items: flex-start;
     justify-content: center;
     text-align: left;
-    margin-right: 200px;     
+    margin-right: 175px;     
   }
  
   .masthead-brand h1 {
@@ -6101,10 +6101,7 @@ body.admin-page #sponsoredAd {
    PREMIUM NAV SEARCH ICON
 ========================================= */
 
-.masthead-nav {
-  display: flex;
-  align-items: center;   /* 🔥 ensures vertical alignment */
-}
+
 
 .masthead-nav .search-toggle {
   background: transparent;

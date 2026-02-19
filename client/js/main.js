@@ -710,17 +710,35 @@ function loadArticlePage() {
       const heroImg = qs("article-image");
 
       if (heroImg) {
-        const images = article.images && article.images.length > 0
-          ? article.images
-          : article.image
-            ? [article.image]
-            : [];
+
+        // 🔥 Normalize image structure safely
+        let images = [];
+
+        if (Array.isArray(article.images) && article.images.length > 0) {
+          images = article.images;
+        } 
+        else if (article.image && typeof article.image === "string") {
+          images = [article.image];
+        }
 
         if (images.length > 0) {
+
+          // Always show first image
           heroImg.src = images[0];
-          startSlideshow(heroImg, images, "slide");
+
+          // Only start slideshow if more than 1
+          if (images.length > 1) {
+            startSlideshow(heroImg, images, "slide");
+          }
+
+        } else {
+
+          // 🔥 Fallback placeholder (prevents black box)
+          heroImg.src = "/assets/news-placeholder.jpg";
+
         }
       }
+
 
       // Author
       if (article.author && qs("author-box")) {

@@ -1409,9 +1409,10 @@ if (sheet) {
 
     // Only allow dragging downward (positive deltaY)
     if (deltaY > 0) {
+      e.preventDefault();        // 🔥 block pull-to-refresh on real mobile
       sheet.style.transform = `translateY(${deltaY}px)`;
     }
-  }, { passive: true });
+  }, { passive: false });        // must be non-passive to allow preventDefault
 
   sheet.addEventListener("touchend", () => {
     if (!isDragging) return;

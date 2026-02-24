@@ -1530,7 +1530,7 @@ document.addEventListener("DOMContentLoaded", () => {
     pages.forEach((dataUrl, index) => {
       const link = document.createElement("a");
       link.href = dataUrl;
-      link.download = `epaper-page-${index + 1}.png`;
+      link.download = `epaper-page-${index + 1}.jpg`;
       link.click();
     });
   });
@@ -1567,7 +1567,7 @@ if (shareBtn) {
 
   if (downloadPdfBtn) {
     downloadPdfBtn.addEventListener("click", () => {
-      downloadAsPDF(pages);
+      downloadAsJPG(pages);
     });
   }
 
@@ -1683,7 +1683,7 @@ if (shareBtn) {
             backgroundColor: "#ffffff"
           });
 
-          pages.push(canvas.toDataURL("image/png"));
+          pages.push(canvas.toDataURL("image/jpeg", 0.92));
 
           currentPage.innerHTML = "";
           pageWrapper = createPageWrapper(
@@ -1729,7 +1729,7 @@ if (shareBtn) {
     });
 
 
-    pages.push(finalCanvas.toDataURL("image/png"));
+    pages.push(finalCanvas.toDataURL("image/jpeg", 0.92));
 
     document.body.removeChild(currentPage); 
   }
@@ -1874,29 +1874,8 @@ if (shareBtn) {
 
 });
 
-async function downloadAsPDF(pages) {
+function downloadAsJPG(pages) {
   if (!pages || pages.length === 0) return;
-
-  const { jsPDF } = window.jspdf;
-
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "px",
-    format: [800, 1130]
-  });
-
-  for (let i = 0; i < pages.length; i++) {
-    if (i > 0) pdf.addPage();
-
-    pdf.addImage(
-      pages[i],
-      "PNG",
-      0,
-      0,
-      800,
-      1130
-    );
-  }
 
   const titleEl = document.getElementById("title");
   const dateEl = document.getElementById("date");
@@ -1912,10 +1891,15 @@ async function downloadAsPDF(pages) {
 
   fileDate = fileDate.replace(/\s+/g, "");
 
-  const fileName = `${fileTitle}-${fileDate}.pdf`;
+  pages.forEach((dataUrl, index) => {
+    const suffix = pages.length > 1 ? `-page${index + 1}` : "";
+    const fileName = `${fileTitle}-${fileDate}${suffix}.jpg`;
 
-  pdf.save(fileName);
-
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = fileName;
+    link.click();
+  });
 }
 
 /* =========================================================

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title id="meta-title">News Article | మంజీరా ధార</title>
   <meta name="description" id="meta-description" content="" />
@@ -7,18 +8,17 @@
   <meta property="og:description" id="og-description" content="" />
   <meta property="og:type" content="article" />
   <meta property="og:image" id="og-image" content="" />
-  
+
   <link rel="canonical" id="canonical-url" href="" />
 
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#b30000">
-  
-  
 
-  <meta http-equiv="Content-Security-Policy"
-  content="
+
+
+  <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     img-src 'self' https: data: blob:;
     style-src 'self' 'unsafe-inline' https:;
@@ -31,328 +31,321 @@
   <!-- Premium Fonts Test Pack -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="/css/style.css?v=4" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <script type="application/ld+json" id="schema"></script>
-<script async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
 </script>
 
 <body class="article-page">
 
-<header class="masthead">
-  <div class="masthead-inner">
-    <div class="masthead-brand masthead-centered">
-      
-      <h1>
-        మంజీరధార
-        <span>ప్రతి క్షణం ప్రజల పక్షం</span>
-      </h1>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="masthead-brand masthead-centered">
+
+        <h1>
+          మంజీరధార
+          <span>ప్రతి క్షణం ప్రజల పక్షం</span>
+        </h1>
+      </div>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="masthead-nav">
+        <a href="/" data-nav="home">HOME</a>
+        <a href="/?category=Politics" data-nav="politics">POLITICS</a>
+        <a href="/?category=Local" data-nav="local">LOCAL</a>
+        <a href="/?category=Crime" data-nav="crime">CRIME</a>
+        <a href="/?category=Sports" data-nav="sports">SPORTS</a>
+        <a href="/?category=Agriculture" data-nav="agriculture">AGRICULTURE</a>
+        <a href="/archive.html" data-nav="time-travel">TIME TRAVEL</a>
+      </nav>
     </div>
+  </header>
 
-    <button class="mobile-menu-btn" id="mobileMenuBtn">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+  <div class="container">
 
-    <nav class="masthead-nav">
-      <a href="/" data-nav="home">HOME</a>
-      <a href="/?category=Politics" data-nav="politics">POLITICS</a>
-      <a href="/?category=Local" data-nav="local">LOCAL</a>
-      <a href="/?category=Crime" data-nav="crime">CRIME</a>
-      <a href="/?category=Sports" data-nav="sports">SPORTS</a>
-      <a href="/?category=Agriculture" data-nav="agriculture">AGRICULTURE</a>
-      <a href="/archive.html" data-nav="time-travel">TIME TRAVEL</a>
-    </nav>
-  </div>
-</header>
+    <div class="article-layout">
 
-<div class="container">
+      <!-- MAIN ARTICLE -->
+      <div class="article-surface">
 
-  <div class="article-layout">
+        <!-- HERO IMAGE / SLIDESHOW -->
+        <div class="article-hero">
+          <img id="article-image" />
+        </div>
 
-    <!-- MAIN ARTICLE -->
-    <div class="article-surface">
 
-      <!-- HERO IMAGE / SLIDESHOW -->
-      <div class="article-hero">
-        <img id="article-image" />
+        <!-- TITLE -->
+        <h1 id="title"></h1>
+
+        <!-- META -->
+        <div class="article-meta">
+          <span id="category-label"></span> • <span id="date"></span>
+        </div>
+
+        <!-- AUTHOR -->
+        <div id="author-box" class="author-box"></div>
+
+
+
+
+        <!-- ARTICLE CONTENT -->
+        <div id="content" class="article-content"></div>
+
+        <div id="article-video" class="article-video" style="display:none;">
+          <a id="article-video-link" class="article-video-card" href="#" target="_blank" rel="noopener">
+            <span class="video-icon">▶</span>
+            <div class="video-text">
+              <div class="video-label">VIDEO REPORT</div>
+              <div class="video-title">Watch related coverage</div>
+            </div>
+          </a>
+        </div>
+
+
+        <br />
+        <a href="/">← Back to News</a>
+
+        <!-- ============================= -->
+        <!-- EPAPER GENERATOR TRIGGER -->
+        <!-- ============================= -->
+
+        <div class="epaper-generator-box">
+          <button id="generate-epaper-btn">
+            📄 Generate ePaper Clip
+          </button>
+        </div>
       </div>
 
+      <!-- RIGHT SIDEBAR -->
+      <aside class="article-sidebar">
 
-      <!-- TITLE -->
-      <h1 id="title"></h1>
+        <h2 class="section-heading">
+          Latest in <span id="sidebar-category"></span>
+        </h2>
 
-      <!-- META -->
-      <div class="article-meta">
-        <span id="category-label"></span> • <span id="date"></span>
-      </div>
+        <div id="related-list"></div>
 
-      <!-- AUTHOR -->
-    <div id="author-box" class="author-box"></div>
-
-      
+      </aside>
 
 
-      <!-- ARTICLE CONTENT -->
-      <div id="content" class="article-content"></div>
-
-      <div id="article-video" class="article-video" style="display:none;">
-        <a
-          id="article-video-link"
-          class="article-video-card"
-          href="#"
-          target="_blank"
-          rel="noopener"
-        >
-          <span class="video-icon">▶</span>
-          <div class="video-text">
-            <div class="video-label">VIDEO REPORT</div>
-            <div class="video-title">Watch related coverage</div>
-          </div>
-        </a>
-      </div>
-      
-
-      <br />
-      <a href="/">← Back to News</a>
-      
-      <!-- ============================= -->
-      <!-- EPAPER GENERATOR TRIGGER -->
-      <!-- ============================= -->
-
-      <div class="epaper-generator-box">
-        <button id="generate-epaper-btn">
-          📄 Generate ePaper Clip
-        </button>
-      </div>
     </div>
-
-    <!-- RIGHT SIDEBAR -->
-    <aside class="article-sidebar">
-
-      <h2 class="section-heading">
-        Latest in <span id="sidebar-category"></span>
-      </h2>
-
-      <div id="related-list"></div>
-
-    </aside>
-
-
-  </div>
 
 
 
     <div id="sponsored-ad-slot"></div>
-    
+
     <div id="ad-slot-article"></div>
 
     <br />
-    
+
 
   </div>
 
-</div>
+  </div>
 
-<!-- Google Ad (Network) -->
-<div id="google-ad-slot"></div>
+  <!-- Google Ad (Network) -->
+  <div id="google-ad-slot"></div>
 
 
 
-<div class="engagement-bar">
-  <div class="engagement-left">
-    <span id="like-btn" class="like-pill">
-      <i class="fa-regular fa-heart"></i>
-      <span id="like-count">0</span>
-    </span>
+  <div class="engagement-bar">
+    <div class="engagement-left">
+      <span id="like-btn" class="like-pill">
+        <i class="fa-regular fa-heart"></i>
+        <span id="like-count">0</span>
+      </span>
+
+    </div>
+
+    <div class="engagement-right">
+      <span>Share:</span>
+      <a id="wa-share" title="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+      <a id="fb-share" title="Facebook">
+        <i class="fa-brands fa-facebook"></i>
+      </a>
+      <a id="tw-share" title="X">
+        <i class="fa-brands fa-x-twitter"></i>
+      </a>
+    </div>
 
   </div>
 
-  <div class="engagement-right">
-    <span>Share:</span>
-    <a id="wa-share" title="WhatsApp">
-      <i class="fa-brands fa-whatsapp"></i>
-    </a>
-    <a id="fb-share" title="Facebook">
-      <i class="fa-brands fa-facebook"></i>
-    </a>
-    <a id="tw-share" title="X">
-      <i class="fa-brands fa-x-twitter"></i>
-    </a>
+
+  <div class="comments-section">
+    <h3>Discussion</h3>
+
+    <div class="comment-form">
+      <input id="comment-name" placeholder="Name" />
+      <textarea id="comment-text" placeholder="Add your comment"></textarea>
+      <button id="comment-btn">Post</button>
+    </div>
+
+    <div id="comments"></div>
   </div>
 
-</div>
 
 
-<div class="comments-section">
-  <h3>Discussion</h3>
+  <!-- ============================= -->
+  <!-- EPAPER MODAL -->
+  <!-- ============================= -->
 
-  <div class="comment-form">
-    <input id="comment-name" placeholder="Name" />
-    <textarea id="comment-text" placeholder="Add your comment"></textarea>
-    <button id="comment-btn">Post</button>
-  </div>
+  <div id="epaper-modal" class="epaper-modal hidden">
+    <div class="epaper-modal-content">
 
-  <div id="comments"></div>
-</div>
-
-
-
-<!-- ============================= -->
-<!-- EPAPER MODAL -->
-<!-- ============================= -->
-
-<div id="epaper-modal" class="epaper-modal hidden">
-  <div class="epaper-modal-content">
-
-    <div class="epaper-header">
-      <span>ePaper Preview</span>
-      <button id="close-epaper">&times;</button>
-    </div>
-
-    <div id="epaper-loading" class="epaper-loading">
-      Generating premium ePaper...
-    </div>
-
-    <div id="epaper-carousel" class="epaper-carousel"></div>
-
-    <div class="epaper-controls">
-      <button id="prev-epaper">←</button>
-      <span id="epaper-page-indicator"></span>
-      <button id="next-epaper">→</button>
-      <button id="download-all-epaper">Download All</button>
-      <button id="download-pdf-epaper">Download PDF</button>
-      <button id="share-epaper-btn">Share</button>
-    </div>
-
-  </div>
-</div>
-
-
-<footer class="site-footer">
-
-  <div class="footer-inner">
-
-    <!-- ABOUT -->
-    <div class="footer-col">
-      <h4>మంజీరధార</h4>
-      <p>
-        మంజీరధార is a digital-first local news platform
-        delivering verified, timely, and responsible journalism
-        focused on Sangareddy and surrounding regions.
-      </p>
-    </div>
-
-    <!-- SECTIONS -->
-    <div class="footer-col">
-      <h4>News Sections</h4>
-      <ul>
-        <li><a href="/?category=Politics">Politics</a></li>
-        <li><a href="/?category=Local">Local</a></li>
-        <li><a href="/?category=Crime">Crime</a></li>
-        <li><a href="/?category=Sports">Sports</a></li>
-        <li><a href="/?category=Agriculture">Agriculture</a></li>
-        <li><a href="/archive.html">Time Travel</a></li>
-      </ul>
-    </div>
-
-    <!-- INFORMATION -->
-    <div class="footer-col">
-      <h4>Information</h4>
-      <ul>
-        <li><a href="/about.html">About Us</a></li>
-        <li><a href="/contact.html">Contact Us</a></li>
-        <li><a href="/editorial-policy.html">Editorial Policy</a></li>
-        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-        <li><a href="/terms.html">Terms & Conditions</a></li>
-        <li><a href="/disclaimer.html">Disclaimer</a></li>
-      </ul>
-    </div>
-
-    <!-- CONTACT -->
-    <div class="footer-col">
-      <h4>Contact</h4>
-
-      <div class="contact-line">
-        <span>📍</span>
-        <span>Sangareddy, Telangana, India</span>
+      <div class="epaper-header">
+        <span>ePaper Preview</span>
+        <button id="close-epaper">&times;</button>
       </div>
 
-      <div class="contact-line">
-        <span>📧</span>
-        <span>contact@manjeeradhaarnews.com</span>
+      <div id="epaper-loading" class="epaper-loading">
+        Generating premium ePaper...
+      </div>
+
+      <div id="epaper-carousel" class="epaper-carousel"></div>
+
+      <div class="epaper-controls">
+        <button id="prev-epaper">←</button>
+        <span id="epaper-page-indicator"></span>
+        <button id="next-epaper">→</button>
+        <button id="download-all-epaper">Download All</button>
+        <button id="download-pdf-epaper">Download JPG</button>
+        <button id="share-epaper-btn">Share</button>
       </div>
 
     </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    © 2026 మంజీరధార. All rights reserved.
-  </div>
-
-</footer>
-
-<nav class="mobile-bottom-nav">
-  <a href="/" class="nav-item" data-mobile="home">Home</a>
-  
-  <a href="#" class="nav-item" id="openSections" data-mobile="sections">Sections</a>
-  <a href="/archive.html" class="nav-item" data-mobile="time">Time Travel</a>
-  <a href="/contact.html" class="nav-item" data-mobile="contact">Contact</a>
-</nav>
-
-<!-- MOBILE SECTIONS SHEET -->
-<div class="mobile-sections-sheet" id="sectionsSheet">
-  <div class="sheet-header">
-    <span>Sections</span>
   </div>
 
 
-  <div class="sheet-links">
-    <a href="/?category=Politics">Politics</a>
-    <a href="/?category=Local">Local</a>
-    <a href="/?category=Crime">Crime</a>
-    <a href="/?category=Sports">Sports</a>
-    <a href="/?category=Agriculture">Agriculture</a>
-    <a href="/archive.html">Time Travel</a>
+  <footer class="site-footer">
+
+    <div class="footer-inner">
+
+      <!-- ABOUT -->
+      <div class="footer-col">
+        <h4>మంజీరధార</h4>
+        <p>
+          మంజీరధార is a digital-first local news platform
+          delivering verified, timely, and responsible journalism
+          focused on Sangareddy and surrounding regions.
+        </p>
+      </div>
+
+      <!-- SECTIONS -->
+      <div class="footer-col">
+        <h4>News Sections</h4>
+        <ul>
+          <li><a href="/?category=Politics">Politics</a></li>
+          <li><a href="/?category=Local">Local</a></li>
+          <li><a href="/?category=Crime">Crime</a></li>
+          <li><a href="/?category=Sports">Sports</a></li>
+          <li><a href="/?category=Agriculture">Agriculture</a></li>
+          <li><a href="/archive.html">Time Travel</a></li>
+        </ul>
+      </div>
+
+      <!-- INFORMATION -->
+      <div class="footer-col">
+        <h4>Information</h4>
+        <ul>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+          <li><a href="/editorial-policy.html">Editorial Policy</a></li>
+          <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms & Conditions</a></li>
+          <li><a href="/disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="footer-col">
+        <h4>Contact</h4>
+
+        <div class="contact-line">
+          <span>📍</span>
+          <span>Sangareddy, Telangana, India</span>
+        </div>
+
+        <div class="contact-line">
+          <span>📧</span>
+          <span>contact@manjeeradhaarnews.com</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 మంజీరధార. All rights reserved.
+    </div>
+
+  </footer>
+
+  <nav class="mobile-bottom-nav">
+    <a href="/" class="nav-item" data-mobile="home">Home</a>
+
+    <a href="#" class="nav-item" id="openSections" data-mobile="sections">Sections</a>
+    <a href="/archive.html" class="nav-item" data-mobile="time">Time Travel</a>
+    <a href="/contact.html" class="nav-item" data-mobile="contact">Contact</a>
+  </nav>
+
+  <!-- MOBILE SECTIONS SHEET -->
+  <div class="mobile-sections-sheet" id="sectionsSheet">
+    <div class="sheet-header">
+      <span>Sections</span>
+    </div>
+
+
+    <div class="sheet-links">
+      <a href="/?category=Politics">Politics</a>
+      <a href="/?category=Local">Local</a>
+      <a href="/?category=Crime">Crime</a>
+      <a href="/?category=Sports">Sports</a>
+      <a href="/?category=Agriculture">Agriculture</a>
+      <a href="/archive.html">Time Travel</a>
+    </div>
   </div>
-</div>
 
-<!-- MOBILE DRAWER MENU -->
-<div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div> 
+  <!-- MOBILE DRAWER MENU -->
+  <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
 
-<div class="mobile-drawer" id="mobileDrawer">
+  <div class="mobile-drawer" id="mobileDrawer">
 
-  <div class="drawer-header">
-    <span>Menu</span>
-    <button id="closeDrawer">&times;</button>
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="closeDrawer">&times;</button>
+    </div>
+
+    <div class="drawer-links">
+      <a href="/about.html">About Us</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms & Conditions</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </div>
+
   </div>
 
-  <div class="drawer-links">
-    <a href="/about.html">About Us</a>
-    <a href="/editorial-policy.html">Editorial Policy</a>
-    <a href="/privacy-policy.html">Privacy Policy</a>
-    <a href="/terms.html">Terms & Conditions</a>
-    <a href="/disclaimer.html">Disclaimer</a>
-  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script src="/js/main.js?v=5"></script>
+  <script src="/js/main.js?v=5"></script>
 
 
 
 
 </body>
+
 </html>
-
-

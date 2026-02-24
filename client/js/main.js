@@ -213,8 +213,8 @@ function highlightActiveNav() {
   document
     .querySelector('.masthead-nav a[data-nav="home"]')
     ?.classList.add("active");
-    
-  }
+
+}
 
 /* =========================================================
    HOMEPAGE LOGIC
@@ -256,7 +256,7 @@ function loadHomepage() {
       latestList && (latestList.innerHTML = "");
       newsList.innerHTML = "";
       trendingList && (trendingList.innerHTML = "");
-      
+
 
       /* -------- BREAKING -------- */
       const breaking = data
@@ -319,7 +319,7 @@ function loadHomepage() {
             const images = JSON.parse(img.dataset.images || "[]");
             startSlideshow(img, images, "slide");
 
-          } catch (e) {}
+          } catch (e) { }
         });
       }
 
@@ -340,14 +340,14 @@ function loadHomepage() {
             </a>
           </div>
         `;
-      setTimeout(() => {
-        const heroImg = document.querySelector(".breaking-hero img");
-        startSlideshow(heroImg, heroBreaking.images, "slide");
-      }, 100);
+        setTimeout(() => {
+          const heroImg = document.querySelector(".breaking-hero img");
+          startSlideshow(heroImg, heroBreaking.images, "slide");
+        }, 100);
 
 
-      secondaryBreaking.forEach(article => {
-        breakingList.innerHTML += `
+        secondaryBreaking.forEach(article => {
+          breakingList.innerHTML += `
           <div class="breaking-item">
             <a href="/news/${article._id}" class="breaking-link">
               <img 
@@ -365,16 +365,16 @@ function loadHomepage() {
             </a>
           </div>
         `;
-      });
+        });
 
-      // 🔴 Secondary Breaking — SLIDE animation
-      document.querySelectorAll(".breaking-thumb").forEach(img => {
-        try {
-          const images = JSON.parse(img.dataset.images || "[]");
-          startSlideshow(img, images, "slide");
-        } catch (e) {}
-      });
-    }
+        // 🔴 Secondary Breaking — SLIDE animation
+        document.querySelectorAll(".breaking-thumb").forEach(img => {
+          try {
+            const images = JSON.parse(img.dataset.images || "[]");
+            startSlideshow(img, images, "slide");
+          } catch (e) { }
+        });
+      }
 
 
       /* -------- LATEST (TOP 2 NON-BREAKING) -------- */
@@ -410,7 +410,7 @@ function loadHomepage() {
         try {
           const images = JSON.parse(img.dataset.images || "[]");
           startSlideshow(img, images, "slide");
-        } catch (e) {}
+        } catch (e) { }
       });
 
 
@@ -449,11 +449,11 @@ function loadHomepage() {
         try {
           const images = JSON.parse(img.dataset.images || "[]");
           startSlideshow(img, images, "slide");
-        } catch (e) {}
+        } catch (e) { }
       });
 
 
-      
+
       /* -------- MOST READ (by views) -------- */
       data
         .slice()
@@ -469,7 +469,7 @@ function loadHomepage() {
           `;
         });
 
-        
+
     })
     .catch(err => {
       console.error("Homepage load failed", err);
@@ -506,7 +506,7 @@ function loadArticlePage() {
         qs("content").innerHTML = "<p>Article not found.</p>";
         return;
       }
-     
+
       window.currentArticleData = article;
       qs("title").innerText = article.title;
       qs("date").innerText = article.date;
@@ -561,34 +561,34 @@ function loadArticlePage() {
               : `<p style="color:#777;font-size:14px;">No more articles in this category.</p>`;
           });
 
-          // 🔵 Animate latest thumbnails in article page sidebar
-          setTimeout(() => {
-            document
-              .querySelectorAll("#related-list .latest-item img")
-              .forEach(img => {
-                try {
-                  const images = JSON.parse(img.dataset.images || "[]");
-                  startSlideshow(img, images, "slide");
-                } catch (e) {}
-              });
-          }, 100);
-
-
-          // Sidebar thumbnail slideshow (same premium animation)
-          document.querySelectorAll(".sidebar-item img").forEach(img => {
-            const href = img.closest("a")?.getAttribute("href") || "";
-            const articleId = href.split("/news/")[1];
-
-
-            if (!articleId) return;
-
-            fetch(`/api/news/${articleId}`)
-              .then(res => res.json())
-              .then(a => {
-                const images = a.images && a.images.length > 1 ? a.images : [];
+        // 🔵 Animate latest thumbnails in article page sidebar
+        setTimeout(() => {
+          document
+            .querySelectorAll("#related-list .latest-item img")
+            .forEach(img => {
+              try {
+                const images = JSON.parse(img.dataset.images || "[]");
                 startSlideshow(img, images, "slide");
-              });
-          });
+              } catch (e) { }
+            });
+        }, 100);
+
+
+        // Sidebar thumbnail slideshow (same premium animation)
+        document.querySelectorAll(".sidebar-item img").forEach(img => {
+          const href = img.closest("a")?.getAttribute("href") || "";
+          const articleId = href.split("/news/")[1];
+
+
+          if (!articleId) return;
+
+          fetch(`/api/news/${articleId}`)
+            .then(res => res.json())
+            .then(a => {
+              const images = a.images && a.images.length > 1 ? a.images : [];
+              startSlideshow(img, images, "slide");
+            });
+        });
       }
 
 
@@ -602,27 +602,27 @@ function loadArticlePage() {
       }
 
 
-        // ===============================
-        // RENDER SPONSORED AD (MANUAL)
-        // ===============================
-        const sponsoredSlot = document.getElementById("sponsored-ad-slot");
+      // ===============================
+      // RENDER SPONSORED AD (MANUAL)
+      // ===============================
+      const sponsoredSlot = document.getElementById("sponsored-ad-slot");
 
-        if (
-          sponsoredSlot &&
-          article.ads &&
-          article.ads.sponsored &&
-          article.ads.sponsored.content &&
-          article.ads.sponsored.content.trim() !== ""
-        ) {
-          sponsoredSlot.innerHTML = `
+      if (
+        sponsoredSlot &&
+        article.ads &&
+        article.ads.sponsored &&
+        article.ads.sponsored.content &&
+        article.ads.sponsored.content.trim() !== ""
+      ) {
+        sponsoredSlot.innerHTML = `
             <div class="sponsored-label">Sponsored</div>
             ${article.ads.sponsored.content}
           `;
-        } else if (sponsoredSlot) {
-          sponsoredSlot.innerHTML = "";
-        }
+      } else if (sponsoredSlot) {
+        sponsoredSlot.innerHTML = "";
+      }
 
-      
+
       // ---------------- ARTICLE VIDEO ----------------
       const videoContainer = document.getElementById("article-video");
       const videoLink = document.getElementById("article-video-link");
@@ -642,7 +642,7 @@ function loadArticlePage() {
         videoContainer.innerHTML = ""; // 🔥 FORCE RESET
       }
 
-      
+
       // 🔐 Count view ONLY ONCE per user (lifetime)
       const viewKey = `viewed_once_${article._id}`;
 
@@ -675,7 +675,7 @@ function loadArticlePage() {
       if (canonicalTag) {
         canonicalTag.setAttribute("href", window.location.href);
       }
-      
+
       // Structured Data (Google News)
       const schemaTag = document.getElementById("schema");
 
@@ -716,7 +716,7 @@ function loadArticlePage() {
 
         if (Array.isArray(article.images) && article.images.length > 0) {
           images = article.images;
-        } 
+        }
         else if (article.image && typeof article.image === "string") {
           images = [article.image];
         }
@@ -748,11 +748,10 @@ function loadArticlePage() {
           <img src="${article.author.photo}">
           <div class="author-details">
             <div class="author-name">${article.author.name}</div>
-            ${
-              article.author.verified
-                ? `<div class="author-verified">✔ Verified Reporter</div>`
-                : ""
-            }
+            ${article.author.verified
+            ? `<div class="author-verified">✔ Verified Reporter</div>`
+            : ""
+          }
           </div>
         `;
       }
@@ -904,7 +903,7 @@ function renderCategory(catData) {
     try {
       const images = JSON.parse(img.dataset.images || "[]");
       startSlideshow(img, images, "slide");
-    } catch (e) {}
+    } catch (e) { }
   });
 }
 
@@ -945,7 +944,7 @@ function renderPagination(page, totalPages) {
 ========================================================= */
 if (isArticlePage) {
   loadArticlePage();
-} 
+}
 else if (
   window.location.pathname === "/" ||
   window.location.pathname.includes("index.html") ||
@@ -986,11 +985,11 @@ document.addEventListener("click", e => {
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  
+
   // ================================
   // TIME TRAVELER – CATEGORY PILLS
   // ================================
-  
+
 
   document.querySelectorAll(".archive-categories button").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -1036,8 +1035,8 @@ function fetchArchive(date) {
           <div class="on-this-day-card">
             <h2>On This Day</h2>
             ${highlights
-              .map(
-                a => `
+            .map(
+              a => `
                 <div class="on-this-day-item">
                   <h3>
                     <a href="/news/${a._id}">
@@ -1047,8 +1046,8 @@ function fetchArchive(date) {
                   <p>${a.summary}</p>
                 </div>
               `
-              )
-              .join("")}
+            )
+            .join("")}
           </div>
         `;
       }
@@ -1102,7 +1101,7 @@ function fetchArchive(date) {
         try {
           const images = JSON.parse(img.dataset.images || "[]");
           startSlideshow(img, images, "rotate");
-        } catch (e) {}
+        } catch (e) { }
       });
     });
 }
@@ -1130,7 +1129,7 @@ function goBack() {
 
 
 // 🚀 PREVIEW MODE LAUNCH DATE (first-ever article date)
-const launchDate = new Date(2026, 1, 6, 12, 0, 0); 
+const launchDate = new Date(2026, 1, 6, 12, 0, 0);
 // Month is 0-based → Feb = 1
 
 /* =========================
@@ -1148,7 +1147,7 @@ function updateBreadcrumb() {
   }
 
   if (selectedMonth) {
-    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     parts.push(monthNames[selectedMonth - 1]);
   }
 
@@ -1243,13 +1242,13 @@ function showMonths() {
   monthView.classList.remove("hidden");
 
   monthsGrid.innerHTML = "";
-  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   months.forEach((m, idx) => {
     const div = document.createElement("div");
     div.textContent = m;
 
-    const monthKeyPrefix = `${selectedYear}-${String(idx + 1).padStart(2,"0")}`;
+    const monthKeyPrefix = `${selectedYear}-${String(idx + 1).padStart(2, "0")}`;
 
     const hasMonthData = availableArchiveDates.some(d =>
       d.startsWith(monthKeyPrefix)
@@ -1390,6 +1389,55 @@ closeBtn && closeBtn.addEventListener("click", () => {
   sheet.classList.remove("open");
 });
 
+/* ---- DRAG-TO-CLOSE for Sections Sheet ---- */
+if (sheet) {
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+  sheet.addEventListener("touchstart", (e) => {
+    startY = e.touches[0].clientY;
+    currentY = startY;
+    isDragging = true;
+    sheet.style.transition = "none"; // disable transition while dragging
+  }, { passive: true });
+
+  sheet.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    currentY = e.touches[0].clientY;
+    const deltaY = currentY - startY;
+
+    // Only allow dragging downward (positive deltaY)
+    if (deltaY > 0) {
+      sheet.style.transform = `translateY(${deltaY}px)`;
+    }
+  }, { passive: true });
+
+  sheet.addEventListener("touchend", () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const deltaY = currentY - startY;
+
+    // Re-enable transition for smooth snap/close
+    sheet.style.transition = "transform 0.3s ease, bottom 0.35s ease";
+
+    if (deltaY > 80) {
+      // Dragged far enough → close the sheet
+      sheet.style.transform = "";
+      sheet.classList.remove("open");
+    } else {
+      // Snap back
+      sheet.style.transform = "translateY(0)";
+    }
+
+    // Clean up inline transform after transition
+    setTimeout(() => {
+      sheet.style.transform = "";
+      sheet.style.transition = "";
+    }, 350);
+  });
+}
+
 // ===============================
 // PWA SERVICE WORKER
 // ===============================
@@ -1447,7 +1495,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // MOBILE DRAWER MENU
 // ===============================
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
   const menuBtn = document.getElementById("mobileMenuBtn");
   const drawer = document.getElementById("mobileDrawer");
@@ -1538,32 +1586,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const downloadPdfBtn = document.getElementById("download-pdf-epaper");
   const shareBtn = document.getElementById("share-epaper-btn");
 
-if (shareBtn) {
-  shareBtn.addEventListener("click", async () => {
-    const shareUrl = window.location.href;
-    const shareTitle = document.getElementById("title")?.innerText || "News Article";
+  if (shareBtn) {
+    shareBtn.addEventListener("click", async () => {
+      const shareUrl = window.location.href;
+      const shareTitle = document.getElementById("title")?.innerText || "News Article";
 
-    // Native Share (Mobile)
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: shareTitle,
-          text: shareTitle,
-          url: shareUrl
-        });
-      } catch (err) {
-        console.log("Share cancelled");
+      // Native Share (Mobile)
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: shareTitle,
+            text: shareTitle,
+            url: shareUrl
+          });
+        } catch (err) {
+          console.log("Share cancelled");
+        }
+      } else {
+        // Fallback (Desktop)
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareTitle + " " + shareUrl)}`;
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl)}`;
+
+        window.open(whatsappUrl, "_blank");
+        window.open(twitterUrl, "_blank");
       }
-    } else {
-      // Fallback (Desktop)
-      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareTitle + " " + shareUrl)}`;
-      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl)}`;
-
-      window.open(whatsappUrl, "_blank");
-      window.open(twitterUrl, "_blank");
-    }
-  });
-}
+    });
+  }
 
   if (downloadPdfBtn) {
     downloadPdfBtn.addEventListener("click", () => {
@@ -1589,7 +1637,7 @@ if (shareBtn) {
     const category = document.getElementById("category-label").innerText;
     const reporterEl = document.querySelector(".author-name");
     const reporter = reporterEl ? reporterEl.innerText : "";
-    
+
     // 🔥 ALWAYS use original article image (NOT slideshow state)
     let heroSrc = null;
 
@@ -1731,7 +1779,7 @@ if (shareBtn) {
 
     pages.push(finalCanvas.toDataURL("image/jpeg", 0.92));
 
-    document.body.removeChild(currentPage); 
+    document.body.removeChild(currentPage);
   }
 
 
@@ -1744,7 +1792,7 @@ if (shareBtn) {
     wrapper.style.boxSizing = "border-box";
     wrapper.style.display = "flex";
     wrapper.style.flexDirection = "column";
-    
+
     wrapper.style.color = "#000";
 
     wrapper.innerHTML = `
@@ -1843,34 +1891,34 @@ if (shareBtn) {
         <span style="float:right;">Page ${pageNumber}</span>
       </div>
     `;
-      
-      // 🔥 MOBILE SAFE IMAGE INSERTION
-      if (imageSrc) {
-        const img = document.createElement("img");
 
-        img.style.width = "100%";
-        img.style.maxWidth = "700px";
-        img.style.height = "270px";
-        img.style.objectFit = "cover";
-        img.style.margin = "15px auto 15px auto";
-        img.style.display = "block";
-        img.style.borderRadius = "0px";
+    // 🔥 MOBILE SAFE IMAGE INSERTION
+    if (imageSrc) {
+      const img = document.createElement("img");
+
+      img.style.width = "100%";
+      img.style.maxWidth = "700px";
+      img.style.height = "270px";
+      img.style.objectFit = "cover";
+      img.style.margin = "15px auto 15px auto";
+      img.style.display = "block";
+      img.style.borderRadius = "0px";
 
 
 
-        // Only set crossOrigin if it's NOT base64
-        if (!imageSrc.startsWith("data:")) {
-          img.crossOrigin = "anonymous";
-        }
-
-        img.src = imageSrc;
-
-        const contentDiv = wrapper.querySelector(".page-content");
-        wrapper.insertBefore(img, contentDiv);
+      // Only set crossOrigin if it's NOT base64
+      if (!imageSrc.startsWith("data:")) {
+        img.crossOrigin = "anonymous";
       }
 
-  return wrapper;
-}
+      img.src = imageSrc;
+
+      const contentDiv = wrapper.querySelector(".page-content");
+      wrapper.insertBefore(img, contentDiv);
+    }
+
+    return wrapper;
+  }
 
 });
 

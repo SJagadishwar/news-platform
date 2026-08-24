@@ -102,9 +102,11 @@ const CONTACT_RECEIVER_EMAIL = "jagadhii.09.09.1999@gmail.com";
 /* -------------------- MongoDB -------------------- */
 if (process.env.MONGODB_URI) {
   mongoose
-    .connect(process.env.MONGODB_URI)
+    .connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000
+    })
     .then(() => console.log("MongoDB connected ✅"))
-    .catch(err => console.error(err));
+    .catch(err => console.error("❌ MongoDB connection failed:", err.message));
 } else {
   console.log("MongoDB skipped (local preview mode)");
 }

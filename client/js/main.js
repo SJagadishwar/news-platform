@@ -1311,11 +1311,6 @@ function showDates() {
   });
 }
 
-
-
-
-
-
 const exploreBtn = document.getElementById("archive-search");
 
 if (exploreBtn) {
